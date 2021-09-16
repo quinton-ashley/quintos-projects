@@ -3,7 +3,6 @@
 	"name": "quintos-template",
 	"description": "Learn to code by making games in JavaScript using QuintOS!",
 	"dependencies": {
-		"@code-dot-org/p5.play": "^1.3.18-cdo",
 		"jquery": "^3.6.0",
 		"p5": "^1.4.0",
 		"quintos": "^1.6.65"
@@ -23,5 +22,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos"
 	},
-	"version": "1.0.13"
+	"version": "1.0.14"
 }

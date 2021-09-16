@@ -1,4 +1,0 @@
-{
-  "installDependencies": true,
-  "startCommand": "node server.js"
-}
