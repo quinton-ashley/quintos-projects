@@ -103,6 +103,16 @@ function draw() {
 	clear();
 	background(0);
 
+	for (let row = 0; row < 24; row++) {
+		for (let col = 0; col < 16; col++) {
+			tiles.drawFrame(
+				row * 16 + col, // tile number
+				64 + col * tileSize, // x
+				32 + row * tileSize // y
+			);
+		}
+	}
+
 	player.action();
 
 	// p5.play function for drawing all sprites
