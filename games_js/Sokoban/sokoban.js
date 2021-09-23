@@ -80,8 +80,6 @@ player.idle = function () {
 	} else if (!curAniName.includes('idle')) {
 		this.changeAnimation('idle-stand');
 		this.animation.onComplete = _idle;
-	} else {
-		this.animation.onComplete = _idle;
 	}
 };
 
@@ -99,19 +97,39 @@ player.action = function () {
 	}
 };
 
+function drawWorld() {
+	let x = 64;
+	let y = 100;
+
+	for (let i = 0; i < 10; i++) {
+		tiles.drawFrame(1, x + tileSize * (1 + i), y);
+		tiles.drawFrame(33, x + tileSize * (1 + i), y + tileSize * 11);
+		tiles.drawFrame(16, x, y + tileSize * (1 + i));
+		tiles.drawFrame(18, x + tileSize * 11, y + tileSize * (1 + i));
+	}
+	//corners
+	tiles.drawFrame(0, x, y);
+	tiles.drawFrame(2, x + tileSize * 11, y);
+	tiles.drawFrame(32, x, y + tileSize * 11);
+	tiles.drawFrame(34, x + tileSize * 11, y + tileSize * 11);
+}
+
 function draw() {
 	clear();
 	background(0);
 
-	for (let row = 0; row < 24; row++) {
-		for (let col = 0; col < 16; col++) {
-			tiles.drawFrame(
-				row * 16 + col, // tile number
-				64 + col * tileSize, // x
-				32 + row * tileSize // y
-			);
-		}
-	}
+	// show all tiles
+	// for (let row = 0; row < 24; row++) {
+	// 	for (let col = 0; col < 16; col++) {
+	// 		tiles.drawFrame(
+	// 			row * 16 + col, // tile number
+	// 			64 + col * tileSize, // x
+	// 			32 + row * tileSize // y
+	// 		);
+	// 	}
+	// }
+
+	drawWorld();
 
 	player.action();
 

@@ -11,9 +11,7 @@ wbbbyybb
 .bbbbyb
 ..wbby`);
 
-let imgPaddleY = spriteArt(
-	'.wwwwww.\nwwwwwwww\n' + 'ww....ww\n'.repeat(50) + 'wwwwwwww\n.wwwwww.'
-);
+let imgPaddleY = spriteArt('.wwwwww.\nwwwwwwww\n' + 'ww....ww\n'.repeat(50) + 'wwwwwwww\n.wwwwww.');
 
 let imgPaddleX = spriteArt(
 	' ' +
@@ -140,22 +138,13 @@ class Paddle {
 	draw() {
 		// mouse y position changes the paddle's y value
 		// -this.h/2 is used to center the paddle
-		this.y = mouseY - this.h / 2;
-		image(imgPaddleY, this.x, this.y);
-	}
-}
-
-class Paddle0 {
-	constructor(x, y, w, h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-
-	draw() {
-		this.x = mouseX - this.w / 2;
-		image(imgPaddleX, this.x, this.y);
+		if (this.w < this.h) {
+			this.y = mouseY - this.h / 2;
+			image(imgPaddleY, this.x, this.y);
+		} else {
+			this.x = mouseX - this.w / 2;
+			image(imgPaddleX, this.x, this.y);
+		}
 	}
 }
 
@@ -172,10 +161,8 @@ for (let i = 0; i < numOfBalls; i++) {
 }
 let paddle0 = new Paddle(3, 200, 16, 108);
 let paddle1 = new Paddle(621, 200, 16, 108);
-// let wall0 = new Wall(0, 0);
-// let wall1 = new Wall(0, 197);
-let paddle2 = new Paddle0(320, 3, 108, 16);
-let paddle3 = new Paddle0(320, 381, 108, 16);
+let paddle2 = new Paddle(320, 3, 108, 16);
+let paddle3 = new Paddle(320, 381, 108, 16);
 
 async function spawn() {
 	for (let i = 0; i < numOfBalls; i++) {
@@ -213,12 +200,7 @@ spawn();
 
 function intersectsRect(a, b) {
 	// right  zone            left zone
-	if (
-		a.x > b.x + b.w ||
-		a.x + a.w < b.x ||
-		a.y + a.h < b.y ||
-		a.y > b.y + b.h
-	) {
+	if (a.x > b.x + b.w || a.x + a.w < b.x || a.y + a.h < b.y || a.y > b.y + b.h) {
 		// top                bottom
 		return false; //if this is all false the function becomes true
 	}
@@ -301,18 +283,12 @@ function draw() {
 			if (intersectsCircle(bi, bj)) {
 				log(bi, bj);
 				// log('intersected');
-				if (
-					!(bi.vel.x < 0 && bj.vel.x < 0) &&
-					!(bi.vel.x > 0 && bj.vel.x > 0)
-				) {
+				if (!(bi.vel.x < 0 && bj.vel.x < 0) && !(bi.vel.x > 0 && bj.vel.x > 0)) {
 					log('invert x');
 					bi.vel.x *= -1;
 					bj.vel.x *= -1;
 				}
-				if (
-					!(bi.vel.y < 0 && bj.vel.y < 0) &&
-					!(bi.vel.y > 0 && bj.vel.y > 0)
-				) {
+				if (!(bi.vel.y < 0 && bj.vel.y < 0) && !(bi.vel.y > 0 && bj.vel.y > 0)) {
 					log('invert y');
 					bi.vel.y *= -1;
 					bj.vel.y *= -1;
