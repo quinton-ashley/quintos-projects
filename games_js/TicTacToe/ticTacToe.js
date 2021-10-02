@@ -1,4 +1,4 @@
-const log = console.log;
+const log = console.log; // shortcut for console.log
 
 const title = `
 TTTTT IIIII   CCC
@@ -30,7 +30,7 @@ OO    OO
 OO    OO
 OO    OO
 OO    OO
- OOOOOO`.slice(1);
+ OOOOOO`.slice(1); // slice off the first newline character
 
 const bigX = `
 XX    XX
@@ -48,8 +48,10 @@ const gridY = 3;
 pc.text('─'.repeat(26), gridX, gridY + 7);
 pc.text('─'.repeat(26), gridX, gridY + 15); // draw another horizontal line
 
-pc.text('│\n'.repeat(23), gridX + 8, gridY);
-pc.text('│\n'.repeat(23), gridX + 17, gridY); // draw another vertical line
+for (let y = gridY; y < gridY + 23; y++) {
+	pc.text('│', gridX + 8, y);
+	pc.text('│', gridX + 17, y); // draw another vertical line
+}
 
 // board stores the game data
 // in a two dimensional array of spaces
@@ -59,314 +61,228 @@ let board = [
 	[' ', ' ', ' ']
 ];
 
-// create buttons with nested for loop
-for (let row = 0; row < 3; row++) {
-	for (let col = 0; col < 3; col++) {
-		// create button
-		pc.button(bigSpace, gridX + col * 9, gridY + row * 8, () => {
-			btnClicked(row, col);
-		});
-	}
-}
-
-// called when a button is clicked
-async function btnClicked(row, col) {
-	if (disableBoard) return;
-
-	// coordinate position of button in btns
-	// and the corresponding positions in board
-	log(row + ', ' + col);
-	let x = gridX + col * 9;
-	let y = gridY + row * 8;
-
-	if (board[row][col] != ' ') {
-		disableBoard = true;
-		await pc.alert('This space is occupied', 57, 20, 20);
-		disableBoard = false;
-		return;
-	}
-
-	let tile;
-
-	if (turnX) {
-		tile = 'X';
-		board[row][col] = tile;
-		// place bigX text
-		await pc.text(bigX, x, y);
-	} else {
-		tile = 'O';
-		board[row][col] = tile;
-		await pc.text(bigO, x, y);
-	}
-	// show the board in the console
-	log(board.map((el) => el.join('|')).join('\n'));
-
-	// if true there was a winner
-	if (winnerCheck(tile)) {
-		if (turnX) {
-			scoreX += 1;
-		} else {
-			scoreO += 1;
-		}
-		updateScore();
-		disableBoard = true;
-		await pc.alert('Player ' + tile + ' you won!', 57, 20, 20);
-
-		if (turnX && challengeMode && aiLevel < 3) {
-			aiLevel++;
-			await pc.alert('AI level increased to ' + aiLevel, 57, 20, 20);
-		}
-		disableBoard = false;
-		await reset();
-		startGame();
-	} else if (drawCheck(board)) {
-		disableBoard = true;
-		await pc.alert('Draw!', 57, 20, 20);
-		disableBoard = false;
-		await reset();
-		startGame();
-	} else {
-		// change turns
-		turnX = !turnX;
-		turnCount++;
-		if (turnX) {
-			pc.text('Turn : X', 60, 2);
-		} else {
-			pc.text('Turn : O', 60, 2);
-			if (onePlayer) aiTurn();
-		}
-	}
-}
-
-let disableBoard = true;
-let onePlayer;
-let aiLevel;
-let challengeMode = false;
-
-let start1Btn = pc.button('1 Player Start', 60, 14, () => {
-	onePlayer = true;
-	aiPick();
-});
-let start2Btn = pc.button('2 Player Start', 60, 16, () => {
-	onePlayer = false;
-	start1Btn.erase();
-	start2Btn.erase();
-	startGame();
-});
-
-// if turnX is true it is player x's turn
-// if turnX is false it is player o's turn
-let turnX;
-let turnCount = 0;
+let turnX = true;
 let scoreX = 0;
 let scoreO = 0;
+let gameMode;
+let aiLevel = 0;
+let challengeMode = false;
 
-function updateScore() {
-	pc.text("X's score : " + scoreX, 60, 4);
-	pc.text("O's score : " + scoreO, 60, 6);
-}
-
-async function reset() {
-	for (let row = 0; row < 3; row++) {
-		for (let col = 0; col < 3; col++) {
-			board[row][col] = ' ';
-			await pc.text(bigSpace, gridX + col * 9, gridY + row * 8);
-		}
-	}
-}
-
-function startGame() {
-	turnCount = 0;
-	turnX = Math.random() < 0.5;
-	if (turnX) {
-		pc.text('Turn : X', 60, 2);
-	} else {
-		pc.text('Turn : O', 60, 2);
-	}
-	updateScore();
-	disableBoard = false;
-	// human is X, ai is always O
-	if (onePlayer && !turnX) aiTurn();
-}
-
-//choosing ai level
-function aiPick() {
-	start1Btn.erase();
-	start2Btn.erase();
-
-	let aiBtns = [];
-	let aiCMBtn;
-
-	let pick = () => {
-		for (let i = 0; i < 4; i++) {
-			aiBtns[i].erase();
-		}
-		aiCMBtn.erase();
-		startGame();
-	};
-
-	for (let i = 0; i < 4; i++) {
-		aiBtns.push(
-			pc.button('AI Level ' + i, 60, 12 + i * 2, () => {
-				aiLevel = i;
-				pick();
-			})
-		);
-	}
-	aiCMBtn = pc.button('Challenge Mode', 60, 20, () => {
-		aiLevel = 0;
-		challengeMode = true;
-		pick();
-	});
-}
-
-function hardAI(tile) {
-	// go through whole board
-	for (let row = 0; row < 3; row++) {
-		for (let col = 0; col < 3; col++) {
-			// skip spaces that are not blank
-			if (board[row][col] != ' ') continue;
-			// make copy of board
-			// ... is called the spread operator
-			// used here to clone the row arrays of board
-			let b = [[...board[0]], [...board[1]], [...board[2]]];
-			// put tile in spot
-			b[row][col] = tile;
-			log(
-				'ai test ' + tile + ' at ',
-				row,
-				col,
-				'\n' + b.map((el) => el.join('|')).join('\n-----\n')
-			);
-			// test tile
-			if (winnerCheck(tile, b)) {
-				// ai goes in that spot
-				btnClicked(row, col);
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-function aiTurn() {
-	log('ai turn');
-
-	if (aiLevel == 3 && turnCount == 0) {
-		log('aiLvl 3');
-		// always go center first turn
-		btnClicked(1, 1);
-		return true;
-	} else if (aiLevel == 3 && turnCount == 1) {
-		log('aiLvl 3');
-		// always take center if available, if not take corner
-		if (board[1][1] == ' ') {
-			btnClicked(1, 1);
-			return true;
-		} else {
-			if (Math.random() < 0.5) {
-				i = 0;
-			} else {
-				i = 2;
-			}
-			if (Math.random() < 0.5) {
-				j = 0;
-			} else {
-				j = 2;
-			}
-			btnClicked(i, j);
-			log(i, j);
-			return true;
-		}
-	} else if (aiLevel == 2 || aiLevel == 3) {
-		log('aiLvl 2');
-		// smart ai
-		// try to win
-		if (hardAI('O')) return; // move was made, return to end aiTurn
-		// prevent opponent from winning
-		if (hardAI('X')) return;
-
-		// didn't find any winning or blocking moves
-	}
-
+function displayAiLevel() {
 	if (aiLevel == 0) {
-		log('aiLvl 0');
-		// go in the first available space
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < 3; j++) {
-				if (board[i][j] == ' ') {
-					// ai make move
-					btnClicked(i, j);
-					return;
-				}
-			}
-		}
-	} else if (aiLevel == 1 || aiLevel == 2 || aiLevel == 3) {
-		log('aiLvl 1');
-		// available spaces coordinates
-		let avail = [];
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < 3; j++) {
-				if (board[i][j] == ' ') {
-					avail.push([i, j]);
-				}
-			}
-		}
-		/* EXAMPLE:
-		board = [
-			['X', ' ', ' ']
-			[' ', 'O', ' ']
-			[' ', 'X', ' ']
-		];
-
-		avail = [
-			[0, 1], [0, 2], [1, 0], [1, 2], [2, 0], [2, 2]
-		];
-		*/
-		// pick a random available space coordinates
-		let rand = Math.floor(Math.random() * avail.length);
-		let pick = avail[rand];
-		// ai make move
-		btnClicked(pick[0], pick[1]);
+		pc.text('AI Level: Easy', 55, 10);
+	} else if (aiLevel == 1) {
+		pc.text('AI Level: Medium', 55, 10);
+	} else {
+		pc.text('AI Level: Hard  ', 55, 10);
 	}
 }
 
-// checks for winner
-// take a tile as input
-function winnerCheck(t, b) {
-	if (!b) b = board;
+function displayTurn() {
+	if (turnX) {
+		pc.text("X's turn!", 55, 4);
+	} else {
+		pc.text("O's turn!", 55, 4);
+	}
+}
 
+function displayScore() {
+	pc.text("Player X's Score: " + scoreX, 55, 6);
+	pc.text("Player O's Score: " + scoreO, 55, 8);
+}
+
+function checkWinner(mark) {
+	// checks all horizontal rows and vertical columns
 	for (let i = 0; i < 3; i++) {
-		// checking horizontals
-		if (b[i][0] == t && b[i][1] == t && b[i][2] == t) {
+		if (board[i][0] == mark && board[i][1] == mark && board[i][2] == mark) {
 			return true;
 		}
-		// checking verticals
-		if (b[0][i] == t && b[1][i] == t && b[2][i] == t) {
+
+		if (board[0][i] == mark && board[1][i] == mark && board[2][i] == mark) {
 			return true;
 		}
 	}
-	// checking diagonals
-	if (b[0][0] == t && b[1][1] == t && b[2][2] == t) {
-		return true;
-	} else if (b[0][2] == t && b[1][1] == t && b[2][0] == t) {
+	// check diagonals
+	if (board[0][0] == mark && board[1][1] == mark && board[2][2] == mark) {
 		return true;
 	}
-	// no winner
+	if (board[0][2] == mark && board[1][1] == mark && board[2][0] == mark) {
+		return true;
+	}
+	// no winner found
 	return false;
 }
 
-// if there is a draw this function will return true
-
-function drawCheck(b) {
-	for (let i = 0; i < 3; i++) {
-		// rows
-		for (let j = 0; j < 3; j++) {
-			// cols
-			if (b[i][j] == ' ') {
+function checkDraw() {
+	for (let row = 0; row < 3; row++) {
+		for (let col = 0; col < 3; col++) {
+			if (board[row][col] == ' ') {
 				return false;
 			}
 		}
 	}
 	return true;
 }
+
+async function startNewGame() {
+	for (let row = 0; row < 3; row++) {
+		for (let col = 0; col < 3; col++) {
+			board[row][col] = ' ';
+			let x = gridX + col * 9;
+			let y = gridY + row * 8;
+			await pc.text(bigSpace, x, y);
+		}
+	}
+}
+
+function aiTurn() {
+	if (aiLevel == 2) {
+		for (let row = 0; row < 3; row++) {
+			for (let col = 0; col < 3; col++) {
+				if (board[row][col] == ' ') {
+					// offense, if o would win, o should go there
+					board[row][col] = 'O';
+					if (checkWinner('O') == true) {
+						board[row][col] = ' ';
+						takeTurn(row, col);
+						return;
+					} else {
+						board[row][col] = ' ';
+					}
+
+					// defense, if x would win, o should go there
+					board[row][col] = 'X';
+					if (checkWinner('X') == true) {
+						board[row][col] = ' ';
+						takeTurn(row, col);
+						return;
+					} else {
+						board[row][col] = ' ';
+					}
+				}
+			}
+		}
+	}
+
+	if (aiLevel >= 1) {
+		let avail = [];
+		for (let row = 0; row < 3; row++) {
+			for (let col = 0; col < 3; col++) {
+				if (board[row][col] == ' ') {
+					avail.push([row, col]);
+				}
+			}
+		}
+		log(avail);
+		let idx = Math.floor(Math.random() * avail.length);
+		let coord = avail[idx];
+		takeTurn(coord[0], coord[1]);
+		return;
+	}
+
+	for (let row = 0; row < 3; row++) {
+		for (let col = 0; col < 3; col++) {
+			if (board[row][col] == ' ') {
+				takeTurn(row, col);
+				return;
+			}
+		}
+	}
+}
+
+async function takeTurn(row, col) {
+	console.log('You clicked button ' + row + ' ' + col);
+
+	if (board[row][col] != ' ') {
+		await pc.alert('Occupied space', 55, 20, 23);
+	} else {
+		let x = gridX + col * 9;
+		let y = gridY + row * 8;
+
+		let mark;
+		if (turnX == true) {
+			pc.text(bigX, x, y);
+			mark = 'X';
+		} else {
+			pc.text(bigO, x, y);
+			mark = 'O';
+		}
+		board[row][col] = mark;
+		console.log(board[0] + '\n' + board[1] + '\n' + board[2]);
+
+		if (checkWinner(mark) == true) {
+			await pc.alert('You won Player ' + mark + '!', 55, 20, 23);
+			if (turnX == true) {
+				scoreX++;
+				if (challengeMode == true) {
+					aiLevel++;
+					displayAiLevel();
+				}
+			} else {
+				scoreO++;
+			}
+			displayScore();
+			await startNewGame();
+		}
+		if (checkDraw() == true) {
+			await pc.alert('Draw.', 55, 20, 23);
+			await startNewGame();
+		}
+		turnX = !turnX;
+
+		displayTurn();
+
+		if (gameMode == 'AI' && turnX == false) {
+			aiTurn();
+		}
+	}
+}
+
+async function startGame() {
+	await pc.eraseRect(55, 11, 10, 15);
+
+	/* PART A: Make the buttons in the grid */
+	for (let row = 0; row < 3; row++) {
+		for (let col = 0; col < 3; col++) {
+			pc.button(bigSpace, gridX + col * 9, gridY + row * 8, () => {
+				takeTurn(row, col);
+			});
+		}
+	}
+
+	displayAiLevel();
+	displayScore();
+
+	turnX = Math.random() < 0.5;
+
+	if (gameMode == 'AI' && turnX == false) {
+		aiTurn();
+	}
+}
+
+pc.button('One Player Start', 55, 13, async () => {
+	await pc.eraseRect(55, 13, 1, 3);
+	gameMode = 'AI';
+	pc.button('Easy', 55, 11, () => {
+		aiLevel = 0;
+		startGame();
+	});
+	pc.button('Medium', 55, 13, () => {
+		aiLevel = 1;
+		startGame();
+	});
+	pc.button('Hard', 55, 15, () => {
+		aiLevel = 2;
+		startGame();
+	});
+	pc.button('Challenge Mode', 55, 17, () => {
+		challengeMode = true;
+		aiLevel = 0;
+		startGame();
+	});
+});
+
+pc.button('Two Player Start', 55, 15, () => {
+	gameMode = 'Person';
+	startGame();
+});

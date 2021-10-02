@@ -1,5 +1,5 @@
 QuintOS.username = 'quinton-ashley';
-QuintOS.level = 0;
+QuintOS.level = 2;
 QuintOS.dir = 'games_js';
 // QuintOS.preload = true;
 
