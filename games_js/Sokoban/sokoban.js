@@ -97,41 +97,31 @@ player.action = function () {
 	}
 };
 
-function drawWorld() {
-	let x = 64;
-	let y = 100;
+//          new Tiles(rows, cols, tileSize, x, y)
+let world = new Tiles(40, 10, 64, 120, 55);
+let walls = new Group();
 
-	for (let i = 0; i < 10; i++) {
-		tiles.drawFrame(1, x + tileSize * (1 + i), y);
-		tiles.drawFrame(33, x + tileSize * (1 + i), y + tileSize * 11);
-		tiles.drawFrame(16, x, y + tileSize * (1 + i));
-		tiles.drawFrame(18, x + tileSize * 11, y + tileSize * (1 + i));
-	}
-	//corners
-	tiles.drawFrame(0, x, y);
-	tiles.drawFrame(2, x + tileSize * 11, y);
-	tiles.drawFrame(32, x, y + tileSize * 11);
-	tiles.drawFrame(34, x + tileSize * 11, y + tileSize * 11);
+let row = 0;
+let col = 0;
+for (let i = 0; i < 10; i++) {
+	world.add(row, col + 1 + i, wallUp, walls);
+	world.add(row + 11, col + 1 + i, wallDown, walls);
+	world.add(row + 1 + i, col, wallLeft, walls);
+	world.add(row + 1 + i, col + 11, wallRight, walls);
 }
+
+let boxes = new Group();
+world.add(2, 2, box, boxes);
 
 function draw() {
 	clear();
 	background(0);
 
-	// show all tiles
-	// for (let row = 0; row < 24; row++) {
-	// 	for (let col = 0; col < 16; col++) {
-	// 		tiles.drawFrame(
-	// 			row * 16 + col, // tile number
-	// 			64 + col * tileSize, // x
-	// 			32 + row * tileSize // y
-	// 		);
-	// 	}
-	// }
-
-	drawWorld();
-
 	player.action();
+
+	player.collide(walls); // handles player collisions with walls
+	player.displace(boxes); // player move boxes by displacing them
+	boxes.collide(walls);
 
 	// p5.play function for drawing all sprites
 	drawSprites();

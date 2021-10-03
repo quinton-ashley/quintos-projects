@@ -1,7 +1,6 @@
 QuintOS.username = 'quinton-ashley';
-QuintOS.level = 2;
+QuintOS.level = 8;
 QuintOS.dir = 'games_js';
-// QuintOS.preload = true;
 
 // QuintOS.gameSelect = 'WheelOfFortune';
 // QuintOS.gameSelect = 'Contain';

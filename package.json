@@ -15,13 +15,13 @@
 		"url": "git+https://github.com/quinton-ashley/quintos-template.git"
 	},
 	"scripts": {
-		"start": "node server.js | open http://127.0.0.1:8081",
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node ./node_modules/quintos/server.js | open http://127.0.0.1:8081",
+		"test": "node ./node_modules/quintos/server.js 8082 --dev | open http://127.0.0.1:8082",
 		"v": "npm version patch --force",
 		"V": "npm version minor --force",
 		"version": "git add -A",
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos | npm link ../../pkg/java2js"
 	},
-	"version": "1.0.17"
+	"version": "1.0.18"
 }
