@@ -1,8 +1,12 @@
+//    new Tiles(rows, cols, layers, tileSize, x, y)
+let world = new Tiles(40, 12, 2, 32, 120, 55);
+
 /* PLAYER */
 
-let player = createSprite(314, 200, 32, 32);
+let player = world.add(5, 5, 1);
+// scale by .5 because the player frames are 64x64
+// but the world tiles are 32x32
 player.scale = 0.5;
-player.autoResetAnimations = true;
 let imgDir = QuintOS.dir + '/img/8bit';
 let playerImg = imgDir + '/player16.png';
 

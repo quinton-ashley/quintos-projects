@@ -1,22 +1,28 @@
 const log = console.log;
 
+let loading = true;
+
+function keyPressed() {
+	if (keyCode === UP_ARROW) {
+		player.walk('up');
+	} else if (keyCode === DOWN_ARROW) {
+		player.walk('down');
+	} else if (keyCode === LEFT_ARROW) {
+		player.walk('left');
+	} else if (keyCode === RIGHT_ARROW) {
+		player.walk('right');
+	}
+}
+
 player.walk = function (direction) {
 	let aniName = 'walk-lr';
 	if (direction == 'up') {
-		this.velocity.x = 0;
-		this.velocity.y = -1.5;
 		aniName = 'walk-up';
 	} else if (direction == 'down') {
-		this.velocity.x = 0;
-		this.velocity.y = 1.5;
 		aniName = 'walk-down';
-	} else if (direction == 'left') {
-		this.velocity.x = -1.5;
-		this.velocity.y = 0;
-	} else if (direction == 'right') {
-		this.velocity.x = 1.5;
-		this.velocity.y = 0;
 	}
+
+	world.move(player, 1.5, direction);
 
 	// the name of the current animation being used
 	let curAniName = this.getAnimationLabel();
@@ -43,12 +49,9 @@ player.walk = function (direction) {
 };
 
 player.idle = function () {
-	// stop player from moving
-	this.velocity.x = 0;
-	this.velocity.y = 0;
-
 	let _this = this;
-
+	// switch between idle animations
+	// some have a higher probability of occurring than others
 	function _idle() {
 		let chance = Math.random();
 
@@ -83,46 +86,35 @@ player.idle = function () {
 	}
 };
 
-player.action = function () {
-	if (keyDown('up')) {
-		this.walk('up');
-	} else if (keyDown('down')) {
-		this.walk('down');
-	} else if (keyDown('left')) {
-		this.walk('left');
-	} else if (keyDown('right')) {
-		this.walk('right');
-	} else {
-		this.idle();
-	}
-};
-
 //          new Tiles(rows, cols, tileSize, x, y)
-let world = new Tiles(40, 10, 64, 120, 55);
 let walls = new Group();
 
 let row = 0;
 let col = 0;
 for (let i = 0; i < 10; i++) {
-	world.add(row, col + 1 + i, wallUp, walls);
-	world.add(row + 11, col + 1 + i, wallDown, walls);
-	world.add(row + 1 + i, col, wallLeft, walls);
-	world.add(row + 1 + i, col + 11, wallRight, walls);
+	world.add(row, col + 1 + i, 0, wallUp, walls);
+	world.add(row + 11, col + 1 + i, 0, wallDown, walls);
+	world.add(row + 1 + i, col, 0, wallLeft, walls);
+	world.add(row + 1 + i, col + 11, 0, wallRight, walls);
 }
 
 let boxes = new Group();
-world.add(2, 2, box, boxes);
+world.add(2, 2, 1, box, boxes);
+
+loading = false;
 
 function draw() {
+	if (loading) return;
 	clear();
 	background(0);
-
-	player.action();
 
 	player.collide(walls); // handles player collisions with walls
 	player.displace(boxes); // player move boxes by displacing them
 	boxes.collide(walls);
 
+	if (!player.isMoving) player.idle();
+
+	world.update();
 	// p5.play function for drawing all sprites
 	drawSprites();
 }
