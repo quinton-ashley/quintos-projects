@@ -73,7 +73,7 @@ function btnClick() {
 
 	makeBg();
 
-	if (times.length < 2) {
+	if (times.length < 20) {
 		/* PART A0: change the values of x and y to be random */
 		// screen size is 80w x 30h
 		// target is 8w x 6h

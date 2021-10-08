@@ -1,6 +1,6 @@
 {
 	"author": "quinton-ashley",
-	"name": "quintos-template",
+	"name": "quintos-games",
 	"description": "Learn to code by making games in JavaScript using QuintOS!",
 	"dependencies": {
 		"java2js": "^1.0.5",
@@ -12,16 +12,17 @@
 	"main": "server.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/quinton-ashley/quintos-template.git"
+		"url": "git+https://github.com/quinton-ashley/quintos-games.git"
 	},
 	"scripts": {
-		"start": "node ./node_modules/quintos/server.js | open http://127.0.0.1:8081",
-		"test": "node ./node_modules/quintos/server.js 8082 --dev | open http://127.0.0.1:8082",
+		"test": "node ./node_modules/quintos/server.js | open http://127.0.0.1:8081",
+		"start": "node ./node_modules/quintos/server.js | start http://127.0.0.1:8081",
+		"dev": "node ./node_modules/quintos/server.js 8081 --dev",
 		"v": "npm version patch --force",
 		"V": "npm version minor --force",
 		"version": "git add -A",
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos | npm link ../../pkg/java2js"
 	},
-	"version": "1.0.19"
+	"version": "1.0.20"
 }
