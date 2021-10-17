@@ -3,6 +3,7 @@ const log = console.log;
 let loading = true;
 
 function keyPressed() {
+	if (player.isMoving) return;
 	if (keyCode === UP_ARROW) {
 		player.walk('up');
 	} else if (keyCode === DOWN_ARROW) {
@@ -14,31 +15,27 @@ function keyPressed() {
 	}
 }
 
-player.walk = function (direction) {
-	let aniName = 'walk-lr';
-	if (direction == 'up') {
-		aniName = 'walk-up';
-	} else if (direction == 'down') {
-		aniName = 'walk-down';
+player.walk = async function (direction) {
+	let aniName = 'walk-' + direction;
+	if (direction == 'left' || direction == 'right') {
+		aniName = 'walk-lr';
 	}
 
 	world.move(player, 1.5, direction);
 
 	// the name of the current animation being used
-	let curAniName = this.getAnimationLabel();
+	let cur = this.getAnimationLabel();
 
 	// player is already walking that way or turning
 	// no need to change animation
-	if (curAniName == aniName || curAniName == 'idle-turn') return;
+	if (cur == aniName || cur == 'idle-turn') return;
 
 	// have the player turn before walking upwards
 	if (direction != 'up') {
-		this.changeAnimation(aniName);
+		this.ani(aniName);
 	} else {
-		this.changeAnimation('idle-turn');
-		this.animation.onComplete = () => {
-			this.changeAnimation('walk-up');
-		};
+		await this.ani('idle-turn');
+		this.ani('walk-up');
 	}
 
 	if (direction == 'left') {
@@ -49,57 +46,52 @@ player.walk = function (direction) {
 };
 
 player.idle = function () {
-	let _this = this;
 	// switch between idle animations
 	// some have a higher probability of occurring than others
-	function _idle() {
+	async function _idle() {
 		let chance = Math.random();
 
 		if (chance > 0.4) {
-			_this.changeAnimation('idle-stand');
+			await player.ani('idle-stand');
 		} else if (chance > 0.2) {
-			_this.changeAnimation('idle-blink');
+			await player.ani('idle-blink');
 		} else if (chance > 0.1) {
-			_this.changeAnimation('idle-think');
+			await player.ani('idle-think');
 		} else if (chance > 0.05) {
-			_this.changeAnimation('idle-scratch');
+			await player.ani('idle-scratch');
 		} else {
-			_this.changeAnimation('idle-yawn');
+			await player.ani('idle-yawn');
 		}
-		_this.animation.onComplete = _idle;
+		_idle();
 	}
 
 	// the name of the current animation being used
-	let curAniName = this.getAnimationLabel();
+	let cur = this.getAnimationLabel();
 
-	if (curAniName == 'walk-up') {
-		this.changeAnimation('idle-turn');
+	if (cur == 'walk-up') {
+		this.ani('idle-turn');
 		this.animation.changeFrame(2);
 		this.animation.goToFrame(0);
 		this.animation.onComplete = () => {
-			this.changeAnimation('idle-stand');
+			this.ani('idle-stand');
 			this.animation.onComplete = _idle;
 		};
-	} else if (!curAniName.includes('idle')) {
-		this.changeAnimation('idle-stand');
+	} else if (!cur.includes('idle')) {
+		this.ani('idle-stand');
 		this.animation.onComplete = _idle;
 	}
 };
 
-//          new Tiles(rows, cols, tileSize, x, y)
-let walls = new Group();
-
-let row = 0;
-let col = 0;
 for (let i = 0; i < 10; i++) {
-	world.add(row, col + 1 + i, 0, wallUp, walls);
-	world.add(row + 11, col + 1 + i, 0, wallDown, walls);
-	world.add(row + 1 + i, col, 0, wallLeft, walls);
-	world.add(row + 1 + i, col + 11, 0, wallRight, walls);
+	//          tile(row, col, ani)
+	world.walls.tile(0, 1 + i, 'wall-up');
+	world.walls.tile(11, 1 + i, 'wall-down');
+	world.walls.tile(1 + i, 0, 'wall-left');
+	world.walls.tile(1 + i, 11, 'wall-right');
 }
 
-let boxes = new Group();
-world.add(2, 2, 1, box, boxes);
+//       tile(row, col, layer, ani)
+world.boxes.tile(2, 2, 1, 'box');
 
 loading = false;
 
@@ -108,9 +100,9 @@ function draw() {
 	clear();
 	background(0);
 
-	player.collide(walls); // handles player collisions with walls
-	player.displace(boxes); // player move boxes by displacing them
-	boxes.collide(walls);
+	player.collide(world.walls); // handles player collisions with walls
+	player.displace(world.boxes); // player move boxes by displacing them
+	world.boxes.collide(world.walls);
 
 	if (!player.isMoving) player.idle();
 

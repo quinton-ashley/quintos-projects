@@ -1,36 +1,41 @@
+// image assets location
+let imgDir = QuintOS.dir + '/img/8bit';
+
+/* WORLD */
+
 //    new Tiles(rows, cols, layers, tileSize, x, y)
 let world = new Tiles(40, 12, 2, 32, 120, 55);
+world.spriteSheet = loadImage(imgDir + '/world.png');
+
+world.addGroup('walls');
+world.walls.loadAni('wall-up', { pos: [0, 1] });
+world.walls.loadAni('wall-down', { pos: [2, 1] });
+world.walls.loadAni('wall-left', { pos: [1, 0] });
+world.walls.loadAni('wall-right', { pos: [1, 2] });
+
+world.addGroup('boxes');
+// loads the animation for the tile representing the box
+// at row 5, column 0 in the tile sheet
+world.boxes.loadAni('box', { pos: [5, 0] });
+
+/* PART A: Choose a tile to represent the box goal positions on the floor */
+// world.loadAni('goal', { pos: [?, ?] });
 
 /* PLAYER */
 
-let player = world.add(5, 5, 1);
+//               tile(row, col, layer)
+let player = world.tile(5, 5, 1);
+player.spriteSheet = loadImage(imgDir + '/player16.png');
 // scale by .5 because the player frames are 64x64
 // but the world tiles are 32x32
 player.scale = 0.5;
-let imgDir = QuintOS.dir + '/img/8bit';
-let playerImg = imgDir + '/player16.png';
 
-// loadAni(spriteSheetImg, size, pos, frameCount, frameDelay)
-player.addAnimation('idle-stand', loadAni(playerImg, 64, 0, 4, 20));
-player.addAnimation('idle-blink', loadAni(playerImg, 64, 1, 4, 10));
-player.addAnimation('idle-think', loadAni(playerImg, 64, 20, 8, 20));
-player.addAnimation('idle-scratch', loadAni(playerImg, 64, 21, 14, 10));
-player.addAnimation('idle-yawn', loadAni(playerImg, 64, 22, 2, 60));
-player.addAnimation('idle-turn', loadAni(playerImg, 64, 17, 3));
-player.addAnimation('walk-lr', loadAni(playerImg, 64, 3, 5, 5));
-player.addAnimation('walk-up', loadAni(playerImg, 64, 18, 6));
-player.addAnimation('walk-down', loadAni(playerImg, 64, 16, 6));
-
-/* TILES */
-
-let tilesImg = imgDir + '/world.png';
-let tileSize = 32;
-
-// loadAni(spriteSheetImg, size, pos, frameCount, frameDelay)
-// pos array is a [row, column] pair
-let wallUp = loadAni(tilesImg, tileSize, [0, 1]);
-let wallLeft = loadAni(tilesImg, tileSize, [1, 0]);
-let wallRight = loadAni(tilesImg, tileSize, [1, 2]);
-let wallDown = loadAni(tilesImg, tileSize, [2, 1]);
-
-let box = loadAni(tilesImg, tileSize, [5, 0]);
+player.loadAni('idle-stand', { line: 0, frames: 4, delay: 20 });
+player.loadAni('idle-blink', { line: 1, frames: 4, delay: 10 });
+player.loadAni('idle-think', { line: 20, frames: 8, delay: 20 });
+player.loadAni('idle-scratch', { line: 21, frames: 14, delay: 10 });
+player.loadAni('idle-yawn', { line: 22, frames: 2, delay: 60 });
+player.loadAni('idle-turn', { line: 17, frames: 3 });
+player.loadAni('walk-lr', { line: 3, frames: 5, delay: 5 });
+player.loadAni('walk-up', { line: 18, frames: 6 });
+player.loadAni('walk-down', { line: 16, frames: 6 });

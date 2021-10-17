@@ -13,17 +13,13 @@ wbbbyybb
 
 let imgPaddleY = spriteArt('.wwwwww.\nwwwwwwww\n' + 'ww....ww\n'.repeat(50) + 'wwwwwwww\n.wwwwww.');
 
+// prettier-ignore
 let imgPaddleX = spriteArt(
-	' ' +
-		'w'.repeat(52) +
-		' \n' +
-		'w'.repeat(54) +
-		'\n' +
-		('ww' + ' '.repeat(50) + 'ww\n').repeat(4) +
-		'w'.repeat(54) +
-		'\n' +
-		' ' +
-		'w'.repeat(52)
+	' ' + 'w'.repeat(52) + ' \n' +
+	'w'.repeat(54) + '\n' +
+	('ww' + ' '.repeat(50) + 'ww\n').repeat(4) +
+	'w'.repeat(54) + '\n' +
+	' ' + 'w'.repeat(52)
 );
 
 // let imgWall = spriteArt(('w'.repeat(320) + '\n').repeat(3));
