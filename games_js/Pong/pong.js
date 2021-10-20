@@ -12,148 +12,68 @@ wwywwyww
 .wwyyww.
 ..wwww..`);
 
-let imgPaddle = spriteArt(
-	'.wwwwww.\nwwwwwwww\n' +
-		'www..www\nww.ww.ww\n'.repeat(21) +
-		'wwwwwwww\n.wwwwww.'
-);
+let imgPaddle = spriteArt('.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(21) + 'wwwwwwww\n.wwwwww.');
 
 let imgWall = spriteArt(('b'.repeat(320) + '\n').repeat(10));
 
-class Ball {
-	constructor(x, y, r) {
-		this.x = x;
-		this.y = y;
-		this.r = r;
-		this.w = r * 2;
-		this.h = r * 2;
-
-		this.speed = 4;
-		this.changeDirection();
-	}
-
-	reset() {
-		this.x = width / 2 - this.w / 2;
-		this.y = height / 2 - this.h / 2;
-	}
-
-	changeDirection() {
-		let sectors = [0.25, 0.75, 1.25, 1.75];
-		let sect = Math.floor(Math.random() * 4);
-		log(sect);
-		let theta = sectors[sect] + Math.random() * 0.1;
-		theta *= Math.PI;
-		log(theta);
-		this.vel = {
-			x: this.speed * Math.cos(theta),
-			y: this.speed * Math.sin(theta)
-		};
-		log(this.vel);
-	}
-
-	draw() {
-		this.x += this.vel.x;
-		this.y += this.vel.y;
-		image(imgBall, this.x, this.y);
-	}
-}
-
-class Paddle {
-	constructor(x, y, w, h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-
-	draw() {
-		this.y = mouseY - this.h / 2;
-		image(imgPaddle, this.x, this.y);
-	}
-}
-
-class Wall {
-	constructor(x, y, w, h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
-	}
-
-	draw() {
-		image(imgWall, this.x, this.y);
-	}
-}
-
-function intersects(a, b) {
-	if (
-		!(
-			b.x >= a.x + a.w ||
-			b.x + b.w <= a.x ||
-			b.y >= a.y + a.h ||
-			b.y + b.h <= a.y
-		)
-	) {
-		log(a, b);
-		return true;
-	}
-}
-
 // place ball in center of the screen
-let ball = new Ball(width / 2 - 8, height / 2 - 8, 8);
+let ball = createSprite(imgBall);
+ball.x = width / 2;
+ball.y = height / 2;
+ball.velocity.x = 1;
+ball.velocity.y = 1;
 
 // place paddles 12px from the sides, center vertically
-let pad0 = new Paddle(12, height / 2 - 50, 16, 100);
-let pad1 = new Paddle(width - 16 - 12, height / 2 - 50, 16, 100);
+let paddleL = createSprite(imgPaddle);
+paddleL.x = 10;
+paddleL.y = height / 2;
+paddleL.immovable = true;
+
+let paddleR = createSprite(imgPaddle);
+paddleR.x = width - 10;
+paddleR.y = height / 2;
+paddleR.immovable = true;
 
 // place walls on the top and bottom of the screen
-let wall0 = new Wall(0, 0, width, 20);
-let wall1 = new Wall(0, height - 20, width, 20);
+let wallTop = createSprite(imgWall);
+wallTop.x = width / 2;
+wallTop.y = 5;
+wallTop.immovable = true;
 
-let imgBg = createGraphics(width, height);
-imgBg.background(color16('r'));
-imgBg.fill(color16('c'));
-imgBg.stroke(color16('w'));
-imgBg.strokeWeight(2);
-imgBg.rect(40, 40, 560, 40); // top
-imgBg.rect(40, 80, 120, 280); // left
-imgBg.rect(480, 80, 120, 280); // right
-imgBg.rect(40, 320, 560, 40); // bottom
+let wallBottom = createSprite(imgWall);
+wallBottom.x = width / 2;
+wallBottom.y = height - 5;
+wallBottom.immovable = true;
 
 let imgNet = spriteArt('w.\n.w\n'.repeat(80));
 
-let centerLine = spriteArt(
-	'w'.repeat(5) +
-		'.'.repeat(55) +
-		'w'.repeat(160) +
-		'.'.repeat(55) +
-		'w'.repeat(5) +
-		'\n'
-);
+let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(55) + 'w'.repeat(160) + '.'.repeat(55) + 'w'.repeat(5) + '\n');
 
 function draw() {
-	image(imgBg, 0, 0);
-	image(imgNet, width / 2 - 2, 40);
-	image(centerLine, 40, height / 2);
+	clear();
+	background(color16('r'));
+	fill(color16('c'));
+	stroke(color16('w'));
+	rect(20, 20, 280, 20); // top
+	rect(20, 40, 60, 140); // left
+	rect(240, 40, 60, 140); // right
+	rect(20, 160, 280, 20); // bottom
+	image(imgNet, width / 2 - 2, 20);
+	image(imgCenterLine, 20, height / 2);
 
-	if (intersects(pad0, ball) || intersects(pad1, ball)) {
-		ball.vel.x = -ball.vel.x;
-	}
-	if (intersects(wall0, ball) || intersects(wall1, ball)) {
-		ball.vel.y = -ball.vel.y;
-	}
+	paddleL.position.y = Math.round(mouseY);
+	paddleR.position.y = Math.round(mouseY);
+
+	ball.bounce(paddleL);
+	ball.bounce(paddleR);
+	ball.bounce(wallTop);
+	ball.bounce(wallBottom);
 
 	// if the ball leaves the screen
 	if (ball.x < -10 || ball.x > width + 10) {
-		ball.reset();
-		ball.changeDirection();
+		ball.x = width / 2;
+		ball.y = height / 2;
 	}
 
-	ball.draw();
-
-	pad0.draw();
-	pad1.draw();
-
-	wall0.draw();
-	wall1.draw();
+	drawSprites();
 }
