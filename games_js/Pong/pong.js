@@ -1,5 +1,5 @@
-// screen width is 640, height is 400
-const log = console.log;
+// screen resolution is 640x400
+// character 40 columns, 25 rows
 
 // sprites are scaled x2 by default
 let imgBall = spriteArt(`
@@ -61,8 +61,8 @@ function draw() {
 	image(imgNet, width / 2 - 2, 20);
 	image(imgCenterLine, 20, height / 2);
 
-	paddleL.position.y = Math.round(mouseY);
-	paddleR.position.y = Math.round(mouseY);
+	paddleL.y = mouseY;
+	paddleR.y = mouseY;
 
 	ball.bounce(paddleL);
 	ball.bounce(paddleR);

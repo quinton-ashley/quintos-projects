@@ -24,20 +24,6 @@ let imgPaddleX = spriteArt(
 
 // let imgWall = spriteArt(('w'.repeat(320) + '\n').repeat(3));
 
-let imgBg = createGraphics(640, 400);
-imgBg.scale(2);
-imgBg.background(color16('g'));
-imgBg.fill(color16('e'));
-imgBg.stroke(color16('w'));
-imgBg.strokeWeight(1);
-imgBg.rect(20, 30, 280, 140);
-imgBg.line(125, 30, 125, 170);
-imgBg.line(195, 30, 195, 170);
-imgBg.circle(160, 25, 3);
-imgBg.circle(160, 175, 3);
-imgBg.circle(160, 100, 40);
-imgBg.line(160, 25, 160, 175);
-
 let imgLogo =
 	`
 ..wwwwwwwwwwwwwwwwwwwww
@@ -217,6 +203,7 @@ function intersectsCircle(a, b) {
 
 async function gameOver() {
 	background(0);
+
 	await pc.alert('Game Over');
 	pc.erase();
 	numOfBalls = 4;
@@ -249,7 +236,19 @@ increaseSpeed();
 /* PART A1: create the p5 draw function, draw the ball and paddles */
 function draw() {
 	if (isGameOver) return;
-	image(imgBg, 0, 0);
+
+	background(color16('g'));
+	fill(color16('e'));
+	stroke(color16('w'));
+	strokeWeight(1);
+	rect(20, 30, 280, 140);
+	line(125, 30, 125, 170);
+	line(195, 30, 195, 170);
+	circle(160, 25, 3);
+	circle(160, 175, 3);
+	circle(160, 100, 40);
+	line(160, 25, 160, 175);
+
 	image(imgLogo, 294, 180);
 
 	for (let i = 0; i < numOfBalls; i++) {
