@@ -1,5 +1,3 @@
-const log = console.log;
-
 const target = `
  .d88b. 
 .8P  Y8.

@@ -1,6 +1,4 @@
 // screen width is 640, height is 800
-const log = console.log;
-
 let imgBall = spriteArt(`
 ..bbby
 .wbbbyb

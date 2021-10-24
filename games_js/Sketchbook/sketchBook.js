@@ -1,5 +1,3 @@
-const log = console.log;
-
 // space and period are transparent
 let palette = {
 	k: '#000000', // blacK
@@ -150,12 +148,7 @@ function drawOnPixels() {
 		for (let j = 0; j < height; j++) {
 			let p = pixels[i][j];
 
-			if (
-				mouseX > p.x &&
-				mouseX < p.x + scale &&
-				mouseY > p.y &&
-				mouseY < p.y + scale
-			) {
+			if (mouseX > p.x && mouseX < p.x + scale && mouseY > p.y && mouseY < p.y + scale) {
 				p.color = brushColor;
 			}
 		}
@@ -172,12 +165,7 @@ function mouseWheel(event) {
 		for (let j = 0; j < height; j++) {
 			let p = pixels[i][j];
 
-			if (
-				mouseX > p.x &&
-				mouseX < p.x + scale &&
-				mouseY > p.y &&
-				mouseY < p.y + scale
-			) {
+			if (mouseX > p.x && mouseX < p.x + scale && mouseY > p.y && mouseY < p.y + scale) {
 				brushX = i;
 				brushY = j;
 			}

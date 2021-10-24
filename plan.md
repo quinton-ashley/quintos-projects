@@ -20,7 +20,7 @@ Callbacks, async, and recursion
 
 - 04_QuickClicks : GRiD
 
-- 05_PickAPath 2.0 w buttons : ZX
+- 05_ClickAPath : ZX
 
 2d arrays and nested for loops
 
@@ -40,17 +40,17 @@ Sprite groups
 
 - 09_Contain : arcade vertical
 
-Basic Algorithms
+Algorithms
 
 - 10_TicTacToe 2.0 AI : GRiD
 
 Audio, Callback hell, and Promises
 
-- 12_SpeakAndSpell : Speak and Spell
+- 11_SpeakAndSpell : Speak and Spell
 
 Tiles
 
-- 11_Snake : GameBoi
+- 12_Snake : GameBoi
 
 Objects and Classes
 
@@ -74,10 +74,49 @@ Node.js and Express
 
 ## computers
 
-CALC
-ZX
-AII
-C64
-ARCH
-ARCV
-MAC
+calcu
+zx
+a2
+gridc
+c64
+sas
+gameboi
+arc
+arcv
+macin
+
+```js
+{
+	levels: [
+		/*00*/ ['GuessTheNumber', 'calcu'],
+		/*01*/ ['PickAPath', 'zx'], // TODO zx
+		/*02*/ ['Pong', 'c64'], // TODO arc
+		/*03*/ ['Hangman', 'a2'],
+		/*04*/ ['QuickClicks', 'gridc'],
+		/*05*/ ['ClickAPath', 'gridc'],
+		/*06*/ ['TicTacToe', 'gridc'],
+		/*07*/ ['WorldWideWeb', 'macin'],
+		/*08*/ ['WheelOfFortune', 'a2'],
+		/*09*/ ['Contain', 'c64'], // TODO arc
+		/*10*/ ['AIOs', 'gridc'],
+		/*11*/ ['SpeakAndSpell', 'calcu'], // TODO sas
+		/*12*/ ['Snake', 'arcv'], // TODO gameboi
+		/*13*/ ['Sketchbook', 'c64'],
+		/*14*/ ['SuperJump', 'arcv'],
+		/*15*/ ['Sokoban', 'arcv']
+	];
+}
+
+// let games = [
+// 	'GuessTheNumber',
+// 	'PickAPath',
+// 	'Hangman',
+// 	'QuickClicks',
+// 	'TicTacToe',
+// 	'Pong',
+// 	'SpeakAndSpell',
+// 	'Snake',
+// 	'Sokoban',
+// 	'WorldWideWeb'
+// ];
+```

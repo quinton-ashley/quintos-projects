@@ -1,5 +1,3 @@
-const log = console.log;
-
 let loading = true;
 
 function keyPressed() {
@@ -21,7 +19,7 @@ player.walk = async function (direction) {
 		aniName = 'walk-lr';
 	}
 
-	world.move(player, 1.5, direction);
+	world.move(player, 0.85, direction);
 
 	// the name of the current animation being used
 	let cur = this.getAnimationLabel();
@@ -101,12 +99,14 @@ function draw() {
 	background(0);
 
 	player.collide(world.walls); // handles player collisions with walls
-	player.displace(world.boxes); // player move boxes by displacing them
+	player.displace(world.boxes);
 	world.boxes.collide(world.walls);
 
 	if (!player.isMoving) player.idle();
 
-	world.update();
+	// snap boxes to nearest tile (row, col)
+	// when player stops moving
+	world.update({ snap: !player.isMoving });
 	// p5.play function for drawing all sprites
 	drawSprites();
 }

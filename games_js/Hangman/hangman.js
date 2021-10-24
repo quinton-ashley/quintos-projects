@@ -75,7 +75,7 @@
 	/* PART A1: make an array with a line for each letter in the word */
 	// Example word: 'quiz'
 	// lines -> ['_', '_', '_', '_']
-	let lines = '_'.repeat(word.length).split();
+	let lines = '_'.repeat(word.length).split('');
 
 	let parts = 0;
 	/* PART A3: make the game loop, don't use the hangman until part B */

@@ -1,11 +1,11 @@
 // image assets location
-let imgDir = QuintOS.dir + '/img/8bit';
+let imgDir = QuintOS.dir + '/img/bitBoi';
 
 /* WORLD */
 
 //    new Tiles(rows, cols, layers, tileSize, x, y)
 let world = new Tiles(40, 12, 2, 16, 60, 55);
-world.spriteSheet = loadImage(imgDir + '/world.png');
+world.spriteSheet = loadImage(imgDir + '/world16.png');
 
 world.addGroup('walls');
 world.walls.loadAni('wall-up', { pos: [0, 1] });
@@ -25,12 +25,7 @@ world.boxes.loadAni('box', { pos: [5, 0] });
 
 //               tile(row, col, layer)
 let player = world.tile(5, 5, 1);
-player.spriteSheet = loadImage(imgDir + '/player16.png');
-
-// TODO: remove the need for this
-// scale by .5 because the player frames are 64x64
-// but the world tiles are 32x32
-player.scale = 0.25;
+player.spriteSheet = loadImage(imgDir + '/bitBoi16.png');
 
 player.loadAni('idle-stand', { line: 0, frames: 4, delay: 20 });
 player.loadAni('idle-blink', { line: 1, frames: 4, delay: 10 });

@@ -1,5 +1,4 @@
 // bitmap lcd is 28w x 20h
-const log = console.log;
 let score = 0;
 
 pc.text('SNAKE', 0, 0);
@@ -37,7 +36,6 @@ class LinkedList {
 		elem.next = null;
 	}
 }
-
 
 class Iterator {
 	constructor(list) {
@@ -85,7 +83,6 @@ snake.push({
 	x: 3,
 	y: 10
 });
-
 
 let food = {
 	block: 'food',

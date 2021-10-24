@@ -1,4 +1,3 @@
-const log = console.log;
 let inp;
 
 let incorrect = false;
