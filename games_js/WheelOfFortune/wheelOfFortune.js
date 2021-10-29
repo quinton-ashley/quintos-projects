@@ -33,30 +33,35 @@ function displayBoxes() {
 	for (let i = 0; i < phrase.length; i++) {
 		let word = phrase[i];
 		for (let j = 0; j < word.length; j++) {
-			pc.rect(3 + j * 3, 3 + i * 3, 3, 3);
-			pc.text(boxes[i][j], 4 + j * 3, 4 + i * 3);
+			textRect(2 + j * 3, 2 + i * 3, 3, 3);
+			text(boxes[i][j], 3 + j * 3, 3 + i * 3);
 		}
 	}
 }
 
 let bigBuzzer = `
- _
-| |__  _   _ ___________ _ __
+|⎺|__  _   _ ___________ _ __
 | '_ \\| | | |_  /_  / _ \\ '__|
 | |_) | |_| |/ / / /  __/ |
-|_.__/ \\__,_/___/___\\___|_|
-                              `;
-pc.button(bigBuzzer, 13, 17, async () => {
+|_.__/ \\__,_/___/___\\___|_|`.slice(1);
+
+async function buzz() {
 	buzzed = true;
 	// guess is the letter the user entered
 	// or a guess of the full word
-	let guess = await pc.prompt('', 2, 24);
+	let guess = await prompt('', 2, 18);
 
 	// see if the guess matches the phrase
+	if (guess == phrase) {
+		return;
+	}
 
 	buzzed = false;
+	button(bigBuzzer, 5, 18, buzz);
 	addLetter();
-});
+}
+
+button(bigBuzzer, 5, 18, buzz);
 
 let buzzed = false;
 

@@ -42,7 +42,7 @@ async function displayStats() {
 	let msg = 'Your average response time was ' + avg + 'ms.\n';
 	msg += 'Your slowest response time was ' + slowest + 'ms.\n';
 	msg += 'Your fastest response time was ' + fastest + 'ms.';
-	await pc.alert(msg);
+	await alert(msg);
 	makeBg();
 }
 
@@ -50,13 +50,13 @@ async function displayStats() {
 function makeBg() {
 	let patternA = '\\⎽⎽/⎺⎺'; //odd
 	let patternB = '/⎺⎺\\⎽⎽'; //even
-	for (let j = 0; j < 28; j++) {
+	for (let row = 0; row < 28; row++) {
 		let pattern = patternA;
-		if (j % 2 == 0) {
+		if (row % 2 == 0) {
 			pattern = patternB;
 		}
-		for (let i = 0; i < 13; i++) {
-			pc.text(pattern, i * 6 + 1, j + 1);
+		for (let col = 0; col < 13; col++) {
+			text(pattern, row + 1, col * 6 + 1);
 		}
 	}
 }
@@ -72,20 +72,20 @@ function btnClick() {
 	makeBg();
 
 	if (times.length < 20) {
-		/* PART A0: change the values of x and y to be random */
-		// screen size is 80w x 30h
+		/* PART A0: change the values of row and col to be random */
+		// screen size is 80 cols x 30 rows
 		// target is 8w x 6h
 		// drawing starts from top left corner
 		// we want to draw the target within the bounds of the frame
-		// 80 screen width - 8 target width - 1 frame line = 71
-		// 30 screen height - 6 target height - 1 frame line = 23
-		let x = Math.random() * 71;
-		x = Math.ceil(x);
+		// 30 rows - 6 target height - 1 frame line = 23
+		// 80 columns - 8 target width - 1 frame line = 71
+		let row = Math.random() * 23;
+		row = Math.ceil(row);
 
-		let y = Math.random() * 23;
-		y = Math.ceil(y);
+		let col = Math.random() * 71;
+		col = Math.ceil(col);
 		/* PART A: Use recursion to make a new button after clicking a button */
-		btn = pc.button(target, x, y, btnClick);
+		btn = button(target, row, col, btnClick);
 	} else {
 		displayStats();
 	}
@@ -93,7 +93,7 @@ function btnClick() {
 
 async function startGame() {
 	makeBg();
-	await pc.alert('Click the buttons as fast as you can!');
+	await alert('Click the buttons as fast as you can!');
 	btnClick();
 }
 

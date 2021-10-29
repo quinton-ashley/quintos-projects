@@ -1,34 +1,14 @@
-// space and period are transparent
-let palette = {
-	k: '#000000', // blacK
-	d: '#626252', // Dark-gray
-	m: '#898989', // Mid-gray
-	l: '#adadad', // Light-gray
-	w: '#ffffff', // White
-	c: '#cb7e75', // Coral
-	r: '#9f4e44', // Red
-	n: '#6d5412', // browN
-	o: '#a1683c', // Orange
-	y: '#c9d487', // Yellow
-	e: '#9ae29b', // light grEEn
-	g: '#5cab5e', // Green
-	t: '#6abfc6', // Teal
-	b: '#50459b', // Blue
-	i: '#887ecb', // Indigo
-	p: '#a057a3' // Purple
-};
-
 // an array of color letters
-let colors = Object.keys(palette);
-
-let paletteBoxes = spriteArt(colors, 25);
+let colors = Object.keys(QuintOS.palette);
+// scale each color pixel by 10
+let paletteBoxes = spriteArt(colors, 10);
 
 let brush = `
-k
-kkk
-kkkk
-kkkk
-.kkww
+b
+bbb
+bbbb
+bbbb
+.bbww
 ...wnn
 .....nn
 ......nn
@@ -37,7 +17,7 @@ kkkk
 .........nn`;
 
 let brushImg = spriteArt(brush);
-let brushColor = 'k'; // black
+let brushColor = 'b'; // black
 
 let width = 20;
 let height = 10;
@@ -60,7 +40,7 @@ class Pixel {
 }
 
 async function pickSize() {
-	// let size = await pc.prompt("Canvas size (ex. 10x10): ", 5, 5, 35);
+	// let size = await prompt("Canvas size (ex. 10x10): ", 5, 5, 35);
 	// size = size.split('x');
 	// width = size[0];
 	// height = size[1];
@@ -72,7 +52,7 @@ async function pickSize() {
 		}
 	}
 
-	pc.text('pick background color', 5, 5);
+	text('pick background color', 5, 5);
 }
 
 pickSize();
@@ -106,8 +86,8 @@ function changeBackgroundColor(c) {
 async function changeBrushColor(c) {
 	if (choosingBg) {
 		changeBackgroundColor(c);
-		await pc.erase();
-		let reBtn = pc.button('Save Image', 30, 24, () => {
+		await erase();
+		let reBtn = button('Save Image', 30, 24, () => {
 			saveImage();
 		});
 		choosingBg = false;

@@ -137,20 +137,20 @@ let isGameOver = false;
 let score = 0;
 let balls = [];
 for (let i = 0; i < numOfBalls; i++) {
-	balls.push(new Ball(-50, -50, 8));
+	balls.push(new Ball(-50, -50, 4));
 }
-let paddle0 = new Paddle(3, 200, 16, 108);
-let paddle1 = new Paddle(621, 200, 16, 108);
-let paddle2 = new Paddle(320, 3, 108, 16);
-let paddle3 = new Paddle(320, 381, 108, 16);
+let paddle0 = new Paddle(4, 100, 8, 54);
+let paddle1 = new Paddle(310, 100, 8, 54);
+let paddle2 = new Paddle(160, 3, 54, 8);
+let paddle3 = new Paddle(160, 190, 54, 8);
 
 async function spawn() {
 	for (let i = 0; i < numOfBalls; i++) {
 		if (isGameOver) return;
 		let ball = balls[i];
 		// place balls at (312, 192)
-		ball.x = 312;
-		ball.y = 192;
+		ball.x = 156;
+		ball.y = 96;
 		ball.active = true;
 		servedBalls++;
 		activeBalls++;
@@ -158,24 +158,6 @@ async function spawn() {
 	}
 }
 
-async function spawnTest() {
-	let b0 = balls[0];
-	let b1 = balls[1];
-	b0.x = 280;
-	b0.y = 220;
-	b1.x = 320;
-	b1.y = 220;
-	b0.active = true;
-	b1.active = true;
-	servedBalls = 2;
-	activeBalls = 2;
-	b0.vel.x = 1;
-	b0.vel.y = 1;
-	b1.vel.x = -1;
-	b1.vel.y = 1;
-}
-
-// spawnTest();
 spawn();
 
 function intersectsRect(a, b) {
@@ -202,8 +184,8 @@ function intersectsCircle(a, b) {
 async function gameOver() {
 	background(0);
 
-	await pc.alert('Game Over');
-	pc.erase();
+	await alert('Game Over');
+	erase();
 	numOfBalls = 4;
 	servedBalls = 0;
 	activeBalls = 0;
@@ -247,7 +229,7 @@ function draw() {
 	circle(160, 100, 40);
 	line(160, 25, 160, 175);
 
-	image(imgLogo, 294, 180);
+	image(imgLogo, 147, 90);
 
 	for (let i = 0; i < numOfBalls; i++) {
 		if (i > servedBalls) break;
@@ -266,7 +248,7 @@ function draw() {
 			log(ball.vel.y);
 			score += 1;
 		}
-		pc.text('Score : ' + score, 3, 2);
+		// text('Score : ' + score, 10, 3);
 
 		// PART B: check for collisions with all other active balls
 		for (j = i + 1; j < numOfBalls; j++) {

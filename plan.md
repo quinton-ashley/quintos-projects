@@ -89,15 +89,15 @@ macin
 {
 	levels: [
 		/*00*/ ['GuessTheNumber', 'calcu'],
-		/*01*/ ['PickAPath', 'zx'], // TODO zx
-		/*02*/ ['Pong', 'c64'], // TODO arc
+		/*01*/ ['PickAPath', 'cpet'], // TODO zx
+		/*02*/ ['Pong', 'zx'], // TODO arc
 		/*03*/ ['Hangman', 'a2'],
 		/*04*/ ['QuickClicks', 'gridc'],
 		/*05*/ ['ClickAPath', 'gridc'],
 		/*06*/ ['TicTacToe', 'gridc'],
 		/*07*/ ['WorldWideWeb', 'macin'],
 		/*08*/ ['WheelOfFortune', 'a2'],
-		/*09*/ ['Contain', 'c64'], // TODO arc
+		/*09*/ ['Contain', 'zx'],
 		/*10*/ ['AIOs', 'gridc'],
 		/*11*/ ['SpeakAndSpell', 'calcu'], // TODO sas
 		/*12*/ ['Snake', 'arcv'], // TODO gameboi

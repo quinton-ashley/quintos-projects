@@ -1,11 +1,10 @@
 package games_java.TicTacToe;
 
-import games_java.QuintOS;
+import static games_java.QuintOS.*;
 
 import java.util.ArrayList;
 
 public class TicTacToe {
-	QuintOS pc = new QuintOS();
 
 	String title = """
 			TTTTT IIIII   CCC
@@ -61,61 +60,61 @@ public class TicTacToe {
 	int scoreO = 0;
 
 	public TicTacToe() {
-		pc.text(title, 5, 6);
+		text(title, 5, 6);
 
 		/* PART A: finish the grid of 9x8 spaces */
-		pc.text("─".repeat(26), gridX, gridY + 7);
-		pc.text("─".repeat(26), gridX, gridY + 15); // draw another horizontal line
-		pc.text("│\n".repeat(23), gridX + 8, gridY);
-		pc.text("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
+		text("─".repeat(26), gridX, gridY + 7);
+		text("─".repeat(26), gridX, gridY + 15); // draw another horizontal line
+		text("│\n".repeat(23), gridX + 8, gridY);
+		text("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
 
-		pc.button("One Player Start", 55, 10, () -> {
+		button("One Player Start", 55, 10, () -> {
 			singlePlayer = true;
-			pc.button("Easy", 55, 4, () -> {
+			button("Easy", 55, 4, () -> {
 				aiLevel = 0;
 				startGame();
 			});
-			pc.button("Medium", 55, 6, () -> {
+			button("Medium", 55, 6, () -> {
 				aiLevel = 1;
 				startGame();
 			});
-			pc.button("Hard", 55, 8, () -> {
+			button("Hard", 55, 8, () -> {
 				aiLevel = 2;
 				startGame();
 			});
-			pc.button("Challenge Mode", 55, 10, () -> {
+			button("Challenge Mode", 55, 10, () -> {
 				challengeMode = true;
 				aiLevel = 0;
 				startGame();
 			});
 		});
 
-		pc.button("Two Player Start", 55, 12, () -> {
+		button("Two Player Start", 55, 12, () -> {
 			startGame();
 		});
 	}
 
 	public void displayAiLevel() {
 		if (aiLevel == 0) {
-			pc.text("AI Level: Easy", 55, 10);
+			text("AI Level: Easy", 55, 10);
 		} else if (aiLevel == 1) {
-			pc.text("AI Level: Medium", 55, 10);
+			text("AI Level: Medium", 55, 10);
 		} else {
-			pc.text("AI Level: Hard  ", 55, 10);
+			text("AI Level: Hard  ", 55, 10);
 		}
 	}
 
 	public void displayTurn() {
 		if (turnX) {
-			pc.text("X's turn!", 55, 4);
+			text("X's turn!", 55, 4);
 		} else {
-			pc.text("O's turn!", 55, 4);
+			text("O's turn!", 55, 4);
 		}
 	}
 
 	public void displayScore() {
-		pc.text("Player X's Score: " + scoreX, 55, 6);
-		pc.text("Player O's Score: " + scoreO, 55, 8);
+		text("Player X's Score: " + scoreX, 55, 6);
+		text("Player O's Score: " + scoreO, 55, 8);
 	}
 
 	public void displayBoard() {
@@ -168,7 +167,7 @@ public class TicTacToe {
 				board[row][col] = ' ';
 				int x = gridX + col * 9;
 				int y = gridY + row * 8;
-				pc.text(bigSpace, x, y);
+				text(bigSpace, x, y);
 			}
 		}
 	}
@@ -232,24 +231,24 @@ public class TicTacToe {
 		System.out.println("You clicked button " + row + " " + col);
 
 		if (board[row][col] != ' ') {
-			pc.alert("Occupied space", 55, 20, 23);
+			alert("Occupied space", 55, 20, 23);
 		} else {
 			int x = gridX + col * 9;
 			int y = gridY + row * 8;
 
 			char mark;
 			if (turnX == true) {
-				pc.text(bigX, x, y);
+				text(bigX, x, y);
 				mark = 'X';
 			} else {
-				pc.text(bigO, x, y);
+				text(bigO, x, y);
 				mark = 'O';
 			}
 			board[row][col] = mark;
 			displayBoard();
 
 			if (checkWinner(mark) == true) {
-				pc.alert("You won Player " + mark + "!", 55, 20, 23);
+				alert("You won Player " + mark + "!", 55, 20, 23);
 				if (turnX == true) {
 					scoreX++;
 					if (challengeMode == true) {
@@ -265,7 +264,7 @@ public class TicTacToe {
 
 			}
 			if (checkDraw() == true) {
-				pc.alert("Draw.", 55, 20, 23);
+				alert("Draw.", 55, 20, 23);
 				startNewGame();
 			}
 
@@ -280,14 +279,14 @@ public class TicTacToe {
 	}
 
 	public void startGame() {
-		pc.eraseRect(55, 1, 60, 20);
+		eraseRect(55, 1, 60, 20);
 
 		/* PART A: Make the buttons in the grid */
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				final int rowFinal = row;
 				final int colFinal = col;
-				pc.button(bigSpace, gridX + col * 9, gridY + row * 8, () -> {
+				button(bigSpace, gridX + col * 9, gridY + row * 8, () -> {
 					takeTurn(rowFinal, colFinal);
 				});
 			}

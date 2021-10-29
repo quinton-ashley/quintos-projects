@@ -14,7 +14,7 @@ wwywwyww
 
 let imgPaddle = spriteArt('.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(21) + 'wwwwwwww\n.wwwwww.');
 
-let imgWall = spriteArt(('b'.repeat(320) + '\n').repeat(10));
+let imgWall = spriteArt(('c'.repeat(320) + '\n').repeat(8));
 
 // place ball in center of the screen
 let ball = createSprite(imgBall);
@@ -37,28 +37,28 @@ paddleR.immovable = true;
 // place walls on the top and bottom of the screen
 let wallTop = createSprite(imgWall);
 wallTop.x = width / 2;
-wallTop.y = 5;
+wallTop.y = 4;
 wallTop.immovable = true;
 
 let wallBottom = createSprite(imgWall);
 wallBottom.x = width / 2;
-wallBottom.y = height - 5;
+wallBottom.y = height - 4;
 wallBottom.immovable = true;
 
 let imgNet = spriteArt('w.\n.w\n'.repeat(80));
 
-let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(55) + 'w'.repeat(160) + '.'.repeat(55) + 'w'.repeat(5) + '\n');
+let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
 function draw() {
 	clear();
 	background(color16('r'));
 	fill(color16('c'));
 	stroke(color16('w'));
-	rect(20, 20, 280, 20); // top
-	rect(20, 40, 60, 140); // left
-	rect(240, 40, 60, 140); // right
-	rect(20, 160, 280, 20); // bottom
-	image(imgNet, width / 2 - 2, 20);
+	rect(20, 16, 216, 20); // top
+	rect(20, 36, 36, 140); // left
+	rect(200, 36, 36, 140); // right
+	rect(20, 156, 216, 20); // bottom
+	image(imgNet, width / 2 - 2, 16);
 	image(imgCenterLine, 20, height / 2);
 
 	paddleL.y = mouseY;

@@ -5,8 +5,8 @@ QuintOS.level = 15;
 {
 	levels: [
 		/*00*/ ['GuessTheNumber', 'calcu'],
-		/*01*/ ['PickAPath', 'cpet'],
-		/*02*/ ['Pong', 'zx'], // TODO arc
+		/*01*/ ['PickAPath', 'cpet'], // TODO cpet
+		/*02*/ ['Pong', 'zx'], // TODO zx
 		/*03*/ ['Hangman', 'a2'], // TODO a2
 		/*04*/ ['QuickClicks', 'gridc'],
 		/*05*/ ['ClickAPath', 'gridc'],
@@ -14,10 +14,10 @@ QuintOS.level = 15;
 		/*07*/ ['WorldWideWeb', 'macin'],
 		/*08*/ ['WheelOfFortune', 'a2'], // TODO a2
 		/*09*/ ['Contain', 'c64'], // TODO arc
-		/*10*/ ['AIOs', 'gridc'],
+		/*10*/ ['TicTacAIO', 'gridc'],
 		/*11*/ ['SpeakAndSpell', 'calcu'], // TODO sas
 		/*12*/ ['Snake', 'arcv'], // TODO gameboi
-		/*13*/ ['Sketchbook', 'c64'],
+		/*13*/ ['SketchBook', 'c64'],
 		/*14*/ ['SuperJump', 'arcv'],
 		/*15*/ ['Sokoban', 'arcv']
 	];

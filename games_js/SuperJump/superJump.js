@@ -1,4 +1,4 @@
-// screen width is 640, height is 800
+// screen width is 320, height is 400
 let imgBall = spriteArt(`
 ..bbby
 .wbbbyb
@@ -37,7 +37,7 @@ class Ball {
 	}
 
 	draw() {
-		this.vel.y += 0.5;
+		this.vel.y += 0.25;
 		/* PART A2: make the ball move */
 		this.x += (mouseX - this.x) * 0.02;
 		// this.x += this.vel.x;
@@ -50,8 +50,8 @@ class Platform {
 	constructor(x, y, w, h) {
 		this.x = x || 0;
 		this.y = y || 0;
-		this.w = w || 108;
-		this.h = h || 16;
+		this.w = w || 54;
+		this.h = h || 8;
 		this.vel = {
 			x: 0,
 			y: 0
@@ -60,9 +60,9 @@ class Platform {
 	}
 
 	spawn() {
-		// platfromX range btw 54-686
-		this.x = 54 + Math.random() * 532;
-		this.y = prevPlatY - (dist + Math.random() * 50);
+		// platfromX range btw
+		this.x = 25 + Math.random() * 260;
+		this.y = prevPlatY - (dist + Math.random() * 25);
 		prevPlatY = this.y;
 	}
 
@@ -72,7 +72,7 @@ class Platform {
 	}
 }
 
-let ball = new Ball(350, 400, 8);
+let ball = new Ball(175, 200, 4);
 
 function intersectsRect(a, b) {
 	// right  zone            left zone
@@ -91,13 +91,13 @@ function init() {
 	// reset all variables
 	levelProgress = 0;
 	initialPlatNum = 20;
-	dist = 150;
+	dist = 75;
 	score = 0;
 	plats = [];
 	goingUp = false;
-	prevPlatY = 780; // position of the last paddle that was positioned (380 to start)
-	ball.x = 350;
-	ball.y = 400;
+	prevPlatY = 490; // position of the last paddle that was positioned (380 to start)
+	ball.x = 175;
+	ball.y = 200;
 	ball.vel.y = 0;
 }
 
@@ -107,29 +107,29 @@ function createPlats() {
 	for (let i = 0; i < initialPlatNum; i++) {
 		let p = new Platform();
 		if (i == 0) {
-			p.x = 266;
+			p.x = 160;
 			p.y = prevPlatY;
 		} else {
 			p.spawn();
 		}
 		plats.push(p);
-		console.log(prevPlatY);
+		// log(prevPlatY);
 	}
 }
 
 createPlats();
 
 function draw() {
-	if (ball.y > 830) {
+	if (ball.y > 415) {
 		if (!restarting) restart();
 		return;
 	}
-	pc.text('score', 20, 2);
-	pc.text(score, 20, 4);
+	text('score', 2, 20);
+	text(score, 4, 20);
 	background(0);
 	// every 1000 increase distance, unless distance is already 300 or more
-	if (score - levelProgress > 1000 && dist < 300) {
-		dist += 10;
+	if (score - levelProgress > 500 && dist < 150) {
+		dist += 5;
 		levelProgress = score;
 	}
 
@@ -139,20 +139,20 @@ function draw() {
 		// AND the ball must be falling
 		// AND the ball and platform are intersecting
 		if (ball.y < p.y && ball.y + ball.h > p.y && ball.vel.y >= 0 && intersectsRect(ball, p)) {
-			ball.vel.y = -20;
-			log(ball.vel.y);
+			ball.vel.y = -10;
+			// log(ball.vel.y);
 		}
 	}
 
 	// when the ball reaches it's height, scroll the screen down
-	goingUp = ball.y < 200 && ball.vel.y < 0;
+	goingUp = ball.y < 100 && ball.vel.y < 0;
 	if (goingUp) reachNext();
 
 	ball.draw();
 
 	// if the platform passes the bottom, respawn it above.
 	for (let p of plats) {
-		if (p.y > 800) p.spawn();
+		if (p.y > 400) p.spawn();
 		if (p.y > 0) p.draw();
 	}
 }
@@ -172,8 +172,8 @@ function reachNext() {
 
 async function restart() {
 	restarting = true;
-	await pc.alert('Game over');
-	await pc.erase(); // erase whole screen
+	await alert('Game over');
+	erase(); // erase whole screen
 
 	init();
 

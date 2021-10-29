@@ -1,8 +1,8 @@
 // bitmap lcd is 28w x 20h
 let score = 0;
 
-pc.text('SNAKE', 0, 0);
-pc.text(score, 0, 1);
+text('SNAKE', 0, 0);
+text(score, 0, 1);
 
 let sbx = 0;
 let sby = 0;
@@ -101,17 +101,17 @@ function draw() {
 	while (itr.hasNext()) {
 		let s = itr.next();
 		// set lcd segment to null
-		if (s == snake.tail) pc.lcd(null, s.x, s.y);
+		if (s == snake.tail) lcd(null, s.x, s.y);
 		if (s == snake.head) continue;
 
 		s.x = s.prev.x;
 		s.y = s.prev.y;
 
 		if (!isSnakeDead || frameCount % 3 == 0) {
-			pc.lcd(s.block, s.x, s.y, s.direction);
+			lcd(s.block, s.x, s.y, s.direction);
 		} else {
 			// set lcd segment to null
-			pc.lcd(null, s.x, s.y);
+			lcd(null, s.x, s.y);
 		}
 	}
 
@@ -147,7 +147,7 @@ function draw() {
 		isSnakeDead = true;
 	}
 	if (!isSnakeDead || frameCount % 3 == 0) {
-		pc.lcd(snake.head.block, snake.head.x, snake.head.y, snake.head.direction);
+		lcd(snake.head.block, snake.head.x, snake.head.y, snake.head.direction);
 	}
 }
 
@@ -176,7 +176,7 @@ function spawnFood() {
 	let coord = avail[Math.floor(Math.random() * avail.length)];
 	food.x = coord[0];
 	food.y = coord[1];
-	pc.lcd(food.block, food.x, food.y);
+	lcd(food.block, food.x, food.y);
 }
 
 spawnFood();

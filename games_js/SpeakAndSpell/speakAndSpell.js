@@ -13,9 +13,9 @@ async function sayLetters() {
 async function nextWord() {
 	word = words[Math.floor(Math.random() * words.length)];
 	log(word);
-	pc.erase();
+	erase();
 	// create the input
-	inp = pc.input('', 0, 0, onSubmit, onChange);
+	inp = input('', 0, 0, onSubmit, onChange);
 	await play(wordSounds[word]);
 }
 
@@ -43,7 +43,7 @@ async function onChange(value) {
 }
 
 async function startGame() {
-	await pc.alert('Press enter to start');
+	await alert('Press enter to start');
 	await play(speechSounds['spell']);
 	await nextWord();
 }

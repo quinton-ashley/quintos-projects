@@ -62,6 +62,19 @@ let board = [
 let turnX = true;
 let scoreX = 0;
 let scoreO = 0;
+let gameMode;
+let aiLevel = 0;
+let challengeMode = false;
+
+function displayAiLevel() {
+	if (aiLevel == 0) {
+		text('AI Level: Easy', 10, 55);
+	} else if (aiLevel == 1) {
+		text('AI Level: Medium', 10, 55);
+	} else {
+		text('AI Level: Hard  ', 10, 55);
+	}
+}
 
 function displayTurn() {
 	if (turnX) {
@@ -120,6 +133,61 @@ async function startNewGame() {
 	}
 }
 
+function aiTurn() {
+	if (aiLevel == 2) {
+		for (let row = 0; row < 3; row++) {
+			for (let col = 0; col < 3; col++) {
+				if (board[row][col] == ' ') {
+					// offense, if o would win, o should go there
+					board[row][col] = 'O';
+					if (checkWinner('O') == true) {
+						board[row][col] = ' ';
+						takeTurn(row, col);
+						return;
+					} else {
+						board[row][col] = ' ';
+					}
+
+					// defense, if x would win, o should go there
+					board[row][col] = 'X';
+					if (checkWinner('X') == true) {
+						board[row][col] = ' ';
+						takeTurn(row, col);
+						return;
+					} else {
+						board[row][col] = ' ';
+					}
+				}
+			}
+		}
+	}
+
+	if (aiLevel >= 1) {
+		let avail = [];
+		for (let row = 0; row < 3; row++) {
+			for (let col = 0; col < 3; col++) {
+				if (board[row][col] == ' ') {
+					avail.push([row, col]);
+				}
+			}
+		}
+		log(avail);
+		let idx = Math.floor(Math.random() * avail.length);
+		let coord = avail[idx];
+		takeTurn(coord[0], coord[1]);
+		return;
+	}
+
+	for (let row = 0; row < 3; row++) {
+		for (let col = 0; col < 3; col++) {
+			if (board[row][col] == ' ') {
+				takeTurn(row, col);
+				return;
+			}
+		}
+	}
+}
+
 async function takeTurn(row, col) {
 	console.log('You clicked button ' + row + ' ' + col);
 
@@ -161,6 +229,10 @@ async function takeTurn(row, col) {
 		turnX = !turnX;
 
 		displayTurn();
+
+		if (gameMode == 'AI' && turnX == false) {
+			aiTurn();
+		}
 	}
 }
 
@@ -178,8 +250,38 @@ async function startGame() {
 
 	turnX = Math.random() < 0.5;
 
+	displayAiLevel();
 	displayTurn();
 	displayScore();
+
+	if (gameMode == 'AI' && turnX == false) {
+		aiTurn();
+	}
 }
 
-startGame();
+button('One Player Start', 13, 55, async () => {
+	await eraseRect(13, 55, 1, 3);
+	gameMode = 'AI';
+	button('Easy', 11, 55, () => {
+		aiLevel = 0;
+		startGame();
+	});
+	button('Medium', 13, 55, () => {
+		aiLevel = 1;
+		startGame();
+	});
+	button('Hard', 15, 55, () => {
+		aiLevel = 2;
+		startGame();
+	});
+	button('Challenge Mode', 17, 55, () => {
+		challengeMode = true;
+		aiLevel = 0;
+		startGame();
+	});
+});
+
+button('Two Player Start', 15, 55, () => {
+	gameMode = 'Person';
+	startGame();
+});
