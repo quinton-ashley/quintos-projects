@@ -1,10 +1,10 @@
-package games_java.TicTacToe;
+package games_java.TicTacAIO;
 
 import static games_java.QuintOS.*;
 
 import java.util.ArrayList;
 
-public class TicTacToe {
+public class TicTacAIO {
 
 	String title = """
 			TTTTT IIIII   CCC
@@ -53,10 +53,13 @@ public class TicTacToe {
 	char[][] board = new char[][] { { ' ', ' ', ' ' }, { ' ', ' ', ' ' }, { ' ', ' ', ' ' } };
 
 	boolean turnX = true;
+	boolean challengeMode = false;
+	boolean singlePlayer = false;
+	int aiLevel = 0;
 	int scoreX = 0;
 	int scoreO = 0;
 
-	public TicTacToe() {
+	public TicTacAIO() {
 		text(title, 5, 6);
 
 		/* PART A: finish the grid of 9x8 spaces */
@@ -65,7 +68,44 @@ public class TicTacToe {
 		text("│\n".repeat(23), gridX + 8, gridY);
 		text("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
 
-		startGame();
+		button("One Player Start", 55, 10, () -> {
+			onePlayerStart();
+		});
+
+		button("Two Player Start", 55, 12, () -> {
+			startGame();
+		});
+	}
+
+	public void onePlayerStart() {
+		singlePlayer = true;
+		button("Easy", 55, 4, () -> {
+			aiLevel = 0;
+			startGame();
+		});
+		button("Medium", 55, 6, () -> {
+			aiLevel = 1;
+			startGame();
+		});
+		button("Hard", 55, 8, () -> {
+			aiLevel = 2;
+			startGame();
+		});
+		button("Challenge Mode", 55, 10, () -> {
+			challengeMode = true;
+			aiLevel = 0;
+			startGame();
+		});
+	}
+
+	public void displayAiLevel() {
+		if (aiLevel == 0) {
+			text("AI Level: Easy", 55, 10);
+		} else if (aiLevel == 1) {
+			text("AI Level: Medium", 55, 10);
+		} else {
+			text("AI Level: Hard  ", 55, 10);
+		}
 	}
 
 	public void displayTurn() {
@@ -136,6 +176,61 @@ public class TicTacToe {
 		}
 	}
 
+	public void aiTurn() {
+		if (aiLevel == 2) {
+			for (int row = 0; row < 3; row++) {
+				for (int col = 0; col < 3; col++) {
+					if (board[row][col] == ' ') {
+						// offense, if o would win, o should go there
+						board[row][col] = 'O';
+						if (checkWinner('O') == true) {
+							board[row][col] = ' ';
+							takeTurn(row, col);
+							return;
+						} else {
+							board[row][col] = ' ';
+						}
+
+						// defense, if x would win, o should go there
+						board[row][col] = 'X';
+						if (checkWinner('X') == true) {
+							board[row][col] = ' ';
+							takeTurn(row, col);
+							return;
+						} else {
+							board[row][col] = ' ';
+						}
+					}
+				}
+			}
+		}
+
+		if (aiLevel >= 1) {
+			ArrayList<int[]> avail = new ArrayList<int[]>();
+			for (int row = 0; row < 3; row++) {
+				for (int col = 0; col < 3; col++) {
+					if (board[row][col] == ' ') {
+						avail.add(new int[] { row, col });
+					}
+				}
+			}
+			// System.out.println(avail);
+			int idx = (int) (Math.floor(Math.random() * avail.size()));
+			int[] coord = avail.get(idx);
+			takeTurn(coord[0], coord[1]);
+			return;
+		}
+
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
+				if (board[row][col] == ' ') {
+					takeTurn(row, col);
+					return;
+				}
+			}
+		}
+	}
+
 	public void takeTurn(int row, int col) {
 		System.out.println("You clicked button " + row + " " + col);
 
@@ -160,6 +255,10 @@ public class TicTacToe {
 				alert("You won Player " + mark + "!", 55, 20, 23);
 				if (turnX == true) {
 					scoreX++;
+					if (challengeMode == true) {
+						aiLevel++;
+						displayAiLevel();
+					}
 				} else {
 					scoreO++;
 				}
@@ -176,6 +275,10 @@ public class TicTacToe {
 			turnX = !turnX;
 
 			displayTurn();
+
+			if (singlePlayer == true && turnX == false) {
+				aiTurn();
+			}
 		}
 	}
 
@@ -193,12 +296,17 @@ public class TicTacToe {
 			}
 		}
 
+		displayAiLevel();
 		displayScore();
 
 		turnX = Math.random() < 0.5;
+
+		if (singlePlayer == true && turnX == false) {
+			aiTurn();
+		}
 	}
 
 	public static void main(String[] args) {
-		new TicTacToe();
+		new TicTacAIO();
 	}
 }
