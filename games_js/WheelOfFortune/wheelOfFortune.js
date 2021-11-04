@@ -33,8 +33,8 @@ function displayBoxes() {
 	for (let i = 0; i < phrase.length; i++) {
 		let word = phrase[i];
 		for (let j = 0; j < word.length; j++) {
-			textRect(2 + j * 3, 2 + i * 3, 3, 3);
-			text(boxes[i][j], 3 + j * 3, 3 + i * 3);
+			textRect(2 + i * 3, 2 + j * 3, 3, 3);
+			text(boxes[i][j], 3 + i * 3, 3 + j * 3);
 		}
 	}
 }
@@ -61,7 +61,7 @@ async function buzz() {
 	addLetter();
 }
 
-button(bigBuzzer, 5, 18, buzz);
+button(bigBuzzer, 18, 5, buzz);
 
 let buzzed = false;
 
