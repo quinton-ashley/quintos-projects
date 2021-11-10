@@ -1,6 +1,6 @@
 // screen resolution is 256x192
 
-let imgBall = spriteArt(`
+PImage imgBall = spriteArt("""
 ..wwww..
 .wwyyww.
 wwywwyww
@@ -8,44 +8,44 @@ wyyyyyyw
 wyyyyyyw
 wwywwyww
 .wwyyww.
-..wwww..`);
+..wwww..""");
 
-let imgPaddle = spriteArt('.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(21) + 'wwwwwwww\n.wwwwww.');
+PImage imgPaddle = spriteArt(".wwwwww.\nwwwwwwww\n" + "www..www\nww.ww.ww\n".repeat(21) + "wwwwwwww\n.wwwwww.");
 
-let imgWall = spriteArt(('c'.repeat(320) + '\n').repeat(8));
+PImage imgWall = spriteArt(("c".repeat(320) + "\n").repeat(8));
 
 // places a ball in center of the screen
-let ball = createSprite(imgBall);
+Sprite ball = createSprite(imgBall);
 ball.x = width / 2;
 ball.y = height / 2;
 ball.velocity.x = -1;
 ball.velocity.y = 1;
 
 // place paddles 5px from the sides, center vertically
-let paddleL = createSprite(imgPaddle);
+Sprite paddleL = createSprite(imgPaddle);
 paddleL.x = 5;
 paddleL.immovable = true;
 
-let paddleR = createSprite(imgPaddle);
+Sprite paddleR = createSprite(imgPaddle);
 paddleR.x = width - paddleR.w - 5;
 paddleR.immovable = true;
 
 // place walls on the top and bottom of the screen
-let wallTop = createSprite(imgWall);
+Sprite wallTop = createSprite(imgWall);
 wallTop.x = 0;
 wallTop.y = 0;
 wallTop.immovable = true;
 
-let wallBottom = createSprite(imgWall);
+Sprite wallBottom = createSprite(imgWall);
 wallBottom.x = 0;
 wallBottom.y = height - wallBottom.h;
 wallBottom.immovable = true;
 
-let imgNet = spriteArt('w.\n.w\n'.repeat(80));
+PImage imgNet = spriteArt("w.\n.w\n".repeat(80));
 
-let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
+PImage imgCenterLine = spriteArt("w".repeat(5) + ".".repeat(31) + "w".repeat(144) + ".".repeat(31) + "w".repeat(5) + "\n");
 
-function draw() {
+void draw() {
 	clear();
 	background(colorPal('r'));
 	fill(colorPal('c'));

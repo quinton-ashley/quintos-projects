@@ -2,8 +2,6 @@ package games_java.TicTacToe;
 
 import static games_java.QuintOS.*;
 
-import java.util.ArrayList;
-
 public class TicTacToe {
 
 	String title = """

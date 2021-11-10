@@ -2,6 +2,8 @@
 *.log
 package-lock.json
 node_modules
+starter_js
+starter_java
 dist
 dev
 roms
