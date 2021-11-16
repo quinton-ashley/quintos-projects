@@ -39,8 +39,8 @@ XX    XX
  XX  XX
 XX    XX`.slice(1);
 
-const gridCol = 26;
 const gridRow = 3;
+const gridCol = 26;
 
 /* PART A: finish the grid of 9x8 spaces */
 text('─'.repeat(26), gridRow + 7, gridCol);
@@ -113,8 +113,8 @@ async function startNewGame() {
 	for (let row = 0; row < 3; row++) {
 		for (let col = 0; col < 3; col++) {
 			board[row][col] = ' ';
-			let c = gridCol + col * 9;
 			let r = gridRow + row * 8;
+			let c = gridCol + col * 9;
 			await text(bigSpace, r, c);
 		}
 	}
@@ -124,7 +124,7 @@ async function takeTurn(row, col) {
 	console.log('You clicked button ' + row + ' ' + col);
 
 	if (board[row][col] != ' ') {
-		await alert('Occupied space', 55, 20, 23);
+		await alert('Occupied space', 20, 55, 23);
 	} else {
 		let r = gridRow + row * 8;
 		let c = gridCol + col * 9;

@@ -26,13 +26,13 @@ public class TicTacToe {
 	String bigSpace = "        \n".repeat(7);
 
 	String bigO = """
-			 OOOOOO
+				OOOOOO
 			OO    OO
 			OO    OO
 			OO    OO
 			OO    OO
 			OO    OO
-			 OOOOOO""".substring(1);
+				OOOOOO""".substring(1);
 
 	String bigX = """
 			XX    XX
@@ -43,8 +43,8 @@ public class TicTacToe {
 			 XX  XX
 			XX    XX""".substring(1);
 
-	int gridX = 26;
-	int gridY = 3;
+	int gridRow = 3;
+	int gridCol = 26;
 
 	// board stores the game data
 	// in a two dimensional array of spaces
@@ -58,25 +58,25 @@ public class TicTacToe {
 		text(title, 5, 6);
 
 		/* PART A: finish the grid of 9x8 spaces */
-		text("─".repeat(26), gridX, gridY + 7);
-		text("─".repeat(26), gridX, gridY + 15); // draw another horizontal line
-		text("│\n".repeat(23), gridX + 8, gridY);
-		text("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
+		text("─".repeat(26), gridRow + 7, gridCol);
+		text("─".repeat(26), gridRow + 15, gridCol); // draw another horizontal line
+		text("│\n".repeat(23), gridRow, gridCol + 8);
+		text("│\n".repeat(23), gridRow, gridCol + 17); // draw another vertical line
 
 		startGame();
 	}
 
 	public void displayTurn() {
 		if (turnX) {
-			text("X's turn!", 55, 4);
+			text("X's turn!", 4, 55);
 		} else {
-			text("O's turn!", 55, 4);
+			text("O's turn!", 4, 55);
 		}
 	}
 
 	public void displayScore() {
-		text("Player X's Score: " + scoreX, 55, 6);
-		text("Player O's Score: " + scoreO, 55, 8);
+		text("Player X's Score: " + scoreX, 6, 55);
+		text("Player O's Score: " + scoreO, 6, 55);
 	}
 
 	public void displayBoard() {
@@ -127,9 +127,9 @@ public class TicTacToe {
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				board[row][col] = ' ';
-				int x = gridX + col * 9;
-				int y = gridY + row * 8;
-				text(bigSpace, x, y);
+				int r = gridRow + row * 8;
+				int c = gridCol + col * 9;
+				text(bigSpace, r, c);
 			}
 		}
 	}
@@ -138,24 +138,24 @@ public class TicTacToe {
 		System.out.println("You clicked button " + row + " " + col);
 
 		if (board[row][col] != ' ') {
-			alert("Occupied space", 55, 20, 23);
+			alert("Occupied space", 20, 55, 23);
 		} else {
-			int x = gridX + col * 9;
-			int y = gridY + row * 8;
+			int r = gridRow + row * 8;
+			int c = gridCol + col * 9;
 
 			char mark;
 			if (turnX == true) {
-				text(bigX, x, y);
+				text(bigX, r, c);
 				mark = 'X';
 			} else {
-				text(bigO, x, y);
+				text(bigO, r, c);
 				mark = 'O';
 			}
 			board[row][col] = mark;
 			displayBoard();
 
 			if (checkWinner(mark) == true) {
-				alert("You won Player " + mark + "!", 55, 20, 23);
+				alert("You won Player " + mark + "!", 20, 55, 23);
 				if (turnX == true) {
 					scoreX++;
 				} else {
@@ -167,7 +167,7 @@ public class TicTacToe {
 
 			}
 			if (checkDraw() == true) {
-				alert("Draw.", 55, 20, 23);
+				alert("Draw.", 20, 55, 23);
 				startNewGame();
 			}
 
@@ -178,22 +178,23 @@ public class TicTacToe {
 	}
 
 	public void startGame() {
-		eraseRect(55, 1, 60, 20);
+		eraseRect(11, 55, 10, 15);
 
 		/* PART A: Make the buttons in the grid */
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				final int rowFinal = row;
 				final int colFinal = col;
-				button(bigSpace, gridX + col * 9, gridY + row * 8, () -> {
+				button(bigSpace, gridRow + row * 8, gridCol + col * 9, () -> {
 					takeTurn(rowFinal, colFinal);
 				});
 			}
 		}
 
-		displayScore();
-
 		turnX = Math.random() < 0.5;
+
+		displayTurn();
+		displayScore();
 	}
 
 	public static void main(String[] args) {
