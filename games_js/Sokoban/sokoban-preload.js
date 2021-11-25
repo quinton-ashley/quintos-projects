@@ -12,6 +12,10 @@ world.walls.loadAni('wall-up', { pos: [0, 1] });
 world.walls.loadAni('wall-down', { pos: [2, 1] });
 world.walls.loadAni('wall-left', { pos: [1, 0] });
 world.walls.loadAni('wall-right', { pos: [1, 2] });
+world.walls.loadAni('wall-topleft', { pos: [0, 0] });
+world.walls.loadAni('wall-topright', { pos: [0, 2] });
+world.walls.loadAni('wall-bottomleft', { pos: [2, 0] });
+world.walls.loadAni('wall-bottomright', { pos: [2, 2] });
 
 world.addGroup('boxes');
 // loads the animation for the tile representing the box
@@ -19,7 +23,8 @@ world.addGroup('boxes');
 world.boxes.loadAni('box', { pos: [5, 0] });
 
 /* PART A: Choose a tile to represent the box goal positions on the floor */
-// world.loadAni('goal', { pos: [?, ?] });
+world.addGroup('goals');
+world.goals.loadAni('goal', { pos: [15, 0] });
 
 /* PLAYER */
 
@@ -36,3 +41,9 @@ player.loadAni('idle-turn', { line: 17, frames: 3 });
 player.loadAni('walk-lr', { line: 3, frames: 5, delay: 5 });
 player.loadAni('walk-up', { line: 18, frames: 6 });
 player.loadAni('walk-down', { line: 16, frames: 6 });
+
+let levelSet;
+
+(async () => {
+	levelSet = await (await fetch(QuintOS.dir + '/levels.json')).json();
+})();

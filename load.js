@@ -1,8 +1,22 @@
-QuintOS.username = 'quinton-ashley';
-QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
+// QuintOS.username = 'quinton-ashley';
+
+// QuintOS.username = 'eeshcapiche';
+// QuintOS.username = 'Man4070';
+QuintOS.username = 'Paeto-Chayarat';
+// QuintOS.username = 'Rayan-Hobballah';
+// QuintOS.username = 'sophiaaaaaaaaaaaa';
+// QuintOS.username = 'VoronmVoron';
+
+// QuintOS.dir = 'games_java';
+QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
-QuintOS.level = 2;
+// QuintOS.dir = 'students/' + QuintOS.username;
+
+// QuintOS.language = 'java';
+
+QuintOS.level = 15;
+
+QuintOS.dev = true;
 
 [
 	/*00*/ ['GuessTheNumber', 'calcu'],

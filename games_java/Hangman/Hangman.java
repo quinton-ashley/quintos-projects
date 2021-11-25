@@ -69,11 +69,7 @@ public class Hangman {
     /* PART A1: make an array with a line for each letter in the word */
     // Example word: 'quiz'
     // lines -> ['_', '_', '_', '_']
-    char[] lines = new char[word.length()];
-    // word.length is the number of letters in the word
-    for (int i = 0; i < word.length(); i++) {
-      lines[i] = '_'; // add a line to the array
-    }
+    char[] lines = ("_".repeat(word.length())).toCharArray();
 
     int parts = 0;
 
@@ -92,11 +88,7 @@ public class Hangman {
       boolean isCorrect = false;
 
       // test if the guess is a whole word, not just one letter
-      if (guess.length() > 1) {
-        if (guess.equals(word)) {
-          break; // if guess matches word the user won, end loop
-        }
-      } else {
+      if (guess.length() == 1) {
         for (int i = 0; i < word.length(); i++) {
           // the next letter in the word
           if (word.charAt(i) == guess.charAt(0)) {
@@ -104,12 +96,11 @@ public class Hangman {
             isCorrect = true;
           }
         }
+      } else if (guess.equals(word)) {
+        break; // if guess matches word the user won, end loop
       }
 
-      if (isCorrect == true) {
-        System.out.println("correct!");
-      } else {
-        System.out.println("incorrect!");
+      if (isCorrect == false) {
         parts++;
       }
 
