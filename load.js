@@ -1,8 +1,10 @@
-// QuintOS.username = 'quinton-ashley';
+QuintOS.username = 'quinton-ashley';
 
+// QuintOS.username = 'hansenhong';
 // QuintOS.username = 'eeshcapiche';
+// QuintOS.username = 'JuniorObrien';
 // QuintOS.username = 'Man4070';
-QuintOS.username = 'Paeto-Chayarat';
+// QuintOS.username = 'Paeto-Chayarat';
 // QuintOS.username = 'Rayan-Hobballah';
 // QuintOS.username = 'sophiaaaaaaaaaaaa';
 // QuintOS.username = 'VoronmVoron';
@@ -34,5 +36,5 @@ QuintOS.dev = true;
 	/*12*/ ['Snake', 'gameboi'],
 	/*13*/ ['SketchBook', 'c64'],
 	/*14*/ ['SuperJump', 'arcv'],
-	/*15*/ ['Sokoban', 'arcv']
+	/*15*/ ['Sokoban', 'c64']
 ];

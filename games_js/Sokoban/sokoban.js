@@ -3,31 +3,34 @@ let loading = true;
 let board = [];
 let levelNum = 0;
 let inGame = false;
+let didWin = false;
 
 player.steps = 0;
 
 async function loadMenu() {
 	resetBoard();
-	levelNum = await prompt('Select level (0-110): ', 6, 1, 26);
+	displayLevel();
+	levelNum = await prompt('Select level (0-110): ', 9, 7, 26);
 	loadLevel(levelSet.levels[levelNum]);
 	displayLevel();
 	displaySteps();
 }
 
 loadMenu();
-button('Reset', 0, 22, () => {
+
+button('Reset', 2, 29, () => {
 	resetBoard();
 	loadLevel(levelSet.levels[levelNum]); // load it again
 });
-button('Menu', 1, 22, loadMenu);
 
-function teleportPlayer(row, col) {
-	player.row = row;
-	player.col = col;
-	player.destRow = row;
-	player.destCol = col;
-	player.x = world.x + col * world.tileSize;
-	player.y = world.y + row * world.tileSize;
+button('Menu', 2, 35, loadMenu);
+
+function displayLevel() {
+	text('level ' + ('' + levelNum).padStart(3, '0'), 2, 0);
+}
+
+function displaySteps() {
+	text('steps ' + ('' + player.steps).padStart(3, '0'), 2, 10);
 }
 
 function loadLevel(level) {
@@ -57,16 +60,24 @@ function loadLevel(level) {
 				} else if (row == board.length - 1) {
 					img = 'wall-down';
 				}
-				world.walls.tile(row, col, img);
+				walls.createSprite(img, row, col);
 			}
 			if (t == '$' || t == '*') {
-				world.boxes.tile(row, col, 1, 'box');
+				let box = boxes.createSprite('box', row, col, 1);
+				box.setCollider(
+					'rectangle',
+					world.tileSize * 0.2,
+					world.tileSize * 0.49,
+					world.tileSize * 0.6,
+					world.tileSize * 0.3
+				);
 			}
 			if (t == '.' || t == '*' || t == '+') {
-				world.goals.tile(row, col, 'goal');
+				goals.createSprite('goal', row, col);
 			}
 			if (t == '@' || t == '+') {
-				teleportPlayer(row, col);
+				player.row = row;
+				player.col = col;
 			}
 		}
 	}
@@ -74,19 +85,24 @@ function loadLevel(level) {
 	inGame = true;
 }
 
-function displayLevel() {
-	text('level ' + levelNum, 3, 17);
-}
-
 function resetBoard() {
-	world.walls.removeSprites();
-	world.boxes.removeSprites();
-	world.goals.removeSprites();
+	player.steps = 0;
+	displaySteps();
+	walls.removeSprites();
+	boxes.removeSprites();
+	goals.removeSprites();
 	board = [];
-	teleportPlayer(0, 0);
+	player.row = 0;
+	player.col = 0;
 }
 
 function keyPressed() {
+	if (key == 'r') {
+		resetBoard();
+		loadLevel(levelSet.levels[levelNum]); // load it again
+	} else if (key == 'm') {
+		loadMenu();
+	}
 	if (player.isMoving) return;
 	if (keyCode === UP_ARROW) {
 		player.walk('up');
@@ -112,8 +128,8 @@ function moveOnBoard(row, col) {
 
 	// if the player is on any goal tile, make it a + sign
 	// to indicate that
-	for (let i = 0; i < world.goals.length; i++) {
-		let goal = world.goals[i];
+	for (let i = 0; i < goals.length; i++) {
+		let goal = goals[i];
 		if (goal.row == row && goal.col == col) {
 			board[row][col] = '+';
 		}
@@ -122,22 +138,18 @@ function moveOnBoard(row, col) {
 
 function moveBox(r1, c1, r2, c2) {
 	if (board[r1][c1] != '$' && board[r1][c1] != '*') {
-		return true;
+		return null; // their is no box to move
 	} else if (board[r2][c2] != '#' && board[r2][c2] != '$' && board[r2][c2] != '*') {
 		board[r2][c2] = '$';
-		for (let i = 0; i < world.goals.length; i++) {
-			let goal = world.goals[i];
+		for (let i = 0; i < goals.length; i++) {
+			let goal = goals[i];
 			if (goal.row == r2 && goal.col == c2) {
 				board[r2][c2] = '*';
 			}
 		}
-		return true;
+		return true; // box can be moved
 	}
-	return false;
-}
-
-function displaySteps() {
-	text('steps ' + player.steps, 3, 5);
+	return false; // the player is not able to push the box
 }
 
 player.walk = async function (direction) {
@@ -149,29 +161,29 @@ player.walk = async function (direction) {
 		aniName = 'walk-lr';
 	}
 
+	let canMoveBox;
 	if (inGame) {
 		// prevent player from moving if they try to move into a wall
 		if (direction == 'up') {
-			if (board[r - 1][c] == '#' || !moveBox(r - 1, c, r - 2, c)) {
-				return;
-			}
+			if (board[r - 1][c] == '#') return;
+			canMoveBox = moveBox(r - 1, c, r - 2, c);
 		} else if (direction == 'down') {
-			if (board[r + 1][c] == '#' || !moveBox(r + 1, c, r + 2, c)) {
-				return;
-			}
+			if (board[r + 1][c] == '#') return;
+			canMoveBox = moveBox(r + 1, c, r + 2, c);
 		} else if (direction == 'left') {
-			if (board[r][c - 1] == '#' || !moveBox(r, c - 1, r, c - 2)) {
-				return;
-			}
+			if (board[r][c - 1] == '#') return;
+			canMoveBox = moveBox(r, c - 1, r, c - 2);
 		} else if (direction == 'right') {
-			if (board[r][c + 1] == '#' || !moveBox(r, c + 1, r, c + 2)) {
-				return;
-			}
+			if (board[r][c + 1] == '#') return;
+			canMoveBox = moveBox(r, c + 1, r, c + 2);
 		}
+		if (canMoveBox == false) return;
+
+		if (canMoveBox) aniName = 'push' + aniName.slice(4);
 	}
 
-	// for (let i = 0; i < world.boxes.length; i++) {
-	// 	let box = world.boxes[i];
+	// for (let i = 0; i < boxes.length; i++) {
+	// 	let box = boxes[i];
 	// 	board[box.row][box.col] = "$";
 	// }
 
@@ -193,7 +205,7 @@ player.walk = async function (direction) {
 		displayBoard();
 	}
 
-	world.move(player, 0.85, direction);
+	player.move(direction, 0.85);
 
 	if (inGame) {
 		player.steps++;
@@ -201,7 +213,7 @@ player.walk = async function (direction) {
 	}
 
 	// the name of the current animation being used
-	let cur = this.getAnimationLabel();
+	let cur = player.getAnimationLabel();
 
 	// player is already walking that way or turning
 	// no need to change animation
@@ -209,20 +221,25 @@ player.walk = async function (direction) {
 
 	// have the player turn before walking upwards
 	if (direction != 'up') {
-		this.ani(aniName);
+		player.depth = 1;
+		player.ani(aniName);
 	} else {
-		await this.ani('idle-turn');
-		this.ani('walk-up');
+		player.depth = 2;
+		await player.ani('idle-turn');
+		player.ani('walk-up');
 	}
 
 	if (direction == 'left') {
-		this.mirrorX(-1); // flip the character left
+		player.mirrorX(-1); // flip the character left
 	} else {
-		this.mirrorX(1);
+		player.mirrorX(1);
 	}
 
 	if (inGame && checkWin()) {
-		await alert('You win!!');
+		didWin = true;
+		player.ani('dance');
+		await alert('You win!!', 10, 27, 12);
+		didWin = false;
 		levelNum++;
 		displayLevel();
 		resetBoard();
@@ -253,7 +270,7 @@ player.idle = function () {
 	// the name of the current animation being used
 	let cur = this.getAnimationLabel();
 
-	if (cur == 'walk-up') {
+	if (cur == 'walk-up' || cur == 'push-up') {
 		this.ani('idle-turn');
 		this.animation.changeFrame(2);
 		this.animation.goToFrame(0);
@@ -283,18 +300,19 @@ loading = false;
 function draw() {
 	if (loading) return;
 	clear();
-	background(0);
+	background('#19142b');
 
-	player.collide(world.walls); // handles player collisions with walls
-	player.displace(world.boxes);
-	world.boxes.collide(world.walls);
-	world.boxes.collide(world.boxes);
+	player.collide(walls); // handles player collisions with walls
+	player.displace(boxes);
+	boxes.snap(player);
+	boxes.collide(walls);
+	boxes.collide(boxes);
 
-	if (!player.isMoving) player.idle();
+	if (!player.isMoving && !didWin) player.idle();
 
-	// snap boxes to nearest tile (row, col)
-	// when player stops moving
-	world.update({ snap: !player.isMoving });
+	// // snap boxes to nearest tile (row, col)
+	// // when player stops moving
+	// world.update({ snap: !player.isMoving });
 	// p5.play function for drawing all sprites
 	drawSprites();
 }
