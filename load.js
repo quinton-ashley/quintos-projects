@@ -16,7 +16,7 @@ QuintOS.dir = 'games_js';
 
 // QuintOS.language = 'java';
 
-QuintOS.level = 15;
+QuintOS.level = 12;
 
 QuintOS.dev = true;
 

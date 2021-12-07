@@ -1,21 +1,51 @@
 package games_java.QuickClicks;
 
-import games_java.QuintOS.*;
 import static games_java.QuintOS.*;
+
+import java.time.Instant;
 
 public class QuickClicks {
 	String target = " .d88b.\n.8P  Y8.\n88    88\n88    88\n'8b  d8'\n 'Y88P'";
 
-	int[] times = new int[10];
+	long[] times = new long[10];
 
 	Button btn;
+
+	int clicked = 0;
+
+	void btnClick() {
+		/* PART C: Limit clicks to 10, calculate stats */
+		if (clicked < 10) {
+			times[clicked] = Instant.now().toEpochMilli();
+			clicked++;
+			/* PART A0: change the values of row and col to be random */
+			// screen size is 80 cols x 30 rows
+			// target is 8w x 6h
+			// drawing starts from top left corner
+			// we want to draw the target within the bounds of the frame
+			// 30 rows - 6 target height - 1 frame line = 23
+			// 80 columns - 8 target width - 1 frame line = 71
+
+			int row = (int) (Math.random() * 23 + 1);
+			int col = (int) (Math.random() * 71 + 1);
+
+			// (text, row, col, function)
+			btn = button(target, row, col, () -> {
+				this.btn.erase();
+				/* PART B: Use recursion to make a new button after clicking a button */
+				this.btnClick();
+			});
+		} else {
+			displayStats();
+		}
+	}
 
 	/* PART B2: calculate and display player performance statistics */
 	void displayStats() {
 		// add difference between times in milliseconds to sum
 		int[] speeds = new int[19];
 		for (int i = 0; i < times.length - 1; i++) {
-			speeds[i] = (times[i + 1] - times[i]);
+			speeds[i] = (int) (times[i + 1] - times[i]);
 		}
 
 		int sum = 0;
@@ -41,42 +71,17 @@ public class QuickClicks {
 		msg += "Your fastest response time was " + fastest + "ms.";
 
 		System.out.println(msg);
-		makeBg();
+		erase();
+		exit();
 	}
 
 	void makeBg() {
 		/* PART D: Make a background pattern */
 	}
 
-	void btnClick() {
-		/* PART C: Limit clicks to 20, calculate stats */
-		if (times.length < 20) {
-			System.out.println("You clicked the button!");
-			/* PART A0: change the values of row and col to be random */
-			// screen size is 80 cols x 30 rows
-			// target is 8w x 6h
-			// drawing starts from top left corner
-			// we want to draw the target within the bounds of the frame
-			// 30 rows - 6 target height - 1 frame line = 23
-			// 80 columns - 8 target width - 1 frame line = 71
-
-			int row = 1;
-			int col = 1;
-
-			// (text, row, col, function)
-			btn = button(target, row, col, () -> {
-				btn.erase();
-				/* PART B: Use recursion to make a new button after clicking a button */
-				this.btnClick();
-			});
-		} else {
-			this.displayStats();
-		}
-	}
-
 	public QuickClicks() {
-		this.makeBg();
-		this.btnClick();
+		makeBg();
+		btnClick();
 	}
 
 	public static void main(String[] args) {
