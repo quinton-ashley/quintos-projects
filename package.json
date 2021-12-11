@@ -20,7 +20,7 @@
 		"V": "npm version minor --force",
 		"version": "git add -A",
 		"postversion": "git push",
-		"relink": "npm link ../../pkg/quintos | npm link ../../pkg/java2js"
+		"relink": "npm link ../../pkg/quintos ../../pkg/java2js"
 	},
-	"version": "1.0.32"
+	"version": "1.0.33"
 }

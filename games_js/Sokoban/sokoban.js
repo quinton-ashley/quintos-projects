@@ -259,20 +259,19 @@ player.walk = async function (direction) {
 		player.mirrorX(1);
 	}
 
-	player.move(direction, 0.85, async () => {
-		if (inGame && checkWin()) {
-			didWin = true;
-			player.ani('dance');
-			await alert('You win!!', 10, 27, 12);
-			didWin = false;
-			levelNum++;
-			displayLevel();
-			player.steps = 0;
-			displaySteps();
-			resetBoard();
-			loadLevel(levelSet.levels[levelNum]);
-		}
-	});
+	await player.move(direction, 0.85);
+	if (inGame && checkWin()) {
+		didWin = true;
+		player.ani('dance');
+		await alert('You win!!', 10, 27, 12);
+		didWin = false;
+		levelNum++;
+		displayLevel();
+		player.steps = 0;
+		displaySteps();
+		resetBoard();
+		loadLevel(levelSet.levels[levelNum]);
+	}
 };
 
 player.idle = function () {
