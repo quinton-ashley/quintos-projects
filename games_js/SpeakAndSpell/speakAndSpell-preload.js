@@ -397,7 +397,6 @@ let longWords = [
 	'stranger'
 ];
 
-/* PART A: organize these better in an object */
 let speech = [
 	'as_in',
 	'here_is_your_score',
@@ -420,22 +419,22 @@ let speech = [
 	'you_win'
 ];
 
-let wordSounds = {};
-for (let word of words) {
-	wordSounds[word] = loadSound(QuintOS.dir + '/sounds/words/' + word + '.mp3');
-	wordSounds[word].setVolume(0.3);
-}
-
 let speechSounds = {};
 for (let speak of speech) {
 	speechSounds[speak] = loadSound(QuintOS.dir + '/sounds/speech/' + speak + '.mp3');
 	speechSounds[speak].setVolume(0.3);
 }
+let wordSounds = {};
+for (let word of words.concat(longWords)) {
+	wordSounds[word] = loadSound(QuintOS.dir + '/sounds/words/' + word + '.mp3');
+	wordSounds[word].setVolume(0.3);
+}
 
+/* PART A0: Load all the letter sounds and apostrophe */
+
+// example loading the "spell" sound
 let letterSounds = {};
-let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ'";
-for (let i = 0; i < 27; i++) {
-	let c = characters[i];
-	letterSounds[c] = loadSound(QuintOS.dir + '/sounds/letters/' + c + '.mp3');
-	letterSounds[c].setVolume(0.3);
+for (let letter of 'abcdefghijklmnopqrstuvwxyz'.split('')) {
+	letterSounds[letter] = loadSound(QuintOS.dir + '/sounds/letters/' + letter + '.mp3');
+	letterSounds[letter].setVolume(0.3);
 }

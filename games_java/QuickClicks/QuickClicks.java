@@ -32,6 +32,7 @@ public class QuickClicks {
 			// (text, row, col, function)
 			btn = button(target, row, col, () -> {
 				this.btn.erase();
+				this.makeBg();
 				/* PART B: Use recursion to make a new button after clicking a button */
 				this.btnClick();
 			});
@@ -77,6 +78,7 @@ public class QuickClicks {
 
 	void makeBg() {
 		/* PART D: Make a background pattern */
+		text("<>".repeat(1000), 1, 1, 78);
 	}
 
 	public QuickClicks() {
