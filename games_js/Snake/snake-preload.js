@@ -31,7 +31,7 @@ pipes.loadAni('pipe-bottomRight', { pos: [2, 7] });
 
 world.loadAni('egg', { pos: [0, 0] });
 
-let snake = world.createSprite(10, 3, 2);
+let snake = world.createGroup('snake');
 snake.spriteSheet = loadImage(QuintOS.dir + '/img/snakes.png');
 snake.loadAni('head-up', { pos: [0, 0] });
 snake.loadAni('blink-up', { pos: [0, 1] });
@@ -39,3 +39,8 @@ snake.loadAni('head-left', { pos: [0, 6] });
 snake.loadAni('blink-left', { pos: [0, 7] });
 snake.loadAni('eat-up', { pos: [1, 0], frames: 5 });
 snake.loadAni('eat-left', { pos: [1, 5], frames: 5 });
+snake.loadAni('body-up', { pos: [0, 2], frames: 2, delay: 8 });
+snake.loadAni('tail-up', { pos: [0, 4], frames: 2, delay: 8 });
+snake.loadAni('body-left', { pos: [0, 8], frames: 2, delay: 8 });
+snake.loadAni('tail-left', { pos: [0, 10], frames: 2, delay: 8 });
+snake.loadAni('curve', { pos: [1, 10], frames: 2, delay: 8 });
