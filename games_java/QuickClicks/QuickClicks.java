@@ -13,7 +13,11 @@ public class QuickClicks {
 
 	int clicked = 0;
 
-	void btnClick() {
+	void makeButton() {
+		if (btn != null) {
+			btn.erase();
+		}
+		makeBg();
 		/* PART C: Limit clicks to 10, calculate stats */
 		if (clicked < 10) {
 			times[clicked] = Instant.now().toEpochMilli();
@@ -31,10 +35,8 @@ public class QuickClicks {
 
 			// (text, row, col, function)
 			btn = button(target, row, col, () -> {
-				this.btn.erase();
-				this.makeBg();
 				/* PART B: Use recursion to make a new button after clicking a button */
-				this.btnClick();
+				this.makeButton();
 			});
 		} else {
 			displayStats();
@@ -83,7 +85,7 @@ public class QuickClicks {
 
 	public QuickClicks() {
 		makeBg();
-		btnClick();
+		makeButton();
 	}
 
 	public static void main(String[] args) {

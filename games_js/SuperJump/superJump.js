@@ -1,13 +1,13 @@
 // screen width is 320, height is 400
 let imgBall = spriteArt(`
-..bbby
-.wbbbyb
-wbbbyybw
-byyyybbb
-yybbybbb
-wbbbyybb
-.bbbbyb
-..wbby`);
+..uuuy
+.wuuuyu
+wuuuyyuw
+uyyyyuuu
+yyuuyuuu
+wuuuyyuu
+.uuuuyu
+..wuuy`);
 
 let imgPlatform = spriteArt(
 	' ' +

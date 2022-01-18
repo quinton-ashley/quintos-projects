@@ -85,9 +85,15 @@ async function startGame() {
 }
 
 async function scrollPrompt(msg) {
-	let modeInput = input();
+	let stop = false;
+	let modeInput = input('', 1, 0, async () => {
+		stop = true;
+		await erase();
+		startGame();
+	});
 	// let user read the beginning
 	for (let i = 0; i < msg.length; i++) {
+		if (stop) break;
 		await text(msg.substring(i, i + 23));
 		if (i == 0) {
 			await delay(2000);

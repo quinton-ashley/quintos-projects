@@ -1,3 +1,5 @@
+document.querySelector('.screen').style.cursor = 'none';
+
 // an array of color letters
 let colors = Object.keys(QuintOS.palette);
 // scale each color pixel by 10
@@ -33,7 +35,7 @@ class Pixel {
 	}
 
 	draw() {
-		fill(palette[this.color]);
+		fill(QuintOS.palette[this.color]);
 		stroke(0);
 		rect(this.x, this.y, scale, scale);
 	}
@@ -87,7 +89,7 @@ async function changeBrushColor(c) {
 	if (choosingBg) {
 		changeBackgroundColor(c);
 		await erase();
-		let reBtn = button('Save Image', 30, 24, () => {
+		let reBtn = button('Save Image', 24, 30, () => {
 			saveImage();
 		});
 		choosingBg = false;
@@ -110,6 +112,7 @@ function saveImage() {
 }
 
 function drawOnPixels() {
+	log(mouseX, mouseY);
 	// If the click is in the pallette area, change the brush color
 	// according to the x,y.
 	if (mouseX > 0 && mouseX < 25) {
@@ -118,7 +121,7 @@ function drawOnPixels() {
 			if (mouseY > y && mouseY < y + 25) {
 				changeBrushColor(c);
 			}
-			y += 25;
+			y += 10;
 		}
 		return;
 	}

@@ -8,15 +8,20 @@ QuintOS.username = 'quinton-ashley';
 // QuintOS.username = 'Rayan-Hobballah';
 // QuintOS.username = 'sophiaaaaaaaaaaaa';
 // QuintOS.username = 'VoronmVoron';
+// QuintOS.username = 'jaximuslim';
 
 // QuintOS.dir = 'games_java';
 QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.username;
+// QuintOS.dir = 'https://raw.githubusercontent.com/jaximuslim/quintos-games/main/GAMES';
 
 // QuintOS.language = 'java';
 
-QuintOS.level = 12;
+QuintOS.level = 15;
+
+// QuintOS.gameTitle = 'Test';
+// QuintOS.sys = 'cpet';
 
 QuintOS.dev = true;
 
