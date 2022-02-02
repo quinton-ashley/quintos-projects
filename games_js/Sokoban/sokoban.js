@@ -138,13 +138,13 @@ function keyPressed() {
 		reset();
 	} else if (key == 'm') {
 		loadMenu();
-	} else if (keyCode === UP_ARROW) {
+	} else if (key === 'ArrowUp') {
 		player.walk('up');
-	} else if (keyCode === DOWN_ARROW) {
+	} else if (key === 'ArrowDown') {
 		player.walk('down');
-	} else if (keyCode === LEFT_ARROW) {
+	} else if (key === 'ArrowLeft') {
 		player.walk('left');
-	} else if (keyCode === RIGHT_ARROW) {
+	} else if (key === 'ArrowRight') {
 		player.walk('right');
 	}
 }

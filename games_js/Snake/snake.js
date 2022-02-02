@@ -2,7 +2,7 @@
 // text rows: 18 cols: 20
 
 let score = 0; // number of apples eaten
-let speed = 1; // snake speed
+let speed = 0.5; // snake speed
 
 text('SCORE: ' + score, 17, 0);
 text('SPEED: ' + score, 17, 11);
@@ -71,7 +71,41 @@ function changeSnakeAni(s, type, direction) {
 	}
 }
 
+function placeEgg() {
+	let avail = [];
+	for (let row = 1; row < 14; row++) {
+		for (let col = 1; col < 19; col++) {
+			let snakeSpace = false;
+			for (let i = 0; i < snake.length; i++) {
+				if (snake[i].row == row && snake[i].col == col) {
+					snakeSpace = true;
+				}
+			}
+			if (snakeSpace == false) {
+				avail.push([row, col]);
+			}
+		}
+	}
+	log(avail);
+	let idx = Math.floor(Math.random() * avail.length);
+	let coord = avail[idx];
+	egg.row = coord[0];
+	egg.col = coord[1];
+}
+
 async function moveSnake() {
+	let movements = [];
+	if (snake[0].row == egg.row && snake[0].col == egg.col) {
+		speed += 0.1;
+		snake.createSprite(snake[1].getAnimationLabel(), snake[1].row, snake[1].col, 2);
+		snake.splice(1, 0, snake.pop());
+		movements.push(snake[1].move(snake[0].direction, speed));
+		movements.push(snake[0].move(inputDirection, speed));
+		await Promise.all(movements);
+		placeEgg();
+		moveSnake();
+		return;
+	}
 	for (let i = snake.toArray().length - 1; i >= 0; i--) {
 		let s = snake[i];
 		// move the snake
@@ -82,10 +116,7 @@ async function moveSnake() {
 			} else {
 				type = 'head';
 			}
-			if (s.row == egg.row && s.col == egg.col) {
-				egg.row = Math.floor(Math.random() * 13 + 1);
-				egg.col = Math.floor(Math.random() * 18 + 1);
-			}
+
 			s.direction = inputDirection;
 		} else {
 			s.direction = snake[i - 1].direction;
@@ -94,11 +125,12 @@ async function moveSnake() {
 		changeSnakeAni(s, type, s.direction);
 
 		if (type == 'head' || type == 'eat') {
-			await s.move(s.direction, 0.5);
+			movements.push(s.move(s.direction, speed));
 		} else {
-			s.move(s.direction, 0.5);
+			movements.push(s.move(s.direction, speed));
 		}
 	}
+	await Promise.all(movements);
 	moveSnake();
 }
 

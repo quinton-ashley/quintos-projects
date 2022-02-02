@@ -78,9 +78,17 @@ window.draw = () => {
 		}
 	}
 
-	// move the paddles with the mouse
-	paddleL.y = mouseY - paddleL.h;
-	paddleR.y = mouseY - paddleR.h;
+	if (isKeyDown('w') && paddleL.y > wallTop.y + wallTop.h) {
+		paddleL.y -= 4;
+	} else if (isKeyDown('s') && paddleL.y + paddleL.h < wallBottom.y) {
+		paddleL.y += 4;
+	}
+
+	if (isKeyDown('ArrowUp') && paddleR.y > wallTop.y + wallTop.h) {
+		paddleR.y -= 4;
+	} else if (isKeyDown('ArrowDown') && paddleR.y + paddleL.h < wallBottom.y) {
+		paddleR.y += 4;
+	}
 
 	// have the ball bounce of the paddles
 	ball.bounce(paddleL);
