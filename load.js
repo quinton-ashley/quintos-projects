@@ -18,10 +18,10 @@ QuintOS.dir = 'games_java';
 
 QuintOS.language = 'java';
 
-// QuintOS.level = 15;
+QuintOS.level = 0;
 
-QuintOS.gameTitle = 'Test';
-QuintOS.sys = 'cpet';
+// QuintOS.gameTitle = 'Test';
+// QuintOS.sys = 'cpet';
 
 QuintOS.dev = true;
 
