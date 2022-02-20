@@ -1,30 +1,3 @@
-QuintOS.username = 'quinton-ashley';
-
-// QuintOS.username = 'hansenhong';
-// QuintOS.username = 'eeshcapiche';
-// QuintOS.username = 'JuniorObrien';
-// QuintOS.username = 'Man4070';
-// QuintOS.username = 'Paeto-Chayarat';
-// QuintOS.username = 'Rayan-Hobballah';
-// QuintOS.username = 'sophiaaaaaaaaaaaa';
-// QuintOS.username = 'VoronmVoron';
-// QuintOS.username = 'jaximuslim';
-
-QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
-// QuintOS.dir = 'starter_js';
-// QuintOS.dir = 'students/' + QuintOS.username;
-// QuintOS.dir = 'https://raw.githubusercontent.com/jaximuslim/quintos-games/main/GAMES';
-
-QuintOS.language = 'java';
-
-QuintOS.level = 0;
-
-// QuintOS.gameTitle = 'Test';
-// QuintOS.sys = 'cpet';
-
-QuintOS.dev = true;
-
 [
 	/*00*/ ['GuessTheNumber', 'calcu'],
 	/*01*/ ['PickAPath', 'cpet'],
@@ -43,3 +16,36 @@ QuintOS.dev = true;
 	/*14*/ ['SuperJump', 'arcv'],
 	/*15*/ ['Sokoban', 'c64']
 ];
+
+QuintOS.level = 0;
+
+QuintOS.username = 'quinton-ashley';
+
+// QuintOS.username = 'jaximuslim';
+// QuintOS.username = 'MEDBEDFAKE';
+// QuintOS.username = 'seva-zoff'
+// QuintOS.username = 'Morz75';
+// QuintOS.username = 'rsaijo24';
+// QuintOS.username = 'WarriorFPHS';
+// QuintOS.username = 'EvanZSC';
+// QuintOS.username = 'hansenhong';
+// QuintOS.username = 'eeshcapiche';
+// QuintOS.username = 'JuniorObrien';
+// QuintOS.username = 'Man4070';
+// QuintOS.username = 'Paeto-Chayarat';
+// QuintOS.username = 'Rayan-Hobballah';
+// QuintOS.username = 'sophiaaaaaaaaaaaa';
+// QuintOS.username = 'VoronmVoron';
+
+QuintOS.dir = 'games_java';
+// QuintOS.dir = 'games_js';
+// QuintOS.dir = 'starter_js';
+// QuintOS.dir = 'students/' + QuintOS.username;
+// QuintOS.dir = `https://raw.githubusercontent.com/${QuintOS.username}/quintos-games/main/GAMES`;
+
+QuintOS.language = 'java';
+
+// QuintOS.gameTitle = 'Test';
+// QuintOS.sys = 'cpet';
+
+QuintOS.dev = true;

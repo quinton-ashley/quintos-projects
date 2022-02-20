@@ -13,34 +13,9 @@ public class QuickClicks {
 
 	int clicked = 0;
 
-	void makeButton() {
-		if (btn != null) {
-			btn.erase();
-		}
-		makeBg();
-		/* PART C: Limit clicks to 10, calculate stats */
-		if (clicked < 10) {
-			times[clicked] = Instant.now().toEpochMilli();
-			clicked++;
-			/* PART A0: change the values of row and col to be random */
-			// screen size is 80 cols x 30 rows
-			// target is 8w x 6h
-			// drawing starts from top left corner
-			// we want to draw the target within the bounds of the frame
-			// 30 rows - 6 target height - 1 frame line = 23
-			// 80 columns - 8 target width - 1 frame line = 71
-
-			int row = (int) (Math.random() * 23 + 1);
-			int col = (int) (Math.random() * 71 + 1);
-
-			// (text, row, col, function)
-			btn = button(target, row, col, () -> {
-				/* PART B: Use recursion to make a new button after clicking a button */
-				this.makeButton();
-			});
-		} else {
-			displayStats();
-		}
+	void makeBg() {
+		/* PART D: Make a background pattern */
+		text("<>".repeat(1000), 1, 1, 78);
 	}
 
 	/* PART B2: calculate and display player performance statistics */
@@ -78,14 +53,43 @@ public class QuickClicks {
 		exit();
 	}
 
-	void makeBg() {
-		/* PART D: Make a background pattern */
-		text("<>".repeat(1000), 1, 1, 78);
+	void makeTarget() {
+		if (btn != null) {
+			btn.erase();
+		}
+		makeBg();
+		/* PART C: Limit clicks to 10, calculate stats */
+		if (clicked < 10) {
+			times[clicked] = Instant.now().toEpochMilli();
+			clicked++;
+			/* PART A0: change the values of row and col to be random */
+			// screen size is 80 cols x 30 rows
+			// target is 8w x 6h
+			// drawing starts from top left corner
+			// we want to draw the target within the bounds of the frame
+			// 30 rows - 6 target height - 1 frame line = 23
+			// 80 columns - 8 target width - 1 frame line = 71
+
+			int row = (int) (Math.random() * 23 + 1);
+			int col = (int) (Math.random() * 71 + 1);
+
+			// (text, row, col, function)
+			btn = button(target, row, col, () -> {
+				/* PART B: Use recursion to make a new button after clicking a button */
+				this.makeTarget();
+			});
+		} else {
+			displayStats();
+		}
+	}
+
+	void startGame() {
+		makeBg();
+		makeTarget();
 	}
 
 	public QuickClicks() {
-		makeBg();
-		makeButton();
+		startGame();
 	}
 
 	public static void main(String[] args) {
