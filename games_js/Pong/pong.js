@@ -12,9 +12,15 @@ wwywwyww
 ..wwww..`);
 
 // paddle racket image
-let imgPaddle = spriteArt('.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(21) + 'wwwwwwww\n.wwwwww.');
+let imgPaddle = spriteArt(
+	'.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(11) + 'www..www\n' + 'wwwwwwww\n.wwwwww.'
+);
 
 let imgWall = spriteArt(('c'.repeat(320) + '\n').repeat(8));
+
+let imgNet = spriteArt('w.\n.w\n'.repeat(80));
+
+let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
 let ball = createSprite(imgBall);
 let paddleL = createSprite(imgPaddle);
@@ -22,35 +28,41 @@ let paddleR = createSprite(imgPaddle);
 let wallTop = createSprite(imgWall);
 let wallBottom = createSprite(imgWall);
 
-let imgNet = spriteArt('w.\n.w\n'.repeat(80));
+let scoreL = 0;
+let scoreR = 0;
 
-let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
+// places a ball in center of the screen
+ball.x = width / 2 - ball.w / 2;
+ball.y = height / 2 - ball.h / 2;
+ball.velocity.x = -1;
+ball.velocity.y = 1;
 
-window.setup = () => {
-	// places a ball in center of the screen
-	ball.x = width / 2 - ball.w / 2;
-	ball.y = height / 2 - ball.h / 2;
-	ball.velocity.x = -1;
-	ball.velocity.y = 1;
+// place paddles 5px from the sides, center vertically
+paddleL.x = 5;
+paddleL.y = height / 2 - paddleL.h / 2;
+paddleL.immovable = true;
 
-	// place paddles 5px from the sides, center vertically
-	paddleL.x = 5;
-	paddleL.immovable = true;
+paddleR.x = width - paddleR.w - 5;
+paddleR.y = height / 2 - paddleR.h / 2;
+paddleR.immovable = true;
 
-	paddleR.x = width - paddleR.w - 5;
-	paddleR.immovable = true;
+// place walls on the top and bottom of the screen
+wallTop.x = 0;
+wallTop.y = 0;
+wallTop.immovable = true;
 
-	// place walls on the top and bottom of the screen
-	wallTop.x = 0;
-	wallTop.y = 0;
-	wallTop.immovable = true;
+wallBottom.x = 0;
+wallBottom.y = height - wallBottom.h;
+wallBottom.immovable = true;
 
-	wallBottom.x = 0;
-	wallBottom.y = height - wallBottom.h;
-	wallBottom.immovable = true;
-};
+function displayScore() {
+	text(scoreL, 3, 10);
+	text(scoreR, 3, 20);
+}
 
-window.draw = () => {
+displayScore();
+
+function draw() {
 	background(colorPal('r'));
 	fill(colorPal('c'));
 	stroke(colorPal('w'));
@@ -95,13 +107,16 @@ window.draw = () => {
 	ball.bounce(paddleR);
 
 	// if the ball leaves the screen
-	if (ball.x < -10) {
+	if (ball.x < -50) {
 		ball.velocity.x = 1;
+		scoreR++;
 	}
-	if (ball.x > width + 10) {
+	if (ball.x > width + 50) {
 		ball.velocity.x = -1;
+		scoreL++;
 	}
-	if (ball.x < -10 || ball.x > width + 10) {
+	if (ball.x < -50 || ball.x > width + 50) {
+		displayScore();
 		if (Math.random() < 0.5) {
 			ball.velocity.y = 1;
 		} else {
@@ -113,4 +128,4 @@ window.draw = () => {
 	}
 
 	drawSprites();
-};
+}

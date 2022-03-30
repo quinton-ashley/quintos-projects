@@ -42,8 +42,8 @@ async function displayStats() {
 	let msg = 'Your average response time was ' + avg + 'ms.\n';
 	msg += 'Your slowest response time was ' + slowest + 'ms.\n';
 	msg += 'Your fastest response time was ' + fastest + 'ms.';
-	await alert(msg);
-	makeBg();
+	await alert(msg, 11, 14);
+	exit();
 }
 
 /* PART B0: make a background pattern */
@@ -93,7 +93,7 @@ function btnClick() {
 
 async function startGame() {
 	makeBg();
-	await alert('Click the buttons as fast as you can!');
+	await alert('Click the buttons as fast as you can!', 11, 28, 24);
 	btnClick();
 }
 

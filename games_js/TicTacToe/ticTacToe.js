@@ -17,8 +17,6 @@ TTTTT  OOO   EEEE
   T   O   O  E
   T    OOO   EEEE`.slice(1);
 
-text(title, 5, 6);
-
 const bigSpace = '        \n'.repeat(7);
 
 const bigO = `
@@ -42,15 +40,6 @@ XX    XX`.slice(1);
 const gridRow = 3;
 const gridCol = 26;
 
-/* PART A: finish the grid of 9x8 spaces */
-text('─'.repeat(26), gridRow + 7, gridCol);
-text('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
-
-for (let row = gridRow; row < gridRow + 23; row++) {
-	text('│', row, gridCol + 8);
-	text('│', row, gridCol + 17); // draw another vertical line
-}
-
 // board stores the game data
 // in a two dimensional array of spaces
 let board = [
@@ -59,16 +48,13 @@ let board = [
 	[' ', ' ', ' ']
 ];
 
-let turnX = true;
 let scoreX = 0;
 let scoreO = 0;
+let turnX, preventMoves;
 
 function displayTurn() {
-	if (turnX) {
-		text("X's turn!", 4, 55);
-	} else {
-		text("O's turn!", 4, 55);
-	}
+	if (turnX) text("X's turn!", 4, 55);
+	else text("O's turn!", 4, 55);
 }
 
 function displayScore() {
@@ -109,6 +95,58 @@ function checkDraw() {
 	return true;
 }
 
+async function takeTurn(row, col) {
+	log('You clicked button ' + row + ' ' + col);
+
+	if (board[row][col] != ' ') {
+		preventMoves = true;
+		await alert('That space is already taken!\n\nYou must choose another.', 18, 55, 23);
+		preventMoves = false;
+		return;
+	}
+	if (preventMoves) return;
+
+	let r = gridRow + row * 8;
+	let c = gridCol + col * 9;
+
+	let mark;
+	if (turnX) {
+		text(bigX, r, c);
+		mark = 'X';
+	} else {
+		text(bigO, r, c);
+		mark = 'O';
+	}
+	board[row][col] = mark;
+	log(board[0] + '\n' + board[1] + '\n' + board[2]);
+
+	if (checkWinner(mark)) {
+		if (turnX) {
+			scoreX++;
+		} else {
+			scoreO++;
+		}
+		displayScore();
+		preventMoves = true;
+		await alert('You won Player ' + mark + '!', 20, 55, 23);
+		turnX = !turnX;
+		displayTurn();
+		await startNewGame();
+		return;
+	}
+	if (checkDraw()) {
+		preventMoves = true;
+		await alert('Draw.', 20, 55, 23);
+		turnX = Math.random() < 0.5;
+		displayTurn();
+		await startNewGame();
+		return;
+	}
+
+	turnX = !turnX;
+	displayTurn();
+}
+
 async function startNewGame() {
 	for (let row = 0; row < 3; row++) {
 		for (let col = 0; col < 3; col++) {
@@ -118,54 +156,20 @@ async function startNewGame() {
 			await text(bigSpace, r, c);
 		}
 	}
-}
-
-async function takeTurn(row, col) {
-	console.log('You clicked button ' + row + ' ' + col);
-
-	if (board[row][col] != ' ') {
-		await alert('Occupied space', 20, 55, 23);
-	} else {
-		let r = gridRow + row * 8;
-		let c = gridCol + col * 9;
-
-		let mark;
-		if (turnX == true) {
-			text(bigX, r, c);
-			mark = 'X';
-		} else {
-			text(bigO, r, c);
-			mark = 'O';
-		}
-		board[row][col] = mark;
-		console.log(board[0] + '\n' + board[1] + '\n' + board[2]);
-
-		if (checkWinner(mark) == true) {
-			await alert('You won Player ' + mark + '!', 20, 55, 23);
-			if (turnX == true) {
-				scoreX++;
-				if (challengeMode == true) {
-					aiLevel++;
-					displayAiLevel();
-				}
-			} else {
-				scoreO++;
-			}
-			displayScore();
-			await startNewGame();
-		}
-		if (checkDraw() == true) {
-			await alert('Draw.', 20, 55, 23);
-			await startNewGame();
-		}
-		turnX = !turnX;
-
-		displayTurn();
-	}
+	preventMoves = false;
 }
 
 async function startGame() {
-	await eraseRect(11, 55, 10, 15);
+	text(title, 5, 6);
+
+	/* PART A: finish the grid of 9x8 spaces */
+	text('─'.repeat(26), gridRow + 7, gridCol);
+	text('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
+
+	for (let row = gridRow; row < gridRow + 23; row++) {
+		text('│', row, gridCol + 8);
+		text('│', row, gridCol + 17); // draw another vertical line
+	}
 
 	/* PART A: Make the buttons in the grid */
 	for (let row = 0; row < 3; row++) {
@@ -176,10 +180,9 @@ async function startGame() {
 		}
 	}
 
-	turnX = Math.random() < 0.5;
-
 	displayTurn();
 	displayScore();
+	preventMoves = false;
 }
 
 startGame();

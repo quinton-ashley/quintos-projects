@@ -25,7 +25,6 @@ PImage imgNet = spriteArt("w.\n.w\n".repeat(80));
 PImage imgCenterLine = spriteArt("w".repeat(5) + ".".repeat(31) + "w".repeat(144) + ".".repeat(31) + "w".repeat(5) + "\n");
 
 void setup() {
-  size(256, 192);
   // places a ball in center of the screen
   ball.x = width / 2;
   ball.y = height / 2;

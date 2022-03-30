@@ -1,9 +1,47 @@
-// start of wrapper (I will explain how this works later)
-(async () => {
-	// your code goes here! below this line
+// your code goes here! below this line
 
-	const hangman = [
-		`
+const hangman = [
+	`
+
+
+
+
+
+
+=========`,
+	`
+
+
+      |
+      |
+      |
+      |
+=========`,
+	`
+      +
+      |
+      |
+      |
+      |
+      |
+=========`,
+	`
+    --+
+      |
+      |
+      |
+      |
+      |
+=========`,
+	`
+  +---+
+      |
+      |
+      |
+      |
+      |
+=========`,
+	`
   +---+
   |   |
       |
@@ -11,7 +49,7 @@
       |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -19,7 +57,7 @@
       |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -27,7 +65,7 @@
       |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -35,7 +73,7 @@
       |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -43,7 +81,7 @@
       |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -51,7 +89,7 @@
  /    |
       |
 =========`,
-		`
+	`
   +---+
   |   |
   O   |
@@ -59,29 +97,51 @@
  / \\  |
       |
 =========`
-	];
+];
 
-	let words = `abruptly absurd abyss affix askew avenue awkward axiom azure bagpipes bandwagon banjo bayou beekeeper bikini blitz blizzard boggle bookworm boxcar buckaroo buffalo buffoon buxom buzzard buzzing buzzwords cobweb croquet crypt cycle disavow dizzying duplex dwarves embezzle equip espionage euouae exodus faking fishhook fixable fjord flapjack flopping fluffiness flyby foxglove frazzled frizzled fuchsia funny gabby galaxy galvanize gazebo gizmo glowworm glyph gnarly gnostic gossip grogginess haiku haphazard hyphen icebox injury ivory ivy jackpot jawbreaker jaywalk jazzy jelly jigsaw jinx jiujitsu jockey jogging joking jovial joyful juicy jukebox jumbo kayak kazoo keyhole kilobyte kiosk kitsch kiwifruit klutz knapsack larynx lengths lucky luxury lymph marquee matrix megahertz microwave mnemonic mystify nightclub nowadays oxidize oxygen pajama phlegm pixel pizazz polka psyche puppy puzzling quartz queue quips quiz quizzes quorum razzmatazz rhubarb rhythm scratch snazzy sphinx squawk staff strength stretch stronghold stymied subway swivel syndrome thrift thumb topaz transcript transgress transplant twelfth triphthong unknown unzip vaporize voodoo vortex walkway waltz wave wavy waxy well whomever witch wizard wristwatch xylophone yacht youthful yummy zigzag zilch zipper zodiac zombie`;
+// words that are easier to spell
+let easyWords =
+	'I cool know over these about down large please they after drink learn put think again each little red this ago everything live right those all face location run three also far make same to always fast man sea together am father many seven try an find may shop turn and first meaning sit under any five men six until are fly mother sleep us as foot much small use from must smile want ask give never some we at go no sorry well away green not star what because has now stay when bed here ocean stop where black his of store which blue how old strong why bring in on tell will call into one thank with clean is only that yellow cold it or the yes color just our you come kind out there'.split(
+		' '
+	);
 
-	/* PART A0: split the words string into an array, choose a random word */
-	words = words.split(' ');
+// words that are harder to spell
+let mediumWords =
+	"above coming hoof pleasure sugar abscess correct hooves plunger summers already corsage houses plural sure ancient couldn't inch poem surgeon angel county's inches poems swap another couple insects poets talk answer courage instead police ten anything cousin iron ponies terror armies danger jealous pony thief's army diamond journey potato thieves' ax diamonds lady's potatoes three axes discover language poultry to baby's does laugh priest today beach dollar laughter priests tomorrow beaches dollars learn promise touch beauty dungeon leisure pull treasure beige early lettuce puppies trouble believe earnest life puppy trucks bench earth lilies quiet two benches echo lily quotient typists blood eight linger rabbis uncles boss elf lives range union bosses elves loss ranger valley brother enough losses ready valleys built extra machine reindeer view bullet farmers man's relief village bureau feather measure remove villages bushel finger men's rhythm warm butcher five mercies rural was calf flood mercy says wash camel floor mice's scarf watch camels for minute scarves water canaries four mirror schedule welcome canary freight mother school wife candies front mouse's scissors winters candy glass navy's search witches canoe glasses niece serious wives canoes glories nine seven wolf's caravan glory ocean shield wolves carry greater oceans should woman's chalk guard once shoulder woman cheese guess one shovel women's cheeses guide other six wonder child gypsies outdoor ski word chimney half oven someone workman chimneys harbors ox's source worth chorus haste oxen's squad wrong choruses health period squat yacht circuit healthy pierce statue yield cities heaven pint stomach zero comfort heavy plague stranger".split(
+		' '
+	);
 
+let hardWords =
+	'abruptly absurd abyss affix askew avenue awkward axiom azure bagpipes bandwagon banjo bayou beekeeper bikini blitz blizzard boggle bookworm boxcar buckaroo buffalo buffoon buzzard buzzing buzzwords cobweb croquet crypt cycle disavow dizzying duplex dwarves embezzle equip espionage euouae exodus faking fishhook fixable fjord flapjack flopping fluffiness flyby foxglove frazzled frizzled funny gabby galaxy galvanize gazebo gizmo glow glyph gnarly gnostic gossip grogginess haiku haphazard hyphen icebox injury ivory ivy jackpot jawbreaker jaywalk jazzy jelly jigsaw jinx jiujitsu jockey jogging joking jovial joyful juicy jukebox jumbo kayak kazoo keyhole kilobyte kiosk kitsch kiwifruit klutz knapsack lengths lucky luxury marquee matrix megahertz microwave mnemonic mystify nightclub nowadays oxidize oxygen pajama phlegm pixel pizazz polka psyche puppy puzzling quartz queue quip quiz quizzes razzmatazz rhythm scratch snazzy squawk staff strength stretch stronghold stymie subway swivel syndrome thrift thumb topaz transcript transgress transplant twelfth unknown unzip vaporize voodoo vortex walkway waltz wave wavy waxy well whomever witch wizard wristwatch xylophone yacht youthful yummy zigzag zilch zipper zodiac zombie'.split(
+		' '
+	);
+
+/* PART A0: split the words string into an array, choose a random word */
+let words, word, lines, incorrectLetters, wrong, mode;
+
+async function gameLoop() {
 	// generate random number between 0 and the number of words in the words array
-	let rand = Math.random() * words.length;
-	rand = Math.floor(rand); // round down
-	const word = words[rand]; // get word from words array
-	console.log(word); // log the word in the console for testing
+	let rand = Math.floor(Math.random() * words.length);
+	word = words[rand]; // get word from words array
+	words.splice(rand, 1);
+	log(word); // log the word in the console for testing
 
 	/* PART A1: make an array with a line for each letter in the word */
 	// Example word: 'quiz'
 	// lines -> ['_', '_', '_', '_']
-	let lines = '_'.repeat(word.length).split('');
+	lines = '_'.repeat(word.length).split('');
 
-	let parts = 0;
+	wrong = 0;
+	incorrectLetters = [];
+
 	/* PART A3: make the game loop, don't use the hangman until part B */
-	while (lines.includes('_') || parts > 6) {
+	while (lines.includes('_') && wrong < hangman.length) {
 		/* PART B: display the hangman in the prompt */
-		let msg = hangman[parts] + '\n' + lines.join(' ');
+		let msg = hangman[wrong] + '\n\n' + lines.join(' ');
+
+		if (incorrectLetters.length > 0) {
+			msg += '\n\n' + incorrectLetters.join(', ');
+		}
 
 		// guess is the letter or word the user entered
 		let guess = await prompt(msg);
@@ -103,16 +163,45 @@
 			i++;
 		}
 
-		if (isCorrect == false) {
-			parts++;
+		if (!isCorrect) {
+			if (guess.length == 1) incorrectLetters.push(guess);
+			wrong++;
 		}
 	}
 
-	if (parts <= 6) {
-		await alert('You got it! The word is ' + word);
+	if (wrong < hangman.length) {
+		await alert('You got it! The word was "' + word + '"');
 	} else {
-		await alert('You ran out of attempts. The word is ' + word);
+		await alert('You ran out of attempts. The word was "' + word + '"');
 	}
 
-	exit(); // exits the game
-})(); // end
+	if (words.length > 0) {
+		gameLoop();
+	} else {
+		await alert("That's all the words in the " + mode + ' words list! Thanks for playing!');
+		startGame();
+	}
+}
+
+async function startGame() {
+	mode = await prompt(
+		'Hangman is a word guessing game.\n\nOn each turn you can guess a letter in the word or try to guess the full word.\n\nDo you want words that are easy, medium, or hard to guess?'
+	);
+	if (mode === null) {
+		exit();
+		return;
+	}
+	mode = mode.toString().toLowerCase();
+	if (mode == 'medium') {
+		words = mediumWords;
+	} else if (mode == 'hard') {
+		words = hardWords;
+	} else {
+		mode = 'easy';
+		words = easyWords;
+	}
+	await alert('You selected the ' + mode + ' words list.\n\nGood luck!');
+	gameLoop();
+}
+
+startGame();
