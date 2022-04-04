@@ -66,9 +66,3 @@ player.loadAni('push-lr', { line: 13, frames: 5 });
 player.loadAni('push-up', { line: 15, frames: 6 });
 player.loadAni('push-down', { line: 14, frames: 6 });
 player.loadAni('dance', { line: 2, frames: 4, delay: 6 });
-
-let levelSet;
-
-(async () => {
-	levelSet = await (await fetch(QuintOS.dir + '/levels.json')).json();
-})();

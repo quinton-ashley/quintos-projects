@@ -106,15 +106,7 @@ spawn();
 
 function draw() {
 	clear();
-	background(color16('r'));
-	fill(color16('c'));
-	stroke(color16('w'));
-	rect(20, 22, 216, 20); // top
-	rect(20, 42, 36, 120); // left
-	rect(200, 42, 36, 120); // right
-	rect(20, 152, 216, 20); // bottom
-	image(imgNet, width / 2 - 2, 22);
-	image(imgCenterLine, 20, height / 2);
+	background(colorPal('u'));
 
 	paddleUp.x = mouseX - paddleUp.w / 2;
 	paddleDown.x = mouseX - paddleDown.w / 2;

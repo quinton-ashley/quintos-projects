@@ -9,6 +9,8 @@ player.steps = 0;
 
 let moves = [];
 
+let levelSet;
+
 async function loadMenu() {
 	player.steps = 0;
 	resetBoard();
@@ -20,7 +22,12 @@ async function loadMenu() {
 	displaySteps();
 }
 
-loadMenu();
+async function loadGame() {
+	levelSet = await (await fetch(QuintOS.dir + '/levels.json')).json();
+	loadMenu();
+}
+
+loadGame();
 
 function undo() {
 	if (moves.length <= 1) {
