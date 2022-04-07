@@ -17,7 +17,7 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 2;
+// QuintOS.level = 2;
 
 QuintOS.username = 'quinton-ashley';
 
