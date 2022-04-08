@@ -19,23 +19,27 @@
 
 // QuintOS.level = 2;
 
-QuintOS.username = 'quinton-ashley';
+// QuintOS.username = 'quinton-ashley';
 
+// QuintOS.username = 'Paeto-Chayarat'; // switch to main
 // QuintOS.username = 'jaximuslim';
 // QuintOS.username = 'MEDBEDFAKE';
-// QuintOS.username = 'seva-zoff';
 // QuintOS.username = 'Morz75';
 // QuintOS.username = 'rsaijo24';
 // QuintOS.username = 'WarriorFPHS';
-// QuintOS.username = 'EvanZSC';
-// QuintOS.username = 'hansenhong';
-// QuintOS.username = 'eeshcapiche';
-// QuintOS.username = 'JuniorObrien';
-// QuintOS.username = 'Man4070';
-// QuintOS.username = 'Paeto-Chayarat';
 // QuintOS.username = 'Rayan-Hobballah';
-// QuintOS.username = 'sophiaaaaaaaaaaaa';
-// QuintOS.username = 'VoronmVoron';
+// QuintOS.username = 'Ricane7'; // update!
+// QuintOS.username = 'carter-noa'; // update!
+// QuintOS.username = 'seva-zoff'; // update!
+// QuintOS.username = 'sophiaaaaaaaaaaaa'; // pong size error
+// QuintOS.username = 'eeshcapiche'; // switch to main
+// QuintOS.username = 'JuniorObrien'; // switch to main
+// QuintOS.username = 'Man4070'; // switch to main
+// QuintOS.username = 'VoronmVoron'; // switch to main
+// QuintOS.username = 'hansenhong';
+// QuintOS.username = 'EvanZSC';
+// QuintOS.username = 'saa1d';
+// QuintOS.username = 'mykaala';
 
 // QuintOS.dir = 'games_java';
 // QuintOS.dir = 'games_js';

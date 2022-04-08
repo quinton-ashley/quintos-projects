@@ -47,7 +47,7 @@ for (let word of words.concat(longWords)) {
 
 // example loading the "spell" sound
 let letterSounds = {};
-for (let letter of 'abcdefghijklmnopqrstuvwxyz'.split('')) {
+for (let letter of "ABCDEFGHIJKLMNOPQRSTUVWXYZ'".split('')) {
 	letterSounds[letter] = loadSound(QuintOS.dir + '/sounds/letters/' + letter + '.mp3');
 	letterSounds[letter].setVolume(0.3);
 }

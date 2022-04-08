@@ -1,5 +1,4 @@
 // screen resolution is 256x192
-log('hi');
 
 // tennis ball image
 let imgBall = spriteArt(`
