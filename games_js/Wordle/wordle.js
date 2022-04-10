@@ -49,19 +49,31 @@ function displayBoxes(guess) {
 
 async function startGame() {
 	/* pick new random word */
-	word = words[Math.floor(Math.random() * words.length)];
+	let rand = Math.floor(Math.random() * words.length);
+
+	word = words.splice(rand, 1)[0];
+
 	displayBoxes('');
 
 	for (let turn = 0; turn < 6; turn++) {
 		let msg = 'Guess the word!';
 		let guess = await prompt(msg, 3, 18, 20);
 		guess = guess.toUpperCase();
-		if (guess.length != 5 && dictionary.findIndex(guess) >= 0) {
+		if (guess.length != 5 || dictionary.indexOf(guess) == -1) {
 			await alert('Your guess must be a five letter word!', 3, 18, 20);
 			turn--;
 			continue;
 		}
 		board[turn] = guess.split('');
 		displayBoxes(guess);
+		if (guess == word) {
+			await alert('You won!', 3, 18, 20);
+			board = [];
+			for (let i = 0; i < 6; i++) {
+				board[i] = ' '.repeat(5).split('');
+			}
+			startGame();
+			return;
+		}
 	}
 }
