@@ -17,9 +17,10 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-// QuintOS.level = 2;
+QuintOS.level = 8;
+QuintOS.game = 'Wordle';
 
-// QuintOS.username = 'quinton-ashley';
+QuintOS.username = 'quinton-ashley';
 
 // QuintOS.username = 'Paeto-Chayarat'; // switch to main
 // QuintOS.username = 'jaximuslim';
@@ -28,10 +29,11 @@
 // QuintOS.username = 'rsaijo24';
 // QuintOS.username = 'WarriorFPHS';
 // QuintOS.username = 'Rayan-Hobballah';
+// QuintOS.username = 'seva-zoff';
 // QuintOS.username = 'Ricane7'; // update!
 // QuintOS.username = 'carter-noa'; // update!
-// QuintOS.username = 'seva-zoff'; // update!
 // QuintOS.username = 'sophiaaaaaaaaaaaa'; // pong size error
+
 // QuintOS.username = 'eeshcapiche'; // switch to main
 // QuintOS.username = 'JuniorObrien'; // switch to main
 // QuintOS.username = 'Man4070'; // switch to main
@@ -42,13 +44,14 @@
 // QuintOS.username = 'mykaala';
 
 // QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
+QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.username;
+// QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.username + '/quintos-games/master/GAMES';
 
 // QuintOS.language = 'java';
 
-// QuintOS.gameTitle = 'Test';
+// QuintOS.game = 'Test';
 // QuintOS.sys = 'cpet';
 
 QuintOS.dev = true;
