@@ -1,8 +1,10 @@
 let dictionary = [];
 let words = [];
-let board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
 let turn = 0;
-let word;
+let board, word;
+let score = 0;
+let total = 0;
+let distribution = [0, 0, 0, 0, 0, 0];
 
 async function loadGame() {
 	let wordsList = await (await fetch(QuintOS.dir + '/words5.txt')).text();
@@ -20,21 +22,21 @@ async function loadGame() {
 loadGame();
 
 function displayInfo() {
-	let row = 9;
-	textRect(row, 19, 3, 3, 'solid');
-	text('letter is not found in word', row + 1, 24);
-	row += 4;
-	textRect(row, 19, 3, 3, 'outline');
-	text('letter is in the word', row + 1, 24);
-	row += 4;
-	textRect(row, 19, 3, 3, 'dashed');
-	text('letter is in the correct position in the word', row, 24, 14);
+	let row = 10;
+	textRect(row, 20, 3, 3, 'solid');
+	text('letter is not found in word', row, 24);
+	row += 3;
+	textRect(row, 20, 3, 3, 'outline');
+	text('letter is in the word', row, 24);
+	row += 3;
+	textRect(row, 20, 3, 3, 'dashed');
+	text('letter is in the correct position', row, 24, 14);
 }
 
 function displayBoxes(guess) {
 	for (let i = 0; i < 6; i++) {
 		for (let j = 0; j < 5; j++) {
-			let row = 3 + i * 3;
+			let row = 2 + i * 3;
 			let col = 2 + j * 3;
 
 			let letter = board[i][j];
@@ -52,32 +54,45 @@ function displayBoxes(guess) {
 	}
 }
 
+function displayScore() {
+	str = '|' + score + '/' + total;
+	for (let i = 0; i < 6; i++) {
+		str += `|${i + 1}:${distribution[i]}`;
+	}
+	text(str + '|', 21, 2);
+}
+
 async function startGame() {
+	displayScore();
+	board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
 	/* pick new random word */
 	let rand = Math.floor(Math.random() * words.length);
 
 	word = words.splice(rand, 1)[0];
+	total++;
 
-	await eraseRect(2, 2, 16, 20);
+	await eraseRect(2, 2, 16, 18);
 	displayBoxes('');
 
 	for (let turn = 0; turn < 6; turn++) {
-		let msg = 'Guess the word!';
-		let guess = await prompt(msg, 3, 18, 20);
+		let guess = await prompt('Guess the word!', 2, 18, 20);
 		guess = guess.toUpperCase();
-		if (guess.length != 5 || dictionary.indexOf(guess) == -1) {
-			await alert('Your guess must be a five letter word!', 3, 18, 20);
+		if (guess.length != 5 || !dictionary.includes(guess)) {
+			await alert('Must be a five letter word!', 3, 18, 20);
 			turn--;
 			continue;
 		}
 		board[turn] = guess;
-		await eraseRect(2, 2, 16, 20);
+		await eraseRect(2, 2, 16, 18);
 		displayBoxes(guess);
 		if (guess == word) {
 			await alert('You won!', 3, 18, 20);
-			board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
+			score++;
+			distribution[turn]++;
 			startGame();
 			return;
 		}
 	}
+	await alert('You lost! The word was ' + word, 3, 18, 20);
+	startGame();
 }
