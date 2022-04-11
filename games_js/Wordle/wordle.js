@@ -1,13 +1,6 @@
 let dictionary = [];
 let words = [];
-let board = [
-	[' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' '],
-	[' ', ' ', ' ', ' ', ' ']
-];
+let board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
 let turn = 0;
 let word;
 
@@ -20,13 +13,25 @@ async function loadGame() {
 		dictionary.push(...line.split(' '));
 	}
 
+	displayInfo();
 	startGame();
 }
 
 loadGame();
 
+function displayInfo() {
+	let row = 9;
+	textRect(row, 19, 3, 3, 'solid');
+	text('letter is not found in word', row + 1, 24);
+	row += 4;
+	textRect(row, 19, 3, 3, 'outline');
+	text('letter is in the word', row + 1, 24);
+	row += 4;
+	textRect(row, 19, 3, 3, 'dashed');
+	text('letter is in the correct position in the word', row, 24, 14);
+}
+
 function displayBoxes(guess) {
-	erase();
 	for (let i = 0; i < 6; i++) {
 		for (let j = 0; j < 5; j++) {
 			let row = 3 + i * 3;
@@ -53,6 +58,7 @@ async function startGame() {
 
 	word = words.splice(rand, 1)[0];
 
+	await eraseRect(2, 2, 16, 20);
 	displayBoxes('');
 
 	for (let turn = 0; turn < 6; turn++) {
@@ -64,14 +70,12 @@ async function startGame() {
 			turn--;
 			continue;
 		}
-		board[turn] = guess.split('');
+		board[turn] = guess;
+		await eraseRect(2, 2, 16, 20);
 		displayBoxes(guess);
 		if (guess == word) {
 			await alert('You won!', 3, 18, 20);
-			board = [];
-			for (let i = 0; i < 6; i++) {
-				board[i] = ' '.repeat(5).split('');
-			}
+			board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
 			startGame();
 			return;
 		}
