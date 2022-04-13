@@ -16,6 +16,7 @@ async function loadMenu() {
 	resetBoard();
 	displayLevel();
 	levelNum = await prompt('Select level (0-110): ', 9, 7, 26);
+	if (!levelNum) levelNum = 0;
 	moves = [levelSet.levels[levelNum]];
 	loadLevel(levelSet.levels[levelNum]);
 	displayLevel();

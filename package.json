@@ -23,5 +23,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/java2js"
 	},
-	"version": "1.0.51"
+	"version": "1.0.52"
 }
