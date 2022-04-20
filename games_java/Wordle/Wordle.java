@@ -2,7 +2,10 @@ package games_java.Wordle;
 
 import static games_java.QuintOS.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Wordle {
 	ArrayList<String> dictionary;
@@ -14,8 +17,20 @@ public class Wordle {
 	}
 
 	void setupGame() {
+		words = new ArrayList<String>();
 		/* load the text files */
-
+		String dir = System.getProperty("user.dir") + "/games_java/Wordle";
+		File file = new File(dir + "/words5.txt");
+		Scanner fileScanner;
+		try {
+			fileScanner = new Scanner(file);
+		} catch (FileNotFoundException e) {
+			return;
+		}
+		while (fileScanner.hasNextLine()) {
+			log(fileScanner.nextLine());
+		}
+		fileScanner.close();
 		startGame();
 	}
 

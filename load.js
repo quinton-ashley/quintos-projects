@@ -17,7 +17,8 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Wordle';
+QuintOS.level = 8;
+// QuintOS.game = 'Wordle';
 
 QuintOS.username = 'quinton-ashley';
 

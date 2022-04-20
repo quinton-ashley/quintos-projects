@@ -32,6 +32,7 @@ public class WheelOfFortune {
 	void setup() {
 		String dir = System.getProperty("user.dir") + "/games_java/WheelOfFortune";
 		File phrasesFile = new File(dir + "/phrases.txt");
+		delay(2000);
 		Scanner fileScanner;
 		try {
 			fileScanner = new Scanner(phrasesFile);
@@ -81,21 +82,27 @@ public class WheelOfFortune {
 
 		text("Score: " + score, 17, 10);
 		displayBoxes();
-		addLetter();
+		// addLetter();
 	}
 
 	/* Display all the boxes for the phrase */
 	void displayBoxes() {
+		String boxes = "";
 		for (int wordCounter = 0; wordCounter < words.length; wordCounter++) {
-			for (int letterCounter = 0; letterCounter < words[wordCounter].length(); letterCounter++) {
-				textRect(wordCounter * 3 + 2, letterCounter * 3 + 2, 3, 3);
+			String word = words[wordCounter];
+			boxes += "┌─┐".repeat(word.length()) + "\n";
+			for (int letterCounter = 0; letterCounter < word.length(); letterCounter++) {
+				boxes += "│" + board[wordCounter][letterCounter] + "│";
 			}
+			boxes += "\n" + "└─┘".repeat(word.length()) + "\n";
 		}
+		System.out.println(boxes);
 	}
 
 	void buzz() {
 		buzzed = true;
-		String guess = prompt("What's your guess?", 18);
+		System.out.println("What's your guess?");
+		String guess = sc.nextLine();
 		if (guess != null && guess.equals(phrase)) {
 			int lettersLeft = 0;
 			for (int w = 0; w < words.length; w++) {
@@ -139,17 +146,22 @@ public class WheelOfFortune {
 		int whichLetter = coord[1];
 
 		board[whichWord][whichLetter] = words[whichWord].charAt(whichLetter);
-		text(words[whichWord].charAt(whichLetter), (whichWord + 1) * 3, (whichLetter + 1) * 3);
-		delay(1000);
+		displayBoxes();
 
-		if (avail.size() > 1 && !buzzed) {
-			addLetter();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// System.err.println("delay failed");
 		}
-		if (avail.size() == 1) {
-			score -= 3;
-			erase();
-			setup();
-		}
+
+		// if (avail.size() > 1 && !buzzed) {
+		// addLetter();
+		// }
+		// if (avail.size() == 1) {
+		// score -= 3;
+		// erase();
+		// setup();
+		// }
 	}
 
 	public static void main(String[] args) {

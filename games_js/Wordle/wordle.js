@@ -1,7 +1,7 @@
 let dictionary = [];
 let words = [];
 let turn = 0;
-let board, word;
+let board, letters, word;
 let score = 0;
 let total = 0;
 let distribution = [0, 0, 0, 0, 0, 0];
@@ -14,8 +14,6 @@ async function loadGame() {
 	for (let line of dict.split('\n')) {
 		dictionary.push(...line.split(' '));
 	}
-
-	displayInfo();
 	startGame();
 }
 
@@ -46,6 +44,8 @@ function displayBoxes(guess) {
 				style = 'dashed';
 			} else if (word.includes(letter)) {
 				style = 'outline';
+			} else {
+				letters[letters.indexOf(letter)] = ' ';
 			}
 
 			textRect(row, col, 3, 3, style);
@@ -54,31 +54,38 @@ function displayBoxes(guess) {
 	}
 }
 
-function displayScore() {
-	str = '|' + score + '/' + total;
+async function displayScore() {
+	await eraseRect(9, 19, 20, 11);
+	let str = score + '/' + total + ' correct\n\nGuess Distribution\n\n';
 	for (let i = 0; i < 6; i++) {
-		str += `|${i + 1}:${distribution[i]}`;
+		str += `Guess ${i + 1}: ${distribution[i]}\n`;
 	}
-	text(str + '|', 21, 2);
+	text(str, 9, 19);
+}
+
+function displayLetters() {
+	text(letters.join('').padEnd(36), 21, 2);
 }
 
 async function startGame() {
-	displayScore();
 	board = (' '.repeat(5) + '|').repeat(6).slice(0, -1).split('|');
+	letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 	/* pick new random word */
 	let rand = Math.floor(Math.random() * words.length);
 
 	word = words.splice(rand, 1)[0];
 	total++;
 
-	await eraseRect(2, 2, 16, 18);
+	erase();
+	displayInfo();
 	displayBoxes('');
 
 	for (let turn = 0; turn < 6; turn++) {
+		displayLetters();
 		let guess = await prompt('Guess the word!', 2, 18, 20);
 		guess = guess.toUpperCase();
 		if (guess.length != 5 || !dictionary.includes(guess)) {
-			await alert('Must be a five letter word!', 3, 18, 20);
+			await alert('Must be a five letter word!', 2, 18, 20);
 			turn--;
 			continue;
 		}
@@ -86,13 +93,15 @@ async function startGame() {
 		await eraseRect(2, 2, 16, 18);
 		displayBoxes(guess);
 		if (guess == word) {
-			await alert('You won!', 3, 18, 20);
 			score++;
 			distribution[turn]++;
+			displayScore();
+			await alert('You won!', 2, 18, 20);
 			startGame();
 			return;
 		}
 	}
-	await alert('You lost! The word was ' + word, 3, 18, 20);
+	displayScore();
+	await alert('You lost! The word was ' + word, 2, 18, 20);
 	startGame();
 }
