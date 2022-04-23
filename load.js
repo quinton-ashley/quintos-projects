@@ -7,7 +7,7 @@
 	/*05*/ ['ClickAPath', 'gridc'],
 	/*06*/ ['TicTacToe', 'gridc'],
 	/*07*/ ['WorldWideWeb', 'macin'],
-	/*08*/ ['WheelOfFortune', 'a2'],
+	/*08*/ ['Wordle', 'a2'],
 	/*09*/ ['Contain', 'zx'],
 	/*10*/ ['TicTacAIO', 'gridc'],
 	/*11*/ ['SpeakAndSpell', 'calcu'], // TODO sas
@@ -17,8 +17,7 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 8;
-// QuintOS.game = 'Wordle';
+QuintOS.level = 7;
 
 QuintOS.username = 'quinton-ashley';
 
@@ -30,10 +29,10 @@ QuintOS.username = 'quinton-ashley';
 // QuintOS.username = 'WarriorFPHS';
 // QuintOS.username = 'Rayan-Hobballah';
 // QuintOS.username = 'seva-zoff';
-// QuintOS.username = 'Ricane7'; // update!
-// QuintOS.username = 'carter-noa'; // update!
+// QuintOS.username = 'carter-noa';
 // QuintOS.username = 'sophiaaaaaaaaaaaa'; // pong size error
 
+// QuintOS.username = 'Ricane7';
 // QuintOS.username = 'eeshcapiche'; // switch to main
 // QuintOS.username = 'JuniorObrien'; // switch to main
 // QuintOS.username = 'Man4070'; // switch to main
@@ -43,8 +42,8 @@ QuintOS.username = 'quinton-ashley';
 // QuintOS.username = 'saa1d';
 // QuintOS.username = 'mykaala';
 
-QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
+// QuintOS.dir = 'games_java';
+QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.username;
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.username + '/quintos-games/master/GAMES';

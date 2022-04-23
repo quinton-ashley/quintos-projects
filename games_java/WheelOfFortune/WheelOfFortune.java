@@ -32,7 +32,6 @@ public class WheelOfFortune {
 	void setup() {
 		String dir = System.getProperty("user.dir") + "/games_java/WheelOfFortune";
 		File phrasesFile = new File(dir + "/phrases.txt");
-		delay(2000);
 		Scanner fileScanner;
 		try {
 			fileScanner = new Scanner(phrasesFile);
@@ -82,7 +81,7 @@ public class WheelOfFortune {
 
 		text("Score: " + score, 17, 10);
 		displayBoxes();
-		// addLetter();
+		addLetter();
 	}
 
 	/* Display all the boxes for the phrase */
@@ -96,13 +95,12 @@ public class WheelOfFortune {
 			}
 			boxes += "\n" + "└─┘".repeat(word.length()) + "\n";
 		}
-		System.out.println(boxes);
+		text(boxes, 2, 2);
 	}
 
 	void buzz() {
 		buzzed = true;
-		System.out.println("What's your guess?");
-		String guess = sc.nextLine();
+		String guess = prompt("What's your guess?", 18);
 		if (guess != null && guess.equals(phrase)) {
 			int lettersLeft = 0;
 			for (int w = 0; w < words.length; w++) {
@@ -117,6 +115,7 @@ public class WheelOfFortune {
 			setup();
 			return;
 		} else {
+			alert("Wrong, try again!", 18);
 			score--;
 		}
 		text("Score: " + score, 17, 10);
@@ -149,19 +148,20 @@ public class WheelOfFortune {
 		displayBoxes();
 
 		try {
+			delay(1000);
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// System.err.println("delay failed");
+			e.printStackTrace();
 		}
 
-		// if (avail.size() > 1 && !buzzed) {
-		// addLetter();
-		// }
-		// if (avail.size() == 1) {
-		// score -= 3;
-		// erase();
-		// setup();
-		// }
+		if (avail.size() > 1 && !buzzed) {
+			addLetter();
+		}
+		if (avail.size() == 1) {
+			score -= 3;
+			erase();
+			setup();
+		}
 	}
 
 	public static void main(String[] args) {

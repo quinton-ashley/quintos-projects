@@ -48,8 +48,7 @@ public class QuickClicks {
 		msg += "Your slowest response time was " + slowest + "ms.\n";
 		msg += "Your fastest response time was " + fastest + "ms.";
 
-		System.out.println(msg);
-		erase();
+		alert(msg);
 		exit();
 	}
 
@@ -93,7 +92,7 @@ public class QuickClicks {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Click the buttons as fast as you can!");
+		alert("Click the buttons as fast as you can!");
 		new QuickClicks();
 	}
 }

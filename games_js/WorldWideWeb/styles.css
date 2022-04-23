@@ -1,0 +1,29 @@
+nav {
+	display: flex;
+	align-content: left;
+	align-items: center;
+	gap: 5px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: white;
+}
+
+nav #homeLink {
+	font-size: 30px;
+}
+nav img {
+	width: 40px;
+}
+
+#contents {
+	padding-top: 20px;
+}
+
+footer {
+	width: 100%;
+	border: black dotted 0px;
+	border-top-width: 3px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}

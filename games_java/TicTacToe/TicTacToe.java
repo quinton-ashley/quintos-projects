@@ -24,30 +24,28 @@ public class TicTacToe {
 				  T   O   O  E
 				  T    OOO   EEEE""";
 
+		String bigO = " OOOOOO \n" +
+				"OO    OO\n" +
+				"OO    OO\n" +
+				"OO    OO\n" +
+				"OO    OO\n" +
+				"OO    OO\n" +
+				" OOOOOO ";
+
+		String bigX = "XX    XX\n" +
+				" XX  XX \n" +
+				"  XXXX  \n" +
+				"   XX   \n" +
+				"  XXXX  \n" +
+				" XX  XX \n" +
+				"XX    XX";
+
 		String bigSpace = "        \n".repeat(7);
-
-		String bigO = """
-				 OOOOOO
-				OO    OO
-				OO    OO
-				OO    OO
-				OO    OO
-				OO    OO
-				 OOOOOO""".substring(1); // slice off the first newline character
-
-		String bigX = """
-				XX    XX
-				 XX  XX
-				  XXXX
-				   XX
-				  XXXX
-				 XX  XX
-				XX    XX""".substring(1);
 
 		int gridRow = 3;
 		int gridCol = 26;
 
-		text(title, 5, 6);
+		text(title, 5, 3);
 		/* PART A: finish the grid of 9x8 spaces */
 		text("─".repeat(26), gridRow + 7, gridCol);
 		// text("─".repeat(26), ?, ?); // draw another horizontal line
