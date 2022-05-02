@@ -17,7 +17,7 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 2;
+QuintOS.level = 12;
 
 QuintOS.username = 'quinton-ashley';
 
@@ -42,8 +42,8 @@ QuintOS.username = 'quinton-ashley';
 // QuintOS.username = 'saa1d';
 // QuintOS.username = 'mykaala';
 
-QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
+// QuintOS.dir = 'games_java';
+QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.username;
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.username + '/quintos-games/master/GAMES';

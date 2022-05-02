@@ -16,38 +16,38 @@ let world = createTiles(8, 0, 16);
 world.spriteSheet = loadImage(QuintOS.dir + '/img/world.png');
 
 for (let i = 0; i < 10; i++) {
-	world.loadAni('grass' + i, { pos: [1, i] });
+	world.addAni('grass' + i, { pos: [1, i] });
 }
 
-let pipes = world.createGroup('pipes');
-pipes.loadAni('pipe-horiz', { pos: [2, 0] });
-pipes.loadAni('pipe-start', { pos: [2, 1] });
-pipes.loadAni('pipe-middle', { pos: [2, 2] });
-pipes.loadAni('pipe-end', { pos: [2, 3] });
-pipes.loadAni('pipe-topLeft', { pos: [2, 4] });
-pipes.loadAni('pipe-topRight', { pos: [2, 5] });
-pipes.loadAni('pipe-bottomLeft', { pos: [2, 6] });
-pipes.loadAni('pipe-bottomRight', { pos: [2, 7] });
+let pipes = world.createGroup();
+pipes.addAni('pipe-horiz', { pos: [2, 0] });
+pipes.addAni('pipe-start', { pos: [2, 1] });
+pipes.addAni('pipe-middle', { pos: [2, 2] });
+pipes.addAni('pipe-end', { pos: [2, 3] });
+pipes.addAni('pipe-topLeft', { pos: [2, 4] });
+pipes.addAni('pipe-topRight', { pos: [2, 5] });
+pipes.addAni('pipe-bottomLeft', { pos: [2, 6] });
+pipes.addAni('pipe-bottomRight', { pos: [2, 7] });
 
-world.loadAni('egg', { pos: [0, 0] });
+world.addAni('egg', { pos: [0, 0] });
 
-let snake = world.createGroup('snake');
+let snake = world.createGroup();
 snake.spriteSheet = loadImage(QuintOS.dir + '/img/snakes.png');
-snake.loadAni('head-up', { pos: [0, 0] });
-snake.loadAni('blink-up', { pos: [0, 1] });
-snake.loadAni('head-left', { pos: [0, 6] });
-snake.loadAni('blink-left', { pos: [0, 7] });
-snake.loadAni('eat-up', { pos: [1, 0], frames: 5 });
-snake.loadAni('eat-left', { pos: [1, 5], frames: 5 });
-snake.loadAni('body-up', { pos: [0, 2], frames: 2, delay: 40 });
-snake.loadAni('tail-up', { pos: [0, 4], frames: 2, delay: 40 });
-snake.loadAni('body-left', { pos: [0, 8], frames: 2, delay: 40 });
-snake.loadAni('tail-left', { pos: [0, 10], frames: 2, delay: 40 });
-snake.loadAni('curve', { pos: [1, 10], frames: 2, delay: 40 });
-snake.loadAni('bodyhalf-up', { pos: [0, 12], frames: 2, delay: 40 });
-snake.loadAni('bodyhalf-left', { pos: [1, 12], frames: 2, delay: 40 });
+snake.addAni('head-up', { pos: [0, 0] });
+snake.addAni('blink-up', { pos: [0, 1] });
+snake.addAni('head-left', { pos: [0, 6] });
+snake.addAni('blink-left', { pos: [0, 7] });
+snake.addAni('eat-up', { pos: [1, 0], frames: 5 });
+snake.addAni('eat-left', { pos: [1, 5], frames: 5 });
+snake.addAni('body-up', { pos: [0, 2], frames: 2, delay: 40 });
+snake.addAni('tail-up', { pos: [0, 4], frames: 2, delay: 40 });
+snake.addAni('body-left', { pos: [0, 8], frames: 2, delay: 40 });
+snake.addAni('tail-left', { pos: [0, 10], frames: 2, delay: 40 });
+snake.addAni('curve', { pos: [1, 10], frames: 2, delay: 40 });
+snake.addAni('bodyhalf-up', { pos: [0, 12], frames: 2, delay: 40 });
+snake.addAni('bodyhalf-left', { pos: [1, 12], frames: 2, delay: 40 });
 
 let icons = createTiles(16).createGroup('icons');
 icons.spriteSheet = loadImage(QuintOS.dir + '/img/icons.png');
-icons.loadAni('Normal', { pos: [0, 0] });
-icons.loadAni('Reverse', { pos: [0, 1] });
+icons.addAni('Normal', { pos: [0, 0] });
+icons.addAni('Reverse', { pos: [0, 1] });
