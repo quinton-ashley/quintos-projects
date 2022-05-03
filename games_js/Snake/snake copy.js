@@ -1,35 +1,3 @@
-for (let i = 0; i < 10; i++) {
-	world.addAni('grass' + i, { pos: [1, i] });
-}
-
-world.addAni('egg', { pos: [0, 0] });
-
-pipes.addAni('pipe-horiz', { pos: [2, 0] });
-pipes.addAni('pipe-start', { pos: [2, 1] });
-pipes.addAni('pipe-middle', { pos: [2, 2] });
-pipes.addAni('pipe-end', { pos: [2, 3] });
-pipes.addAni('pipe-topLeft', { pos: [2, 4] });
-pipes.addAni('pipe-topRight', { pos: [2, 5] });
-pipes.addAni('pipe-bottomLeft', { pos: [2, 6] });
-pipes.addAni('pipe-bottomRight', { pos: [2, 7] });
-
-snake.addAni('head-up', { pos: [0, 0] });
-snake.addAni('blink-up', { pos: [0, 1] });
-snake.addAni('head-left', { pos: [0, 6] });
-snake.addAni('blink-left', { pos: [0, 7] });
-snake.addAni('eat-up', { pos: [1, 0], frames: 5 });
-snake.addAni('eat-left', { pos: [1, 5], frames: 5 });
-snake.addAni('body-up', { pos: [0, 2], frames: 2, delay: 40 });
-snake.addAni('tail-up', { pos: [0, 4], frames: 2, delay: 40 });
-snake.addAni('body-left', { pos: [0, 8], frames: 2, delay: 40 });
-snake.addAni('tail-left', { pos: [0, 10], frames: 2, delay: 40 });
-snake.addAni('curve', { pos: [1, 10], frames: 2, delay: 40 });
-snake.addAni('bodyhalf-up', { pos: [0, 12], frames: 2, delay: 40 });
-snake.addAni('bodyhalf-left', { pos: [1, 12], frames: 2, delay: 40 });
-
-icons.addAni('Normal', { pos: [0, 0] });
-icons.addAni('Reverse', { pos: [0, 1] });
-
 // screen size: 160x144 pixels
 // text rows: 18 cols: 20
 

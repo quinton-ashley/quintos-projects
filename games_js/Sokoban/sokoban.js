@@ -106,13 +106,7 @@ function loadLevel(level, doReset) {
 			}
 			if (t == '$' || t == '*') {
 				let box = boxes.createSprite('box', row, col, 1);
-				box.setCollider(
-					'rectangle',
-					world.tileSize * 0.2,
-					world.tileSize * 0.49,
-					world.tileSize * 0.6,
-					world.tileSize * 0.3
-				);
+				box.setCollider('rectangle', 0, 0, box.height * 0.5, box.height * 0.5);
 			}
 			if (t == '.' || t == '*' || t == '+') {
 				goals.createSprite('goal', row, col);

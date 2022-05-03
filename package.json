@@ -3,9 +3,10 @@
 	"name": "quintos-games",
 	"description": "Learn to code by making games in JavaScript using QuintOS!",
 	"dependencies": {
+		"java2js": "^1.0.7",
 		"jquery": "^3.6.0",
 		"p5": "^1.4.0",
-		"java2js": "^1.0.7",
+		"p5.play": "^2.1.1",
 		"quintos": "^2.0.2"
 	},
 	"homepage": "https://quinton-ashley.github.io/java2js/",
@@ -21,7 +22,7 @@
 		"V": "npm version minor --force",
 		"version": "git add -A",
 		"postversion": "git push",
-		"relink": "npm link ../../pkg/quintos ../../pkg/java2js"
+		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
 	},
-	"version": "1.0.57"
+	"version": "1.0.58"
 }
