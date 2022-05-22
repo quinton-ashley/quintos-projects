@@ -42,7 +42,7 @@ async function displayStats() {
 	let msg = 'Your average response time was ' + avg + 'ms.\n';
 	msg += 'Your slowest response time was ' + slowest + 'ms.\n';
 	msg += 'Your fastest response time was ' + fastest + 'ms.';
-	await alert(msg, 11, 14);
+	await alert(msg, 9, 19, 42);
 	exit();
 }
 
@@ -50,7 +50,7 @@ async function displayStats() {
 function makeBg() {
 	let patternA = '\\⎽⎽/⎺⎺'; //odd
 	let patternB = '/⎺⎺\\⎽⎽'; //even
-	for (let row = 0; row < 28; row++) {
+	for (let row = 0; row < 24; row++) {
 		let pattern = patternA;
 		if (row % 2 == 0) {
 			pattern = patternB;
@@ -77,9 +77,9 @@ function btnClick() {
 		// target is 8w x 6h
 		// drawing starts from top left corner
 		// we want to draw the target within the bounds of the frame
-		// 30 rows - 6 target height - 1 frame line = 23
+		// 26 rows - 6 target height - 1 frame line = 19
 		// 80 columns - 8 target width - 1 frame line = 71
-		let row = Math.random() * 23;
+		let row = Math.random() * 19;
 		row = Math.ceil(row);
 
 		let col = Math.random() * 71;

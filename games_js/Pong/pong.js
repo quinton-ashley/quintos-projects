@@ -1,4 +1,4 @@
-// screen resolution is 256x192
+// screen size is 256x192
 
 // tennis ball image
 let imgBall = spriteArt(`
@@ -22,38 +22,19 @@ let imgNet = spriteArt('w.\n.w\n'.repeat(80));
 
 let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
-let ball = createSprite(imgBall);
-let paddleL = createSprite(imgPaddle);
-let paddleR = createSprite(imgPaddle);
-let wallTop = createSprite(imgWall);
-let wallBottom = createSprite(imgWall);
+let ball = new Sprite(imgBall, centerX, centerY);
+let paddleL = new Sprite(imgPaddle, 9, centerY, 'static');
+let paddleR = new Sprite(imgPaddle, width - 9, centerY, 'static');
+let wallTop = new Sprite(imgWall, centerX, 4, 'static');
+let wallBottom = new Sprite(imgWall, centerX, height - 4, 'static');
 
 let scoreL = 0;
 let scoreR = 0;
 
 // places a ball in center of the screen
-ball.x = width / 2 - ball.w / 2;
-ball.y = height / 2 - ball.h / 2;
-ball.velocity.x = -1;
+ball.velocity.x = 1;
 ball.velocity.y = 1;
-
-// place paddles 5px from the sides, center vertically
-paddleL.x = 5;
-paddleL.y = height / 2 - paddleL.h / 2;
-paddleL.immovable = true;
-
-paddleR.x = width - paddleR.w - 5;
-paddleR.y = height / 2 - paddleR.h / 2;
-paddleR.immovable = true;
-
-// place walls on the top and bottom of the screen
-wallTop.x = 0;
-wallTop.y = 0;
-wallTop.immovable = true;
-
-wallBottom.x = 0;
-wallBottom.y = height - wallBottom.h;
-wallBottom.immovable = true;
+ball.bounciness = 1;
 
 function displayScore() {
 	text(scoreL, 3, 10);
@@ -70,8 +51,8 @@ function draw() {
 	rect(20, 36, 36, 140); // left
 	rect(200, 36, 36, 140); // right
 	rect(20, 156, 216, 20); // bottom
-	image(imgNet, width / 2 - 2, 16);
-	image(imgCenterLine, 20, height / 2);
+	image(imgNet, centerX - 1, 16);
+	image(imgCenterLine, 20, centerY);
 
 	// if ball touches top wall
 	if (ball.y < wallTop.y + wallTop.h) {
@@ -90,21 +71,17 @@ function draw() {
 		}
 	}
 
-	if (isKeyDown('w') && paddleL.y > wallTop.y + wallTop.h) {
+	if (isKeyDown('w') && paddleL.y > wallTop.y) {
 		paddleL.y -= 4;
-	} else if (isKeyDown('s') && paddleL.y + paddleL.h < wallBottom.y) {
+	} else if (isKeyDown('s') && paddleL.y < wallBottom.y) {
 		paddleL.y += 4;
 	}
 
-	if (isKeyDown('ArrowUp') && paddleR.y > wallTop.y + wallTop.h) {
+	if (isKeyDown('ArrowUp') && paddleR.y > wallTop.y) {
 		paddleR.y -= 4;
-	} else if (isKeyDown('ArrowDown') && paddleR.y + paddleL.h < wallBottom.y) {
+	} else if (isKeyDown('ArrowDown') && paddleR.y < wallBottom.y) {
 		paddleR.y += 4;
 	}
-
-	// have the ball bounce of the paddles
-	ball.bounce(paddleL);
-	ball.bounce(paddleR);
 
 	// if the ball leaves the screen
 	if (ball.x < -50) {
@@ -126,6 +103,18 @@ function draw() {
 		ball.x = width / 2 - ball.w / 2;
 		ball.y = height / 2 - ball.h / 2;
 	}
+}
 
-	drawSprites();
+function keyPressed() {
+	if (key == 'd') {
+		paddleL.rotation += 22.5;
+	} else if (key == 'a') {
+		paddleL.rotation -= 22.5;
+	}
+
+	if (key == 'ArrowLeft') {
+		paddleR.rotation -= 22.5;
+	} else if (key == 'ArrowRight') {
+		paddleR.rotation += 22.5;
+	}
 }

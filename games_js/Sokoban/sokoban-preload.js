@@ -3,8 +3,7 @@ let imgDir = QuintOS.dir + '/img/bitBoi';
 
 /* WORLD */
 
-//      createTiles(tileSize, x, y)
-let world = createTiles(16, 90, 40);
+let world = new World(0, 0, 16);
 world.spriteSheet = loadImage(imgDir + '/world16.png');
 
 let walls = world.createGroup();
@@ -49,7 +48,7 @@ goals.addAni('goal', { pos: [15, 1] });
 
 /* PLAYER */
 
-//                 createSprite(row, col, layer)
+//                 createSprite(x, y, layer)
 let player = world.createSprite(5, 5, 1);
 player.spriteSheet = loadImage(imgDir + '/bitBoi16.png');
 

@@ -7,6 +7,7 @@
 		"jquery": "^3.6.0",
 		"p5": "^1.4.0",
 		"p5.play": "^2.1.1",
+		"planck": "^1.0.0-alpha.4",
 		"quintos": "^2.0.2"
 	},
 	"homepage": "https://quinton-ashley.github.io/java2js/",
@@ -24,5 +25,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
 	},
-	"version": "1.0.58"
+	"version": "1.0.59"
 }

@@ -189,7 +189,7 @@ async function selectScreen() {
 	let description = 'Save the hangman by guessing which letters occur in a word!';
 	await text(description, 2, 2, 36);
 
-	await text('*'.repeat(40), 5);
+	await text('*'.repeat(38), 5, 1);
 
 	await text('Select a words list:', 7, 2);
 
@@ -206,7 +206,7 @@ async function selectScreen() {
 		}
 	}
 
-	await text('*'.repeat(40), 19);
+	await text('*'.repeat(38), 19, 1);
 
 	upload('  Upload a word list!'.padEnd(38), 21, 1, 'text', loadWordList);
 }

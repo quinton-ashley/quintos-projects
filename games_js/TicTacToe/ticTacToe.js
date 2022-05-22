@@ -160,7 +160,7 @@ async function startNewGame() {
 }
 
 async function startGame() {
-	text(title, 5, 6);
+	text(title, 6, 6);
 
 	/* PART A: finish the grid of 9x8 spaces */
 	text('─'.repeat(26), gridRow + 7, gridCol);

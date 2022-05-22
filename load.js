@@ -4,7 +4,7 @@
 	/*02*/ ['Pong', 'zx'],
 	/*03*/ ['Hangman', 'a2'],
 	/*04*/ ['QuickClicks', 'gridc'],
-	/*05*/ ['ClickAPath', 'gridc'],
+	/*05*/ ['CodeBreaker', 'gridc'],
 	/*06*/ ['TicTacToe', 'gridc'],
 	/*07*/ ['WorldWideWeb', 'macin'],
 	/*08*/ ['Wordle', 'a2'],
@@ -17,7 +17,7 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 12;
+QuintOS.level = 2;
 
 QuintOS.username = 'quinton-ashley';
 
