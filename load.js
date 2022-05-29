@@ -17,7 +17,10 @@
 	/*15*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 2;
+// QuintOS.level = 12;
+
+QuintOS.game = 'NumberDash';
+QuintOS.sys = 'arcv';
 
 QuintOS.username = 'quinton-ashley';
 

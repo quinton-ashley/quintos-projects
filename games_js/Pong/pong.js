@@ -35,6 +35,7 @@ let scoreR = 0;
 ball.velocity.x = 1;
 ball.velocity.y = 1;
 ball.bounciness = 1;
+ball.friction = 0;
 
 function displayScore() {
 	text(scoreL, 3, 10);
