@@ -34,9 +34,9 @@ pipes.addAnis({
 	'├': [2, 1],
 	'-': [2, 2],
 	'┤': [2, 3],
-	'┬': { pos: [2, 1], angle: 90 },
-	'|': { pos: [2, 2], angle: 90 },
-	'┴': { pos: [2, 3], angle: 90 },
+	'┬': { pos: [2, 1], rotate: 90 },
+	'|': { pos: [2, 2], rotate: 90 },
+	'┴': { pos: [2, 3], rotate: 90 },
 	'┌': [2, 4],
 	'┐': [2, 5],
 	'└': [2, 6],
@@ -45,6 +45,7 @@ pipes.addAnis({
 
 let snake = new Group();
 snake.layer = 2;
+snake.collider = 'none';
 snake.spriteSheet = loadImage(QuintOS.dir + '/img/snakes.png');
 
 snake.addAnis({

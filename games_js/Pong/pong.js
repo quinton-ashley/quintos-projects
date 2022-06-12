@@ -22,7 +22,7 @@ let imgNet = spriteArt('w.\n.w\n'.repeat(80));
 
 let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
-let ball = new Sprite(imgBall, centerX, centerY);
+let ball = new Sprite(imgBall, centerX, centerY, 8);
 let paddleL = new Sprite(imgPaddle, 9, centerY, 'static');
 let paddleR = new Sprite(imgPaddle, width - 9, centerY, 'static');
 let wallTop = new Sprite(imgWall, centerX, 4, 'static');

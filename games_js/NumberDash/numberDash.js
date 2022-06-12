@@ -108,7 +108,8 @@ function mousePressed() {
 
 	spark.rotation = player.rotation + 180;
 	spark.fixedRotation = true;
-	spark.setSpeed(5, player.rotation + 180);
+	spark.direction = player.rotation + 180;
+	spark.speed = 5;
 
 	spark.ani('spark' + (eqCount % 2));
 	if (spark) sparkCount++;

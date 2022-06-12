@@ -50,7 +50,7 @@ async function displayStats() {
 function makeBg() {
 	let patternA = '\\⎽⎽/⎺⎺'; //odd
 	let patternB = '/⎺⎺\\⎽⎽'; //even
-	for (let row = 0; row < 24; row++) {
+	for (let row = 0; row < 28; row++) {
 		let pattern = patternA;
 		if (row % 2 == 0) {
 			pattern = patternB;
