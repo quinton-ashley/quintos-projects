@@ -1,37 +1,43 @@
 [
-	/*00*/ ['GuessTheNumber', 'calcu'],
-	/*01*/ ['PickAPath', 'cpet'],
-	/*02*/ ['Pong', 'zx'],
-	/*03*/ ['Hangman', 'a2'],
-	/*04*/ ['QuickClicks', 'gridc'],
-	/*05*/ ['CodeBreaker', 'gridc'],
-	/*06*/ ['TicTacToe', 'gridc'],
-	/*07*/ ['WorldWideWeb', 'macin'],
-	/*08*/ ['Wordle', 'a2'],
-	/*09*/ ['Contain', 'zx'],
-	/*10*/ ['TicTacAIO', 'gridc'],
-	/*11*/ ['SpeakAndSpell', 'calcu'], // TODO sas
-	/*12*/ ['Snake', 'gameboi'],
-	/*13*/ ['SketchBook', 'c64'],
-	/*14*/ ['SuperJump', 'arcv'],
-	/*15*/ ['Sokoban', 'c64']
+	/*00*/ ['GuessTheNumber', 'calcu'], // primitives and if/else
+	/*01*/ ['PickAPath', 'cpet'], // array
+	/*02*/ ['Pong', 'zx'], // using objects
+	/*03*/ ['LeafEater', 'gameboi'], // iteration
+	/*04*/ ['Hangman', 'a2'], // strings
+	/*05*/ ['QuickClicks', 'gridc'], // recursion
+	/*06*/ ['BinaryCounter', 'cpet'], // binary
+	/*07*/ ['CodeBreaker', 'gridc'], // loading files
+	/*08*/ ['GenerativeArt', 'c64'], // fun (review)
+	/*09*/ ['TicTacToe', 'gridc'], // 2D Array
+	/*10*/ ['DataDesigner', 'c64'], // creating objects
+	/*11*/ ['WorldWideWeb', 'macin'], // web
+
+	/*12*/ ['Wordle', 'a2'],
+	/*13*/ ['TicTacAIO', 'gridc'],
+	/*14*/ ['SpeakAndSpell', 'sas'],
+	/*15*/ ['Contain', 'zx'],
+	/*16*/ ['Snake', 'gameboi'],
+	/*17*/ ['SketchBook', 'c64'],
+	/*18*/ ['SuperJump', 'arcv'],
+	/*19*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.level = 2;
+QuintOS.game = 'SpeakAndSpell';
 
 QuintOS.username = 'quinton-ashley';
 
+// QuintOS.username = 'LizaaV' // Liza (Jes)
 // QuintOS.username = 'Paeto-Chayarat'; // switch to main
-// QuintOS.username = 'jaximuslim';
-// QuintOS.username = 'MEDBEDFAKE';
-// QuintOS.username = 'Morz75';
-// QuintOS.username = 'rsaijo24';
-// QuintOS.username = 'WarriorFPHS';
-// QuintOS.username = 'Rayan-Hobballah';
-// QuintOS.username = 'seva-zoff';
-// QuintOS.username = 'carter-noa';
-// QuintOS.username = 'sophiaaaaaaaaaaaa'; // pong size error
+// QuintOS.username = 'jaximuslim'; // Jax
+// QuintOS.username = 'MEDBEDFAKE'; // Tagir
+// QuintOS.username = 'Morz75'; // Alex
+// QuintOS.username = 'rsaijo24'; // Saijo
+// QuintOS.username = 'WarriorFPHS'; // Aarnav
+// QuintOS.username = 'seva-zoff'; // Seva
+// QuintOS.username = 'carter-noa'; // Carter
+// QuintOS.username = 'sophiaaaaaaaaaaaa'; // Sophia pong size error
 
+// QuintOS.username = 'Rayan-Hobballah';
 // QuintOS.username = 'Ricane7';
 // QuintOS.username = 'eeshcapiche'; // switch to main
 // QuintOS.username = 'JuniorObrien'; // switch to main

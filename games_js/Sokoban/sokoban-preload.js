@@ -4,9 +4,13 @@ let imgDir = QuintOS.dir + '/img/bitBoi';
 /* WORLD */
 
 let world = new World(0, 0, 16);
+world.offset.x = 96;
+world.offset.y = 48;
+world.autoResetAnimations = true;
 world.spriteSheet = loadImage(imgDir + '/world16.png');
 
 let walls = new Group();
+walls.collider = 'static';
 let atlases = {
 	'wall-up': [0, 1],
 	'wall-down': [2, 1],
@@ -41,17 +45,20 @@ for (let i = 0; i < 16; i++) {
 walls.addAnis(atlases);
 
 let boxes = new Group();
+boxes.layer = 1;
 // loads the animation for the tile representing the box
 // at row 5, column 0 in the tile sheet
 boxes.addAni('box', [5, 0]);
 
 /* PART A: Choose a tile to represent the box goal positions on the floor */
 let goals = new Group();
+goals.layer = 0;
 goals.addAni('goal', [15, 1]);
+goals.overlap(allSprites);
 
 /* PLAYER */
 
-let player = new Sprite(5, 5);
+let player = new Sprite(0, 0);
 player.layer = 1;
 player.spriteSheet = loadImage(imgDir + '/bitBoi16.png');
 

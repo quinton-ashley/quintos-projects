@@ -45,9 +45,9 @@ function displayScore() {
 displayScore();
 
 function draw() {
-	background(colorPal('r'));
-	fill(colorPal('c'));
-	stroke(colorPal('w'));
+	background('r');
+	fill('c');
+	stroke('w');
 	rect(20, 16, 216, 20); // top
 	rect(20, 36, 36, 140); // left
 	rect(200, 36, 36, 140); // right

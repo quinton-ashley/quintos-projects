@@ -86,7 +86,7 @@ async function startGame() {
 
 async function scrollPrompt(msg) {
 	let stop = false;
-	let modeInput = input('', 1, 0, async () => {
+	let modeInput = input('', 0, 0, async () => {
 		stop = true;
 		await erase();
 		startGame();
@@ -94,7 +94,7 @@ async function scrollPrompt(msg) {
 	// let user read the beginning
 	for (let i = 0; i < msg.length; i++) {
 		if (stop) break;
-		await text(msg.substring(i, i + 23));
+		await text(msg.substring(i, i + 20));
 		if (i == 0) {
 			await delay(2000);
 		}
@@ -102,4 +102,14 @@ async function scrollPrompt(msg) {
 	}
 }
 
-scrollPrompt('Select mode A for short words or mode B for long words.');
+async function boot() {
+	text(('.'.repeat(20) + '\n').repeat(4), 0, 0, 0, 0, 1000);
+	let boom = '.|+x*O';
+	for (let i = 0; i < 6; i++) {
+		await text((boom[i].repeat(20) + '\n').repeat(4), 0, 0, 0, 0, 5);
+	}
+	erase();
+	scrollPrompt('Select mode A for short words or mode B for long words.');
+}
+
+boot();

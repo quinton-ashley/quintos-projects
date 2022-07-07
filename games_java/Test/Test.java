@@ -13,7 +13,10 @@ public class Test {
 	}
 
 	public static void main(String[] args) {
-		new Test();
+		// new Test();
+		int x = 4;
+		String num = x.toUpperCase();
+		System.out.println(num);
 	}
 }
 

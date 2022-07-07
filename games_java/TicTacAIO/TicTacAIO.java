@@ -50,7 +50,11 @@ public class TicTacAIO {
 
 	// board stores the game data
 	// in a two dimensional array of spaces
-	char[][] board = new char[][] { { ' ', ' ', ' ' }, { ' ', ' ', ' ' }, { ' ', ' ', ' ' } };
+	char[][] board = new char[][] {
+			{ ' ', ' ', ' ' },
+			{ ' ', ' ', ' ' },
+			{ ' ', ' ', ' ' }
+	};
 
 	boolean turnX = true;
 	boolean challengeMode = false;

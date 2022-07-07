@@ -72,27 +72,27 @@ function loadLevel(level, doReset) {
 	let objectNum = 0;
 	if (!doReset) objects = [];
 
-	for (let row = 0; row < board.length; row++) {
-		for (let col = 0; col < board[row].length; col++) {
-			let t = board[row][col];
+	for (let y = 0; y < board.length; y++) {
+		for (let x = 0; x < board[y].length; x++) {
+			let t = board[y][x];
 			if (t == '#') {
 				let img = 'wall-up';
 
-				if (col == 0 && row == 0) {
+				if (x == 0 && y == 0) {
 					img = 'wall-topleft';
-				} else if (col == 0 && row == board.length - 1) {
+				} else if (x == 0 && y == board.length - 1) {
 					img = 'wall-bottomleft';
-				} else if (col == board[row].length - 1 && row == 0) {
+				} else if (x == board[y].length - 1 && y == 0) {
 					img = 'wall-topright';
-				} else if (col == board[row].length - 1 && row == board.length - 1) {
+				} else if (x == board[y].length - 1 && y == board.length - 1) {
 					img = 'wall-bottomright';
-				} else if (col == 0) {
+				} else if (x == 0) {
 					img = 'wall-left';
-				} else if (col == board[row].length - 1) {
+				} else if (x == board[y].length - 1) {
 					img = 'wall-right';
-				} else if (row == board.length - 1) {
+				} else if (y == board.length - 1) {
 					img = 'wall-down';
-				} else if (row == 0) {
+				} else if (y == 0) {
 					img = 'wall-up';
 				} else if (doReset) {
 					img = objects[objectNum];
@@ -102,18 +102,18 @@ function loadLevel(level, doReset) {
 					img = 'furniture-' + num;
 					objects.push(img);
 				}
-				walls.createSprite(img, row, col);
+				walls.sprite(img, x, y);
 			}
 			if (t == '$' || t == '*') {
-				let box = boxes.createSprite('box', row, col, 1);
-				box.setCollider('rectangle', 0, 0, box.height * 0.5, box.height * 0.5);
+				let box = boxes.sprite('box', x, y, 1);
+				// box.setCollider('rectangle', 0, 0, box.height * 0.5, box.height * 0.5);
 			}
 			if (t == '.' || t == '*' || t == '+') {
-				goals.createSprite('goal', row, col);
+				goals.sprite('goal', x, y);
 			}
 			if (t == '@' || t == '+') {
-				player.row = row;
-				player.col = col;
+				player.x = x;
+				player.y = y;
 			}
 		}
 	}
@@ -127,8 +127,6 @@ function resetBoard() {
 	boxes.removeSprites();
 	goals.removeSprites();
 	board = [];
-	player.row = 0;
-	player.col = 0;
 }
 
 function keyPressed() {
@@ -167,7 +165,7 @@ function moveOnBoard(row, col) {
 	// to indicate that
 	for (let i = 0; i < goals.length; i++) {
 		let goal = goals[i];
-		if (goal.row == row && goal.col == col) {
+		if (goal.y == row && goal.x == col) {
 			board[row][col] = '+';
 		}
 	}
@@ -180,7 +178,7 @@ function moveBox(r1, c1, r2, c2) {
 		board[r2][c2] = '$';
 		for (let i = 0; i < goals.length; i++) {
 			let goal = goals[i];
-			if (goal.row == r2 && goal.col == c2) {
+			if (goal.y == r2 && goal.x == c2) {
 				board[r2][c2] = '*';
 			}
 		}
@@ -190,8 +188,8 @@ function moveBox(r1, c1, r2, c2) {
 }
 
 player.walk = async function (direction) {
-	let r = player.row;
-	let c = player.col;
+	let r = player.y;
+	let c = player.x;
 
 	let aniName = 'walk-' + direction;
 	if (direction == 'left' || direction == 'right') {
@@ -218,19 +216,19 @@ player.walk = async function (direction) {
 
 		if (canMoveBox) aniName = 'push' + aniName.slice(4);
 
-		if (board[player.row][player.col] == '+') {
-			board[player.row][player.col] = '.';
+		if (board[player.y][player.x] == '+') {
+			board[player.y][player.x] = '.';
 		} else {
-			board[player.row][player.col] = ' ';
+			board[player.y][player.x] = ' ';
 		}
 		if (direction == 'up') {
-			moveOnBoard(player.row - 1, player.col);
+			moveOnBoard(player.y - 1, player.x);
 		} else if (direction == 'down') {
-			moveOnBoard(player.row + 1, player.col);
+			moveOnBoard(player.y + 1, player.x);
 		} else if (direction == 'left') {
-			moveOnBoard(player.row, player.col - 1);
+			moveOnBoard(player.y, player.x - 1);
 		} else if (direction == 'right') {
-			moveOnBoard(player.row, player.col + 1);
+			moveOnBoard(player.y, player.x + 1);
 		}
 		moves.push(displayBoard());
 
@@ -245,23 +243,23 @@ player.walk = async function (direction) {
 	// no need to change animation
 	if (cur == aniName || cur == 'idle-turn') return;
 
-	// have the player turn before walking upwards
 	if (direction != 'up') {
-		player.depth = 1;
+		player.layer = 1;
 		player.ani(aniName);
 	} else {
-		player.depth = 2;
+		player.layer = 2;
+		// have the player turn before walking upwards
 		await player.ani('idle-turn');
 		player.ani('walk-up');
 	}
 
 	if (direction == 'left') {
-		player.mirrorX(-1); // flip the character left
+		player.mirrorX = true; // flip the character left
 	} else {
-		player.mirrorX(1);
+		player.mirrorX = false;
 	}
 
-	await player.move(direction, 0.85);
+	await player.move(direction, 0.05);
 	if (inGame && checkWin()) {
 		didWin = true;
 		player.ani('dance');
@@ -328,20 +326,11 @@ loading = false;
 
 function draw() {
 	if (loading) return;
-	clear();
 	background('#19142b');
-
-	player.collide(walls); // handles player collisions with walls
-	player.displace(boxes);
-	boxes.snap(player);
-	boxes.collide(walls);
-	boxes.collide(boxes);
 
 	if (!player.isMoving && !didWin) player.idle();
 
-	// // snap boxes to nearest tile (row, col)
-	// // when player stops moving
-	// world.update({ snap: !player.isMoving });
-	// p5.play function for drawing all sprites
-	drawSprites();
+	boxes.snap(player);
+
+	allSprites.debug = mouseIsPressed;
 }

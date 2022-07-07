@@ -75,7 +75,7 @@ public class QuickClicks {
 			// (text, row, col, function)
 			btn = button(target, row, col, () -> {
 				/* PART B: Use recursion to make a new button after clicking a button */
-				this.makeTarget();
+				makeTarget();
 			});
 		} else {
 			displayStats();
