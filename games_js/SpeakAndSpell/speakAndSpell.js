@@ -4,10 +4,14 @@ let word;
 let attempt = 0;
 let wordAmount = 0;
 let correctWords = 0;
+let selectMode = true;
+
+let shouldScroll = true;
 
 // value is the text the user entered in the input
 async function onSubmit(value) {
 	if (value == word) {
+		text('correct');
 		if (wordAmount == 10) {
 			await play(speechSounds.you_are_correct);
 			endGame();
@@ -32,10 +36,10 @@ async function onSubmit(value) {
 		await play(speechSounds.that_is_incorrect_the_correct_spelling_of);
 		await play(wordSounds[word]);
 		await play(speechSounds.is);
-		await erase(); // erase the screen
+		erase(); // erase the screen
 		await text('*' + word);
-		for (let i = 0; i < word.length; i++) {
-			let letter = word[i];
+		let spelling = word.toUpperCase().split('');
+		for (let letter of spelling) {
 			await play(letterSounds[letter]);
 		}
 		if (wordAmount == 10) {
@@ -49,12 +53,12 @@ async function onSubmit(value) {
 
 // called everytime the user enters text in the input
 function onChange(value) {
-	let letter = value[value.length - 1];
+	let letter = value[value.length - 1].toUpperCase();
 	letterSounds[letter].play();
 }
 
 async function endGame() {
-	await erase(); // erase the screen
+	erase(); // erase the screen
 	await text('Your score: ' + correctWords);
 	if (correctWords >= 5) {
 		await play(speechSounds.you_win);
@@ -67,7 +71,7 @@ async function endGame() {
 
 async function nextWord() {
 	wordAmount++;
-	await erase(); // erase the screen
+	erase(); // erase the screen
 	attempt = 0;
 	let rand = Math.random() * words.length;
 	rand = Math.floor(rand);
@@ -80,36 +84,37 @@ async function nextWord() {
 }
 
 async function startGame() {
+	selectMode = false;
+	shouldScroll = false;
 	await play(speechSounds.spell);
 	nextWord();
 }
 
-async function scrollPrompt(msg) {
-	let stop = false;
-	let modeInput = input('', 0, 0, async () => {
-		stop = true;
-		await erase();
-		startGame();
-	});
+async function textScroll(msg, stepDelay, initDelay) {
+	initDelay ??= 0;
+	stepDelay ??= 200;
+	shouldScroll = true;
 	// let user read the beginning
-	for (let i = 0; i < msg.length; i++) {
-		if (stop) break;
-		await text(msg.substring(i, i + 20));
-		if (i == 0) {
-			await delay(2000);
-		}
-		await delay(250);
+	for (let i = 0; shouldScroll && i < msg.length; i++) {
+		await text(msg.substring(i, i + 20), 1, 0);
+		if (i == 0) await delay(initDelay);
+		else await delay(stepDelay);
 	}
 }
 
+function keyPressed() {
+	if (!selectMode) return;
+	if (key == 'a') startGame('a');
+	if (key == 'b') startGame('b');
+}
+
 async function boot() {
-	text(('.'.repeat(20) + '\n').repeat(4), 0, 0, 0, 0, 1000);
 	let boom = '.|+x*O';
 	for (let i = 0; i < 6; i++) {
 		await text((boom[i].repeat(20) + '\n').repeat(4), 0, 0, 0, 0, 5);
 	}
 	erase();
-	scrollPrompt('Select mode A for short words or mode B for long words.');
+	await textScroll('Select mode A for short words or mode B for long words.', 200, 1500);
 }
 
 boot();
