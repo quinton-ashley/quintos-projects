@@ -10,7 +10,7 @@ let shouldScroll = true;
 
 // value is the text the user entered in the input
 async function onSubmit(value) {
-	if (value == word) {
+	if (value.toUpperCase() == word.toUpperCase()) {
 		text('correct');
 		if (wordAmount == 10) {
 			await play(speechSounds.you_are_correct);
@@ -104,17 +104,8 @@ async function textScroll(msg, stepDelay, initDelay) {
 
 function keyPressed() {
 	if (!selectMode) return;
-	if (key == 'a') startGame('a');
-	if (key == 'b') startGame('b');
+	if (key.toUpperCase() == 'A') startGame('A');
+	if (key.toUpperCase() == 'B') startGame('B');
 }
 
-async function boot() {
-	let boom = '.|+x*O';
-	for (let i = 0; i < 6; i++) {
-		await text((boom[i].repeat(20) + '\n').repeat(4), 0, 0, 0, 0, 5);
-	}
-	erase();
-	await textScroll('Select mode A for short words or mode B for long words.', 200, 1500);
-}
-
-boot();
+textScroll('Select mode A for short words or mode B for long words.', 200, 1500);
