@@ -54,7 +54,11 @@ async function onSubmit(value) {
 // called everytime the user enters text in the input
 function onChange(value) {
 	let letter = value[value.length - 1].toUpperCase();
-	letterSounds[letter].play();
+	if (letter == '<') {
+		wordSounds[word].play();
+	} else {
+		letterSounds[letter].play();
+	}
 }
 
 async function endGame() {
