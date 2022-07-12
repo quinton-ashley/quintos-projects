@@ -2,7 +2,7 @@
 // text rows: 18 cols: 20
 
 let score = 0; // number of apples eaten
-let speed = 0.01; // snake speed
+let speed = 0.05; // snake speed
 
 let isGameOver = false;
 let reverseMode = false;
@@ -135,7 +135,7 @@ async function gameOver() {
 	curves = [];
 	tailIndex = 2;
 	score = 0;
-	speed = 0.01;
+	speed = 0.05;
 
 	moveSnake();
 }
@@ -185,14 +185,14 @@ async function moveSnake() {
 	}
 
 	if (snake[0].y == egg.y && snake[0].x == egg.x) {
-		log(speed);
-		if (speed < 0.5) {
-			speed += 0.1;
-		} else if (speed < 0.6) {
-			speed += 0.05;
-		} else {
+		if (speed < 0.075) {
 			speed += 0.01;
+		} else if (speed < 0.12) {
+			speed += 0.005;
+		} else {
+			speed += 0.001;
 		}
+		log(speed);
 
 		if (reverseMode == true) {
 			let newDirections = [];
