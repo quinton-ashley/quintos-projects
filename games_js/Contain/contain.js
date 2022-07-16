@@ -1,130 +1,85 @@
-// screen resolution is 256x192
+// screen width is 256, height is 192
 
 let imgBall = spriteArt(`
-..wwww..
-.wwyyww.
-wwywwyww
-wyyyyyyw
-wyyyyyyw
-wwywwyww
-.wwyyww.
-..wwww..`);
+..ygyg..
+.yg..gy.
+yg....gy
+y......g
+g......y
+yg....gy
+.yg..gy.
+..ygyg..`);
 
-let imgPaddleHoriz = spriteArt(
-	' ' +
-		'w'.repeat(52) +
-		' \n' +
-		'w'.repeat(54) +
-		'\n' +
-		('ww' + ' '.repeat(50) + 'ww\n').repeat(4) +
-		'w'.repeat(54) +
-		'\n' +
-		' ' +
-		'w'.repeat(52)
-);
-
-let imgPaddleVert = spriteArt('.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(21) + 'wwwwwwww\n.wwwwww.');
-
-let imgNet = spriteArt('w.\n.w\n'.repeat(74));
-
-let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
-
-let paddleUp = createSprite(imgPaddleHoriz);
-paddleUp.y = 9;
-paddleUp.immovable = true;
-
-let paddleDown = createSprite(imgPaddleHoriz);
-paddleDown.y = height - paddleDown.h - 5;
-paddleDown.immovable = true;
-
-let paddleLeft = createSprite(imgPaddleVert);
-paddleLeft.x = 5;
-paddleLeft.immovable = true;
-
-let paddleRight = createSprite(imgPaddleVert);
-paddleRight.x = width - paddleRight.w - 5;
-paddleRight.immovable = true;
-
-// place ball in center of the screen
-let balls = [];
-for (let i = 0; i < 4; i++) {
-	let ball = createSprite(imgBall);
-	ball.speed = 1;
-	ball.reset = function () {
-		// acceptable angle in radians, not too far straight
-		// up and down or straight left and right
-		let theta = (Math.random() * 0.3 + 0.1) * Math.PI;
-
-		// put it in a random quadrant
-		let quadrants = [0, 0.5, 1, 1.75];
-		let quad = quadrants[Math.floor(Math.random() * 4)];
-		theta += quad * Math.PI;
-
-		// (x, y) = (r * cos(theta), r * sin(theta)))
-		this.velocity.x = this.speed * Math.cos(theta);
-		this.velocity.y = this.speed * Math.sin(theta);
-
-		this.x = 123;
-		this.y = 96;
-	};
-	balls.push(ball);
-}
-
-let isGameOver = false;
-let servedBalls = 0;
-let activeBalls = 0;
-
-async function gameOver() {
-	isGameOver = true;
-	background(0);
-	await alert('Game Over');
-	erase();
-	servedBalls = 0;
-	activeBalls = 0;
-	score = 0;
+// the \n means new line
+let imgPaddle = spriteArt('.wwwwww.\nwwwwwwww\n' + 'ww....ww\n'.repeat(22) + 'wwwwwwww\n.wwwwww.');
+serve();
+// places a ball in center of the screen
+async function serve() {
+	let balls = new Group();
 	for (let i = 0; i < 4; i++) {
-		let ball = balls[i];
-		ball.active = false;
-	}
-	isGameOver = false;
-	spawn();
-}
+		log('3');
+		await delay(1000);
+		log('2');
+		await delay(1000);
+		log('1');
+		await delay(1000);
+		let ball = new Sprite(imgBall);
+		ball.x = width / 2;
+		ball.y = height / 2;
+		let rand = Math.random() * 1.25 + 0.25;
+		let rand2 = Math.random() * 1.25 + 0.25;
 
-async function spawn() {
-	for (let i = 0; i < 4; i++) {
-		if (isGameOver) return;
-		let ball = balls[i];
-		ball.reset();
-		ball.active = true;
-		servedBalls++;
-		activeBalls++;
-		await delay(4000);
+		ball.velocity.x = rand;
+		ball.velocity.y = rand2;
+		ball.bounciness = 1;
+		ball.friction = 0;
+		ball.rotationLocked = true;
+		balls.push(ball);
 	}
 }
 
-spawn();
+/* PART A0: create two paddles, place on each end of the screen */
+let paddleL = new Sprite(imgPaddle);
+paddleL.x = 16;
+paddleL.y = height / 2;
+paddleL.static = true;
+paddleL.rotation = -180;
+
+let paddleR = new Sprite(imgPaddle);
+paddleR.x = width - 16 - paddleR.w;
+paddleR.y = height / 2;
+paddleR.static = true;
+
+let increment = 0.1;
+let scoreL = 0;
+let scoreR = 0;
+
+function displayScore() {
+	text(scoreL, 3, 13);
+	text(scoreR, 3, 19);
+}
+
+displayScore();
 
 function draw() {
-	clear();
-	background(colorPal('u'));
+	background(0);
 
-	paddleUp.x = mouseX - paddleUp.w / 2;
-	paddleDown.x = mouseX - paddleDown.w / 2;
-	paddleLeft.y = mouseY - paddleLeft.h / 2;
-	paddleRight.y = mouseY - paddleRight.h / 2;
+	/* PART A1: draw the ball and paddles inside the p5 main draw function */
+	// the `width` and `height` variables are the width and height of the screen
 
-	for (let i = 0; i < balls.length; i++) {
-		let ball = balls[i];
-		ball.bounce(paddleUp);
-		ball.bounce(paddleDown);
-		ball.bounce(paddleLeft);
-		ball.bounce(paddleRight);
-
-		// if the ball leaves the screen
-		if (ball.x < -10 || ball.x > width + 10 || ball.y < -10 || ball.y > height + 10) {
-			ball.reset();
-		}
+	if (keyIsDown('ArrowUp') && paddleR.rotation > -89) {
+		paddleR.rotation -= 2;
+	} else if (keyIsDown('ArrowDown') && paddleR.rotation < 89) {
+		paddleR.rotation += 2;
 	}
+	paddleR.x = 88 * cos(paddleR.rotation) + width / 2;
+	paddleR.y = 88 * sin(paddleR.rotation) + height / 2;
 
-	drawSprites();
+	if (keyIsDown('w') && (paddleL.rotation > 89 || paddleL.rotation < -91)) {
+		paddleL.rotation += 2;
+	} else if (keyIsDown('s') && (paddleL.rotation > 91 || paddleL.rotation < -89)) {
+		paddleL.rotation -= 2;
+	}
+	paddleL.x = 88 * cos(paddleL.rotation) + width / 2;
+	paddleL.y = 88 * sin(paddleL.rotation) + height / 2;
 }
