@@ -1,7 +1,7 @@
 document.querySelector('.screen').style.cursor = 'none';
 
 // an array of color letters
-let colors = Object.keys(QuintOS.palette);
+let colors = Object.keys(QuintOS.palettes[0]);
 // scale each color pixel by 10
 let paletteBoxes = spriteArt(colors, 10);
 
@@ -35,7 +35,7 @@ class Pixel {
 	}
 
 	draw() {
-		fill(QuintOS.palette[this.color]);
+		fill(this.color);
 		stroke(0);
 		rect(this.x, this.y, scale, scale);
 	}

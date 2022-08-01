@@ -77,19 +77,19 @@ function startGame() {
 
 function changeSnakeAni(s, type, direction) {
 	if (direction == 'up') {
-		s.ani(type + '-up');
+		s.ani = type + '-up';
 		s.mirrorX(1);
 		s.mirrorY(1);
 	} else if (direction == 'down') {
-		s.ani(type + '-up');
+		s.ani = type + '-up';
 		s.mirrorX(1);
 		s.mirrorY(-1);
 	} else if (direction == 'left') {
-		s.ani(type + '-left');
+		s.ani = type + '-left';
 		s.mirrorX(1);
 		s.mirrorY(1);
 	} else {
-		s.ani(type + '-left');
+		s.ani = type + '-left';
 		s.mirrorX(-1);
 		s.mirrorY(1);
 	}

@@ -12,77 +12,57 @@ let curves = [];
 let inputDirection = 'up';
 let egg;
 
-text('SCORE: ' + score, 17, 6);
-
-world.resize();
-
-for (let i = 0; i < 15; i++) {
-	for (let j = 0; j < 20; j++) {
-		let rand = Math.floor(Math.random() * 9);
-		bg.sprite('grass' + rand, j, i);
-	}
-}
-
-createTiles([
-	'┌├----------------┤┐',
-	'┬                  ┬',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'|                  |',
-	'┴                  ┴',
-	'└├----------------┤┘'
-]);
-
 function selectMode() {
-	icons.sprite('Normal', 2, 3);
+	new icons.Sprite('Normal', 2, 3);
 	button('Normal mode', 5, 4, () => {
+		exitMenu();
 		startGame();
 	});
 
-	icons.sprite('Reverse', 2, 11);
+	new icons.Sprite('Reverse', 2, 11);
 	button('Reverse mode', 13, 4, () => {
 		reverseMode = true;
+		exitMenu();
 		startGame();
 	});
 }
-selectMode();
 
-function startGame() {
+function exitMenu() {
 	erase();
 	icons.removeSprites();
-	snake.sprite('head-up', 2, 11).direction = 'up';
-	snake.sprite('body-up', 2, 12).direction = 'up';
-	snake.sprite('tail-up', 2, 13).direction = 'up';
+}
 
-	egg = bg.sprite('egg', 10, 5, 'static');
-	egg.layer = 2;
+function startGame() {
+	new snake.Sprite('head-up', 2, 11).layer = 4;
+	new snake.Sprite('body-up', 2, 12);
+	new snake.Sprite('tail-up', 2, 13);
+
+	egg = new eggs.Sprite('egg', 10, 5, 'static');
+
+	inputDirection = 'up';
+	curves = [];
+	tailIndex = 2;
+	score = 0;
+	speed = 0.05;
 
 	moveSnake();
 }
 
-function changeSnakeAni(s, type, direction) {
-	if (direction == 'up') {
-		s.ani(type + '-up');
+function changeSnakeAni(s, type, heading) {
+	if (heading == 'up') {
+		s.ani = type + '-up';
 		s.mirrorX = false;
 		s.mirrorY = false;
-	} else if (direction == 'down') {
-		s.ani(type + '-up');
+	} else if (heading == 'down') {
+		s.ani = type + '-up';
 		s.mirrorX = false;
 		s.mirrorY = true;
-	} else if (direction == 'left') {
-		s.ani(type + '-left');
+	} else if (heading == 'left') {
+		s.ani = type + '-left';
 		s.mirrorX = false;
 		s.mirrorY = false;
 	} else {
-		s.ani(type + '-left');
+		s.ani = type + '-left';
 		s.mirrorX = true;
 		s.mirrorY = false;
 	}
@@ -124,20 +104,9 @@ async function gameOver() {
 	isGameOver = false;
 
 	snake.removeSprites();
+	eggs.removeSprites();
 
-	let head = snake.sprite('head-up', 2, 11);
-	head.layer = 3;
-	head.direction = 'up';
-	snake.sprite('body-up', 2, 12).direction = 'up';
-	snake.sprite('tail-up', 2, 13).direction = 'up';
-
-	inputDirection = 'up';
-	curves = [];
-	tailIndex = 2;
-	score = 0;
-	speed = 0.05;
-
-	moveSnake();
+	startGame();
 }
 
 async function moveSnake() {
@@ -147,12 +116,12 @@ async function moveSnake() {
 	}
 	let movements = [];
 
-	let prevDir = snake[0].direction;
+	let prevDir = snake[0].heading;
 	let nextDir = inputDirection;
 
 	// create the curve
 	if (prevDir != nextDir) {
-		let s = snake.sprite('curve', snake[0].x, snake[0].y);
+		let s = new snake.Sprite('curve', snake[0].x, snake[0].y);
 		if ((prevDir == 'up' && nextDir == 'right') || (prevDir == 'left' && nextDir == 'down')) {
 			s.mirrorX = false;
 			s.mirrorY = true;
@@ -209,13 +178,13 @@ async function moveSnake() {
 					sj.x = siX;
 				}
 
-				if (sj.direction == 'up') {
+				if (sj.heading == 'up') {
 					newDirections.push('down');
-				} else if (sj.direction == 'down') {
+				} else if (sj.heading == 'down') {
 					newDirections.push('up');
-				} else if (sj.direction == 'left') {
+				} else if (sj.heading == 'left') {
 					newDirections.push('right');
-				} else if (sj.direction == 'right') {
+				} else if (sj.heading == 'right') {
 					newDirections.push('left');
 				}
 			}
@@ -223,21 +192,21 @@ async function moveSnake() {
 			for (let i = 0; i < tailIndex; i++) {
 				let s = snake[i];
 				let type = s.animation.name.split('-')[0];
-				s.direction = newDirections[i + 1];
-				changeSnakeAni(s, type, s.direction);
+				s.heading = newDirections[i + 1];
+				changeSnakeAni(s, type, s.heading);
 			}
 
 			inputDirection = newDirections[0];
 		}
 
-		snake.sprite(snake[1].animation.name, snake[1].x, snake[1].y);
+		new snake.Sprite(snake[1].animation.name, snake[1].x, snake[1].y);
 		tailIndex += 1;
 		snake.splice(1, 0, snake.pop());
-		snake[1].direction = snake[0].direction;
+		snake[1].heading = snake[0].heading;
 
-		movements.push(snake[1].move(snake[1].direction, speed));
-		snake[0].direction = inputDirection;
-		movements.push(snake[0].move(snake[0].direction, speed));
+		movements.push(snake[1].move(snake[1].heading, speed));
+		snake[0].heading = inputDirection;
+		movements.push(snake[0].move(snake[0].heading, speed));
 		await Promise.all(movements);
 		score += 1;
 		text('SCORE: ' + score, 17, 6);
@@ -268,14 +237,14 @@ async function moveSnake() {
 				type = 'head';
 			}
 
-			s.direction = inputDirection;
+			s.heading = inputDirection;
 		} else {
-			s.direction = snake[i - 1].direction;
+			s.heading = snake[i - 1].heading;
 		}
 
 		if (type == 'body' || type == 'bodyhalf') {
-			let prevDir = snake[i].direction;
-			let nextDir = snake[i].direction;
+			let prevDir = snake[i].heading;
+			let nextDir = snake[i].heading;
 
 			if (prevDir != nextDir) {
 				type = 'bodyhalf';
@@ -292,12 +261,12 @@ async function moveSnake() {
 			}
 		}
 
-		changeSnakeAni(s, type, s.direction);
+		changeSnakeAni(s, type, s.heading);
 
 		if (type == 'head' || type == 'eat') {
-			movements.push(s.move(s.direction, speed));
+			movements.push(s.move(s.heading, speed));
 		} else {
-			movements.push(s.move(s.direction, speed));
+			movements.push(s.move(s.heading, speed));
 		}
 	}
 	await Promise.all(movements);
@@ -309,13 +278,13 @@ function draw() {
 }
 
 function keyPressed() {
-	if (key == 'ArrowUp' && snake[0].direction != 'down') {
+	if (key == 'ArrowUp' && snake[0].heading != 'down') {
 		inputDirection = 'up';
-	} else if (key == 'ArrowDown' && snake[0].direction != 'up') {
+	} else if (key == 'ArrowDown' && snake[0].heading != 'up') {
 		inputDirection = 'down';
-	} else if (key == 'ArrowLeft' && snake[0].direction != 'right') {
+	} else if (key == 'ArrowLeft' && snake[0].heading != 'right') {
 		inputDirection = 'left';
-	} else if (key == 'ArrowRight' && snake[0].direction != 'left') {
+	} else if (key == 'ArrowRight' && snake[0].heading != 'left') {
 		inputDirection = 'right';
 	}
 

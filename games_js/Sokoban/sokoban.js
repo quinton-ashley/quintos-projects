@@ -5,8 +5,6 @@ let levelNum = 0;
 let inGame = false;
 let didWin = false;
 
-player.steps = 0;
-
 let moves = [];
 
 let levelSet;
@@ -102,14 +100,14 @@ function loadLevel(level, doReset) {
 					img = 'furniture-' + num;
 					objects.push(img);
 				}
-				walls.sprite(img, x, y);
+				new walls.Sprite(img, x, y);
 			}
 			if (t == '$' || t == '*') {
-				let box = boxes.sprite('box', x, y, 1);
+				new boxes.Sprite('box', x, y);
 				// box.setCollider('rectangle', 0, 0, box.height * 0.5, box.height * 0.5);
 			}
 			if (t == '.' || t == '*' || t == '+') {
-				goals.sprite('goal', x, y);
+				new goals.Sprite('goal', x, y);
 			}
 			if (t == '@' || t == '+') {
 				player.x = x;
@@ -245,12 +243,12 @@ player.walk = async function (direction) {
 
 	if (direction != 'up') {
 		player.layer = 1;
-		player.ani(aniName);
+		player.ani = aniName;
 	} else {
 		player.layer = 2;
 		// have the player turn before walking upwards
-		await player.ani('idle-turn');
-		player.ani('walk-up');
+		await player.changeAni('idle-turn');
+		player.ani = 'walk-up';
 	}
 
 	if (direction == 'left') {
@@ -262,7 +260,7 @@ player.walk = async function (direction) {
 	await player.move(direction, 0.05);
 	if (inGame && checkWin()) {
 		didWin = true;
-		player.ani('dance');
+		player.ani = 'dance';
 		await alert('You win!!', 10, 27, 12);
 		didWin = false;
 		levelNum++;
@@ -281,15 +279,15 @@ player.idle = function () {
 		let chance = Math.random();
 
 		if (chance > 0.4) {
-			await player.ani('idle-stand');
+			await player.changeAni('idle-stand');
 		} else if (chance > 0.2) {
-			await player.ani('idle-blink');
+			await player.changeAni('idle-blink');
 		} else if (chance > 0.1) {
-			await player.ani('idle-think');
+			await player.changeAni('idle-think');
 		} else if (chance > 0.05) {
-			await player.ani('idle-scratch');
+			await player.changeAni('idle-scratch');
 		} else {
-			await player.ani('idle-yawn');
+			await player.changeAni('idle-yawn');
 		}
 		_idle();
 	}
@@ -298,15 +296,15 @@ player.idle = function () {
 	let cur = this.getAnimationLabel();
 
 	if (cur == 'walk-up' || cur == 'push-up') {
-		this.ani('idle-turn');
+		this.ani = 'idle-turn';
 		this.animation.changeFrame(2);
 		this.animation.goToFrame(0);
 		this.animation.onComplete = () => {
-			this.ani('idle-stand');
+			this.ani = 'idle-stand';
 			this.animation.onComplete = _idle;
 		};
 	} else if (!cur.includes('idle')) {
-		this.ani('idle-stand');
+		this.ani = 'idle-stand';
 		this.animation.onComplete = _idle;
 	}
 };

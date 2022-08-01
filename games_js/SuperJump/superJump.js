@@ -21,7 +21,7 @@ let imgPlatform = spriteArt(
 		'w'.repeat(52)
 );
 
-new World(0, 9.8);
+new World(0, 10);
 let ball = new Sprite(imgBall, 175, 200, 8);
 ball.bounciness = 1;
 
