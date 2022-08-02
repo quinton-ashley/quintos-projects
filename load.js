@@ -22,7 +22,7 @@
 	/*19*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'NumberDash';
+QuintOS.game = 'Crazy7';
 QuintOS.sys = 'arc';
 
 QuintOS.user = 'quinton-ashley';

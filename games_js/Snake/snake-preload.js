@@ -79,8 +79,6 @@ async function setup() {
 		Reverse: [1, 0]
 	});
 
-	text('SCORE: ' + score, 17, 6);
-
 	for (let i = 0; i < 15; i++) {
 		for (let j = 0; j < 20; j++) {
 			let rand = Math.floor(Math.random() * 9);
@@ -105,6 +103,4 @@ async function setup() {
 		'┴                  ┴',
 		'└├----------------┤┘'
 	]);
-
-	selectMode();
 }

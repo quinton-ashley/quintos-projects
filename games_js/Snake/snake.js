@@ -26,6 +26,7 @@ function selectMode() {
 		startGame();
 	});
 }
+selectMode();
 
 function exitMenu() {
 	erase();
@@ -33,6 +34,8 @@ function exitMenu() {
 }
 
 function startGame() {
+	text('SCORE: ' + score, 17, 6);
+
 	new snake.Sprite('head-up', 2, 11).layer = 4;
 	new snake.Sprite('body-up', 2, 12);
 	new snake.Sprite('tail-up', 2, 13);
