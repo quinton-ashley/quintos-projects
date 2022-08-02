@@ -78,6 +78,7 @@ async function setup() {
 		Normal: [0, 0],
 		Reverse: [1, 0]
 	});
+	icons.tileSize = 8;
 
 	for (let i = 0; i < 15; i++) {
 		for (let j = 0; j < 20; j++) {
