@@ -12,6 +12,34 @@ let curves = [];
 let inputDirection = 'up';
 let egg;
 
+function setup() {
+	for (let i = 0; i < 15; i++) {
+		for (let j = 0; j < 20; j++) {
+			let rand = Math.floor(Math.random() * 9);
+			new bg.Sprite('grass' + rand, j, i);
+		}
+	}
+
+	createTiles([
+		'┌├----------------┤┐',
+		'┬                  ┬',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'|                  |',
+		'┴                  ┴',
+		'└├----------------┤┘'
+	]);
+	selectMode();
+}
+
 function selectMode() {
 	new icons.Sprite('Normal', 2, 3);
 	button('Normal mode', 5, 4, () => {
@@ -26,7 +54,6 @@ function selectMode() {
 		startGame();
 	});
 }
-selectMode();
 
 function exitMenu() {
 	erase();

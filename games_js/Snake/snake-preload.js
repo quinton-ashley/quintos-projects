@@ -1,4 +1,4 @@
-async function setup() {
+function preload() {
 	eatSound = loadSound(QuintOS.dir + '/sounds/retro_collect_pickup_item_20.wav');
 	eatSound.setVolume(0.3);
 
@@ -15,7 +15,7 @@ async function setup() {
 
 	world = new World(0, 0, 8);
 	world.offset.y = 16;
-	world.spriteSheet = await loadImage(QuintOS.dir + '/img/world.png');
+	world.spriteSheet = loadImage(QuintOS.dir + '/img/world.png');
 
 	bg = new Group();
 	bg.layer = 0;
@@ -50,7 +50,7 @@ async function setup() {
 	snake.layer = 3;
 	snake.collider = 'none';
 	snake.heading = 'up';
-	snake.spriteSheet = await loadImage(QuintOS.dir + '/img/snakes.png');
+	snake.spriteSheet = loadImage(QuintOS.dir + '/img/snakes.png');
 
 	snake.addAnis({
 		'head-up': [0, 0],
@@ -72,36 +72,11 @@ async function setup() {
 	icons.layer = 1;
 	icons.collider = 'none';
 	icons.tileSize = 16;
-	icons.spriteSheet = await loadImage(QuintOS.dir + '/img/icons.png');
+	icons.spriteSheet = loadImage(QuintOS.dir + '/img/icons.png');
 
 	icons.addAnis({
 		Normal: [0, 0],
 		Reverse: [1, 0]
 	});
 	icons.tileSize = 8;
-
-	for (let i = 0; i < 15; i++) {
-		for (let j = 0; j < 20; j++) {
-			let rand = Math.floor(Math.random() * 9);
-			new bg.Sprite('grass' + rand, j, i);
-		}
-	}
-
-	createTiles([
-		'┌├----------------┤┐',
-		'┬                  ┬',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'|                  |',
-		'┴                  ┴',
-		'└├----------------┤┘'
-	]);
 }
