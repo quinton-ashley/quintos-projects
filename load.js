@@ -15,14 +15,14 @@
 	/*12*/ ['Wordle', 'a2'],
 	/*13*/ ['TicTacAIO', 'gridc'],
 	/*14*/ ['SpeakAndSpell', 'sas'],
-	/*15*/ ['Tempest', 'zx'],
+	/*15*/ ['Contain', 'zx'],
 	/*16*/ ['Snake', 'gameboi'], // TODO fix animation frame delay
 	/*17*/ ['SketchBook', 'c64'],
 	/*18*/ ['SuperJump', 'arcv'],
 	/*19*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Hangman';
+QuintOS.game = 'Snake';
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 

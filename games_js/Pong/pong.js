@@ -1,7 +1,14 @@
 // screen size is 256x192
 
-// tennis ball image
-let imgBall = spriteArt(`
+let ball, paddleL, paddleR, wallTop, wallBottom;
+let imgNet, imgCenterLine;
+
+let scoreL = 0;
+let scoreR = 0;
+
+function setup() {
+	// tennis ball image
+	let imgBall = spriteArt(`
 ..wwww..
 .wwyyww.
 wwywwyww
@@ -11,39 +18,37 @@ wwywwyww
 .wwyyww.
 ..wwww..`);
 
-// paddle racket image
-let imgPaddle = spriteArt(
-	'.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(11) + 'www..www\n' + 'wwwwwwww\n.wwwwww.'
-);
+	// paddle racket image
+	let imgPaddle = spriteArt(
+		'.wwwwww.\nwwwwwwww\n' + 'www..www\nww.ww.ww\n'.repeat(11) + 'www..www\n' + 'wwwwwwww\n.wwwwww.'
+	);
 
-let imgWall = spriteArt(('c'.repeat(320) + '\n').repeat(8));
+	let imgWall = spriteArt(('c'.repeat(320) + '\n').repeat(8));
 
-let imgNet = spriteArt('w.\n.w\n'.repeat(80));
+	imgNet = spriteArt('w.\n.w\n'.repeat(80));
 
-let imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
+	imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
-let ball = new Sprite(imgBall, centerX, centerY, 8);
-let paddleL = new Sprite(imgPaddle, 9, centerY, 'static');
-let paddleR = new Sprite(imgPaddle, width - 9, centerY, 'static');
-let wallTop = new Sprite(imgWall, centerX, 4, 'static');
-let wallBottom = new Sprite(imgWall, centerX, height - 4, 'static');
+	ball = new Sprite(imgBall, centerX, centerY, 8);
+	paddleL = new Sprite(imgPaddle, 9, centerY, 'static');
+	paddleR = new Sprite(imgPaddle, width - 9, centerY, 'static');
+	wallTop = new Sprite(imgWall, centerX, 4, 'static');
+	wallBottom = new Sprite(imgWall, centerX, height - 4, 'static');
 
-let scoreL = 0;
-let scoreR = 0;
+	// places a ball in center of the screen
+	ball.velocity.x = 1;
+	ball.velocity.y = 1;
+	ball.bounciness = 1;
+	ball.friction = 0;
+	ball.rotationLocked = true;
 
-// places a ball in center of the screen
-ball.velocity.x = 1;
-ball.velocity.y = 1;
-ball.bounciness = 1;
-ball.friction = 0;
-ball.rotationLocked = true;
+	displayScore();
+}
 
 function displayScore() {
 	text(scoreL, 3, 10);
 	text(scoreR, 3, 20);
 }
-
-displayScore();
 
 function draw() {
 	background('r');
