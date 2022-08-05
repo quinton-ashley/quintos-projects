@@ -115,72 +115,70 @@ for (let listName in wordLists) {
 let words, word, lines, incorrectLetters, wrong, mode;
 
 async function gameLoop() {
-	// generate random number between 0 and the number of words in the words array
-	let rand = Math.floor(Math.random() * words.length);
-	word = words[rand]; // get word from words array
-	words.splice(rand, 1);
-	log(word); // log the word in the console for testing
+	while (words.length > 0) {
+		// generate random number between 0 and the number of words in the words array
+		let rand = Math.floor(Math.random() * words.length);
+		word = words[rand]; // get word from words array
+		words.splice(rand, 1);
+		log(word); // log the word in the console for testing
 
-	/* PART A1: make an array with a line for each letter in the word */
-	// Example word: 'quiz'
-	// lines -> ['_', '_', '_', '_']
-	lines = '_'.repeat(word.length).split('');
+		/* PART A1: make an array with a line for each letter in the word */
+		// Example word: 'quiz'
+		// lines -> ['_', '_', '_', '_']
+		lines = '_'.repeat(word.length).split('');
 
-	wrong = 0;
-	incorrectLetters = [];
+		wrong = 0;
+		incorrectLetters = [];
 
-	/* PART A3: make the game loop, don't use the hangman until part B */
-	while (lines.includes('_') && wrong < hangman.length) {
-		/* PART B: display the hangman in the prompt */
-		let msg = hangman[wrong] + '\n\n' + lines.join(' ');
+		/* PART A3: make the game loop, don't use the hangman until part B */
+		while (lines.includes('_') && wrong < hangman.length) {
+			/* PART B: display the hangman in the prompt */
+			let msg = hangman[wrong] + '\n\n' + lines.join(' ');
 
-		if (incorrectLetters.length > 0) {
-			msg += '\n\n' + incorrectLetters.join(', ');
-		}
-
-		// guess is the letter or word the user entered
-		let guess = await prompt(msg);
-		if (guess == null) {
-			selectScreen();
-			return;
-		}
-		guess = guess.toLowerCase();
-		let isCorrect = false;
-
-		// test if the guess is a whole word, not just one letter
-		if (guess == word.toLowerCase()) {
-			break; // if guess matches word the user won, end loop
-		}
-
-		let i = 0;
-		while (i < lines.length) {
-			// the next letter in the word
-			let letter = word[i];
-			if (letter.toLowerCase() == guess) {
-				lines[i] = letter;
-				isCorrect = true;
+			if (incorrectLetters.length > 0) {
+				msg += '\n\n' + incorrectLetters.join(', ');
 			}
-			i++;
+
+			// guess is the letter or word the user entered
+			let guess = await prompt(msg);
+			if (guess == null) {
+				selectScreen();
+				return;
+			}
+			guess = guess.toLowerCase();
+			let isCorrect = false;
+
+			// test if the guess is a whole word, not just one letter
+			if (guess == word.toLowerCase()) {
+				break; // if guess matches word the user won, end loop
+			}
+
+			let i = 0;
+			while (i < lines.length) {
+				// the next letter in the word
+				let letter = word[i];
+				if (letter.toLowerCase() == guess) {
+					lines[i] = letter;
+					isCorrect = true;
+				}
+				i++;
+			}
+
+			if (!isCorrect) {
+				if (guess.length == 1) incorrectLetters.push(guess);
+				wrong++;
+			}
 		}
 
-		if (!isCorrect) {
-			if (guess.length == 1) incorrectLetters.push(guess);
-			wrong++;
+		if (wrong < hangman.length) {
+			await alert('You got it! The word was "' + word + '"');
+		} else {
+			await alert('You ran out of attempts. The word was "' + word + '"');
 		}
 	}
 
-	if (wrong < hangman.length) {
-		await alert('You got it! The word was "' + word + '"');
-	} else {
-		await alert('You ran out of attempts. The word was "' + word + '"');
-	}
-
-	if (words.length > 0) {
-		gameLoop();
-	} else {
-		await alert("That's all the words in this list! Thanks for playing!");
-		selectScreen();
-	}
+	await alert("That's all the words in this list! Thanks for playing!");
+	selectScreen();
 }
 
 async function selectScreen() {
@@ -223,4 +221,6 @@ async function startGame(listName) {
 	gameLoop();
 }
 
-selectScreen();
+function setup() {
+	selectScreen();
+}

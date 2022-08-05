@@ -139,10 +139,8 @@ async function selectScreen() {
 	}
 }
 
-async function loadGame() {
+async function setup() {
 	// source: https://gist.github.com/michaelmotzkus/de82e06c8538399909103108049788b9
 	Object.assign(categories, await (await fetch(QuintOS.dir + '/categories.json')).json());
 	selectScreen();
 }
-
-loadGame();

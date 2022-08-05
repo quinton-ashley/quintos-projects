@@ -1,4 +1,5 @@
-(async () => {
+// the start function gets run when the game starts
+async function start() {
 	// your code goes here!
 
 	let num = Math.round(random(1, 100));
@@ -17,4 +18,4 @@
 	}
 
 	exit();
-})();
+} // end of the start function

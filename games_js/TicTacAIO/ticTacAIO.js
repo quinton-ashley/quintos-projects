@@ -17,8 +17,6 @@ TTTTT  OOO   EEEE
   T   O   O  E
   T    OOO   EEEE`.slice(1);
 
-text(title, 5, 6);
-
 const bigSpace = '        \n'.repeat(7);
 
 const bigO = `
@@ -41,15 +39,6 @@ XX    XX`.slice(1);
 
 const gridCol = 26;
 const gridRow = 3;
-
-/* PART A: finish the grid of 9x8 spaces */
-text('─'.repeat(26), gridRow + 7, gridCol);
-text('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
-
-for (let row = gridRow; row < gridRow + 23; row++) {
-	text('│', row, gridCol + 8);
-	text('│', row, gridCol + 17); // draw another vertical line
-}
 
 // board stores the game data
 // in a two dimensional array of spaces
@@ -259,29 +248,41 @@ async function startGame() {
 	}
 }
 
-button('One Player Start', 13, 55, async () => {
-	await eraseRect(13, 55, 1, 3);
-	gameMode = 'AI';
-	button('Easy', 11, 55, () => {
-		aiLevel = 0;
-		startGame();
-	});
-	button('Medium', 13, 55, () => {
-		aiLevel = 1;
-		startGame();
-	});
-	button('Hard', 15, 55, () => {
-		aiLevel = 2;
-		startGame();
-	});
-	button('Challenge Mode', 17, 55, () => {
-		challengeMode = true;
-		aiLevel = 0;
-		startGame();
-	});
-});
+function setup() {
+	text(title, 5, 6);
+	/* PART A: finish the grid of 9x8 spaces */
+	text('─'.repeat(26), gridRow + 7, gridCol);
+	text('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
 
-button('Two Player Start', 15, 55, () => {
-	gameMode = 'Person';
-	startGame();
-});
+	for (let row = gridRow; row < gridRow + 23; row++) {
+		text('│', row, gridCol + 8);
+		text('│', row, gridCol + 17); // draw another vertical line
+	}
+
+	button('One Player Start', 13, 55, async () => {
+		await eraseRect(13, 55, 1, 3);
+		gameMode = 'AI';
+		button('Easy', 11, 55, () => {
+			aiLevel = 0;
+			startGame();
+		});
+		button('Medium', 13, 55, () => {
+			aiLevel = 1;
+			startGame();
+		});
+		button('Hard', 15, 55, () => {
+			aiLevel = 2;
+			startGame();
+		});
+		button('Challenge Mode', 17, 55, () => {
+			challengeMode = true;
+			aiLevel = 0;
+			startGame();
+		});
+	});
+
+	button('Two Player Start', 15, 55, () => {
+		gameMode = 'Person';
+		startGame();
+	});
+}

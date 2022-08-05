@@ -6,7 +6,7 @@ let score = 0;
 let total = 0;
 let distribution = [0, 0, 0, 0, 0, 0];
 
-async function loadGame() {
+async function setup() {
 	let wordsList = await (await fetch(QuintOS.dir + '/words5.txt')).text();
 	words = wordsList.split('\n');
 
@@ -16,8 +16,6 @@ async function loadGame() {
 	}
 	startGame();
 }
-
-loadGame();
 
 function displayInfo() {
 	let row = 10;

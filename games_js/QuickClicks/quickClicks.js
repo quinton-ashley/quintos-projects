@@ -91,10 +91,8 @@ function btnClick() {
 	}
 }
 
-async function startGame() {
+async function start() {
 	makeBg();
 	await alert('Click the buttons as fast as you can!', 11, 28, 24);
 	btnClick();
 }
-
-startGame();

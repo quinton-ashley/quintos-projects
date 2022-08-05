@@ -159,7 +159,7 @@ async function startNewGame() {
 	preventMoves = false;
 }
 
-async function startGame() {
+async function start() {
 	text(title, 6, 6);
 
 	/* PART A: finish the grid of 9x8 spaces */
@@ -184,5 +184,3 @@ async function startGame() {
 	displayScore();
 	preventMoves = false;
 }
-
-startGame();
