@@ -129,14 +129,14 @@ function selectMode() {
 	new icons.Sprite('Normal', 2, 3);
 	button('Normal mode', 5, 4, () => {
 		exitMenu();
-		start();
+		startGame();
 	});
 
 	new icons.Sprite('Reverse', 2, 11);
 	button('Reverse mode', 13, 4, () => {
 		reverseMode = true;
 		exitMenu();
-		start();
+		startGame();
 	});
 }
 
@@ -145,7 +145,7 @@ function exitMenu() {
 	icons.removeSprites();
 }
 
-function start() {
+function startGame() {
 	text('SCORE: ' + score, 17, 6);
 
 	new snake.Sprite('head-up', 2, 11).layer = 4;
@@ -221,7 +221,7 @@ async function gameOver() {
 	snake.removeSprites();
 	eggs.removeSprites();
 
-	start();
+	startGame();
 }
 
 async function moveSnake() {

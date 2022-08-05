@@ -16,7 +16,7 @@ let bigBuzzer = `
 |_.__/ \\__,_/___/___\\___|_|`.slice(1);
 
 function displayScore() {
-	text('Score: ' + score, 17, 14);
+	text('Score: ' + score, 23, 14);
 }
 
 async function pickNewPhrase() {
@@ -60,25 +60,25 @@ async function pickNewPhrase() {
 
 	/* Create the buzzer button */
 	buzzed = false;
-	button(bigBuzzer, 18, 5, buzz);
+	button(bigBuzzer, 24, 12, buzz);
 	addLetter();
 }
 
 async function buzz() {
 	buzzed = true;
-	let guess = await prompt('Guess the phrase:', 18);
+	let guess = await prompt('Guess the phrase:', 24);
 
 	if (typeof guess == 'string' && guess.toLowerCase() == phrase.toLowerCase()) {
 		score += emptyBoxes;
 		displayScore();
-		await alert('Correct!', 18);
+		await alert('Correct!', 24);
 		pickNewPhrase();
 	} else {
 		score -= 3;
 		displayScore();
-		await alert('Wrong! Try again.', 18);
+		await alert('Wrong! Try again.', 24);
 		buzzed = false;
-		button(bigBuzzer, 18, 5, buzz);
+		button(bigBuzzer, 24, 5, buzz);
 		addLetter();
 	}
 }
@@ -86,7 +86,7 @@ async function buzz() {
 async function gameOver() {
 	score -= 3;
 	displayScore();
-	await alert('Out of time! The phrase was "' + phrase + '"', 17);
+	await alert('Out of time! The phrase was "' + phrase + '"', 23);
 	pickNewPhrase();
 }
 
