@@ -17,20 +17,19 @@
 	/*14*/ ['SpeakAndSpell', 'sas'],
 	/*15*/ ['Contain', 'zx'],
 	/*16*/ ['Snake', 'gameboi'], // TODO fix animation frame delay
-	/*17*/ ['SketchBook', 'c64'],
-	/*18*/ ['SuperJump', 'arcv'],
-	/*19*/ ['Sokoban', 'c64']
+	/*17*/ ['SuperJump', 'arcv'],
+	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Sokoban';
+QuintOS.game = 'Snake';
+QuintOS.user = 'quinton-ashley';
+
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
-QuintOS.user = 'quinton-ashley';
-
+// QuintOS.user = 'Paeto-Chayarat'; // switch to main
 // QuintOS.user = 'ZhYGuoL'; // Zhiyuan
 // QuintOS.user = 'LizaaV'; // Liza (Jes)
-// QuintOS.user = 'Paeto-Chayarat'; // switch to main
 // QuintOS.user = 'jaximuslim'; // Jax
 // QuintOS.user = 'MEDBEDFAKE'; // Tagir
 // QuintOS.user = 'Morz75'; // Alex
@@ -54,7 +53,7 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.dir = 'games_java';
 QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
-// QuintOS.dir = 'students/' + QuintOS.user;
+// QuintOS.dir = 'students/' + QuintOS.user + '/' + QuintOS.game;
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/master/GAMES';
 
 // QuintOS.language = 'java';
