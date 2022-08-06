@@ -2,11 +2,12 @@ function preload() {
 	// image assets location
 	let imgDir = QuintOS.dir + '/img/bitBoi';
 
-	world = new World(0, 0, 16);
 	world.offset.x = 96;
 	world.offset.y = 48;
 	world.autoResetAnimations = true;
-	world.spriteSheet = loadImage(imgDir + '/world16.png');
+
+	allSprites.tileSize = 16;
+	allSprites.spriteSheet = loadImage(imgDir + '/world16.png');
 
 	walls = new Group();
 	walls.collider = 'static';

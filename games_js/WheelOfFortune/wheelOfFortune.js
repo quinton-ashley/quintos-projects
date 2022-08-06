@@ -124,13 +124,15 @@ async function selectScreen() {
 	await erase();
 
 	let description = 'Guess the phrase as quick as you can! Select a Category:';
-	await text(description, 2, 2, 36);
+	await text(description, 2, 2);
 
 	let cats = Object.keys(categories);
 	cats.push('Shuffle!');
+	let w = 25;
+	let rows = 12;
 	for (let i = 0; i < cats.length; i++) {
 		let categoryName = cats[i];
-		button(categoryName.slice(0, 17).padEnd(17), 5 + (i % 17), i < 17 ? 2 : 21, async () => {
+		button(categoryName.padEnd(w - 1), 4 + (i % rows) * 2, 2 + w * floor(i / rows), async () => {
 			await erase();
 			selectedCategory = categoryName;
 			await alert('You selected "' + selectedCategory + '".\n\nGood luck!');

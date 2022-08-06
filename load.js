@@ -21,7 +21,7 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'WheelOfFortune';
+QuintOS.game = 'Snake';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
