@@ -15,11 +15,11 @@
 // }
 
 // function eqX1(t) {
-// 	return sin(t * 6) * mouseX;
+// 	return sin(t * 6) * mouse.x;
 // }
 
 // function eqY1(t) {
-// 	return cos(t / 2) * mouseY;
+// 	return cos(t / 2) * mouse.y;
 // }
 
 // function eqX2(t) {

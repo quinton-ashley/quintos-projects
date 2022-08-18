@@ -2,11 +2,15 @@
 
 let ball, paddleL, paddleR, wallTop, wallBottom;
 let imgNet, imgCenterLine;
+let halfW, halfH;
 
 let scoreL = 0;
 let scoreR = 0;
 
 function setup() {
+	halfW = width / 2;
+	halfH = height / 2;
+
 	// tennis ball image
 	let imgBall = spriteArt(`
 ..wwww..
@@ -29,11 +33,11 @@ wwywwyww
 
 	imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
-	ball = new Sprite(imgBall, centerX, centerY, 8);
-	paddleL = new Sprite(imgPaddle, 9, centerY, 'static');
-	paddleR = new Sprite(imgPaddle, width - 9, centerY, 'static');
-	wallTop = new Sprite(imgWall, centerX, 4, 'static');
-	wallBottom = new Sprite(imgWall, centerX, height - 4, 'static');
+	ball = new Sprite(imgBall, halfW, halfH, 8);
+	paddleL = new Sprite(imgPaddle, 9, halfH, 'static');
+	paddleR = new Sprite(imgPaddle, width - 9, halfH, 'static');
+	wallTop = new Sprite(imgWall, halfW, 4, 'static');
+	wallBottom = new Sprite(imgWall, halfW, height - 4, 'static');
 
 	// places a ball in center of the screen
 	ball.velocity.x = 1;
@@ -58,8 +62,8 @@ function draw() {
 	rect(20, 36, 36, 140); // left
 	rect(200, 36, 36, 140); // right
 	rect(20, 156, 216, 20); // bottom
-	image(imgNet, centerX - 1, 16);
-	image(imgCenterLine, 20, centerY);
+	image(imgNet, halfW - 1, 16);
+	image(imgCenterLine, 20, halfH);
 
 	// if ball touches top wall
 	if (ball.y < wallTop.y + wallTop.h) {
@@ -78,15 +82,15 @@ function draw() {
 		}
 	}
 
-	if (isKeyDown('w') && paddleL.y > wallTop.y) {
+	if (kb.pressing('w') && paddleL.y > wallTop.y) {
 		paddleL.y -= 4;
-	} else if (isKeyDown('s') && paddleL.y < wallBottom.y) {
+	} else if (kb.pressing('s') && paddleL.y < wallBottom.y) {
 		paddleL.y += 4;
 	}
 
-	if (isKeyDown('ArrowUp') && paddleR.y > wallTop.y) {
+	if (kb.pressing('ArrowUp') && paddleR.y > wallTop.y) {
 		paddleR.y -= 4;
-	} else if (isKeyDown('ArrowDown') && paddleR.y < wallBottom.y) {
+	} else if (kb.pressing('ArrowDown') && paddleR.y < wallBottom.y) {
 		paddleR.y += 4;
 	}
 

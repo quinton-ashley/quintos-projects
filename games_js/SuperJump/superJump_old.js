@@ -39,7 +39,7 @@ class Ball {
 	draw() {
 		this.vel.y += 0.25;
 		/* PART A2: make the ball move */
-		this.x += (mouseX - this.x) * 0.02;
+		this.x += (mouse.x - this.x) * 0.02;
 		// this.x += this.vel.x;
 		this.y += this.vel.y;
 		image(imgBall, this.x, this.y);
