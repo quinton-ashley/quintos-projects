@@ -143,7 +143,7 @@ function selectMode() {
 
 function exitMenu() {
 	erase();
-	icons.removeSprites();
+	icons.remove();
 }
 
 function startGame() {
@@ -167,20 +167,20 @@ function startGame() {
 function changeSnakeAni(s, type, heading) {
 	if (heading == 'up') {
 		s.ani = type + '-up';
-		s.mirrorX = false;
-		s.mirrorY = false;
+		s.mirror.x = false;
+		s.mirror.y = false;
 	} else if (heading == 'down') {
 		s.ani = type + '-up';
-		s.mirrorX = false;
-		s.mirrorY = true;
+		s.mirror.x = false;
+		s.mirror.y = true;
 	} else if (heading == 'left') {
 		s.ani = type + '-left';
-		s.mirrorX = false;
-		s.mirrorY = false;
+		s.mirror.x = false;
+		s.mirror.y = false;
 	} else {
 		s.ani = type + '-left';
-		s.mirrorX = true;
-		s.mirrorY = false;
+		s.mirror.x = true;
+		s.mirror.y = false;
 	}
 }
 
@@ -219,8 +219,8 @@ async function gameOver() {
 	await alert('Game Over');
 	isGameOver = false;
 
-	snake.removeSprites();
-	eggs.removeSprites();
+	snake.remove();
+	eggs.remove();
 
 	startGame();
 }
@@ -239,17 +239,17 @@ async function moveSnake() {
 	if (prevDir != nextDir) {
 		let s = new snake.Sprite('curve', snake[0].x, snake[0].y);
 		if ((prevDir == 'up' && nextDir == 'right') || (prevDir == 'left' && nextDir == 'down')) {
-			s.mirrorX = false;
-			s.mirrorY = true;
+			s.mirror.x = false;
+			s.mirror.y = true;
 		} else if ((prevDir == 'up' && nextDir == 'left') || (prevDir == 'right' && nextDir == 'down')) {
-			s.mirrorX = true;
-			s.mirrorY = true;
+			s.mirror.x = true;
+			s.mirror.y = true;
 		} else if ((prevDir == 'down' && nextDir == 'right') || (prevDir == 'left' && nextDir == 'up')) {
-			s.mirrorX = false;
-			s.mirrorY = false;
+			s.mirror.x = false;
+			s.mirror.y = false;
 		} else {
-			s.mirrorX = true;
-			s.mirrorY = false;
+			s.mirror.x = true;
+			s.mirror.y = false;
 		}
 		curves.push(s);
 	}

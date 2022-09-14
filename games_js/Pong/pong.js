@@ -94,6 +94,18 @@ function draw() {
 		paddleR.y += 4;
 	}
 
+	if (kb.pressed('d')) {
+		paddleL.rotation += 22.5;
+	} else if (kb.pressed('a')) {
+		paddleL.rotation -= 22.5;
+	}
+
+	if (kb.pressed('ArrowLeft')) {
+		paddleR.rotation -= 22.5;
+	} else if (kb.pressed('ArrowRight')) {
+		paddleR.rotation += 22.5;
+	}
+
 	// if the ball leaves the screen
 	if (ball.x < -50) {
 		ball.velocity.x = 1;
@@ -113,19 +125,5 @@ function draw() {
 		// place back in center of the screen
 		ball.x = width / 2 - ball.w / 2;
 		ball.y = height / 2 - ball.h / 2;
-	}
-}
-
-function keyPressed() {
-	if (key == 'd') {
-		paddleL.rotation += 22.5;
-	} else if (key == 'a') {
-		paddleL.rotation -= 22.5;
-	}
-
-	if (key == 'ArrowLeft') {
-		paddleR.rotation -= 22.5;
-	} else if (key == 'ArrowRight') {
-		paddleR.rotation += 22.5;
 	}
 }

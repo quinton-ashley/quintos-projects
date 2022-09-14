@@ -2,12 +2,12 @@
 	/*00*/ ['GuessTheNumber', 'calcu'], // primitives and if/else
 	/*01*/ ['PickAPath', 'cpet'], // array
 	/*02*/ ['Pong', 'zx'], // using objects
-	/*03*/ ['LeafEater', 'gameboi'], // iteration
+	/*03*/ ['LilyLeap', 'gameboi'], // iteration
 	/*04*/ ['Hangman', 'a2'], // strings
 	/*05*/ ['QuickClicks', 'gridc'], // recursion
 	/*06*/ ['BinaryCounter', 'cpet'], // binary
 	/*07*/ ['CodeBreaker', 'gridc'], // loading files
-	/*08*/ ['GenerativeArt', 'c64'], // fun (review)
+	/*08*/ ['GenerativeArt', 'ibm2250'], // fun (review)
 	/*09*/ ['TicTacToe', 'gridc'], // 2D Array
 	/*10*/ ['DataDesigner', 'c64'], // creating objects
 	/*11*/ ['WorldWideWeb', 'macin'], // web
@@ -21,12 +21,13 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Pong';
+QuintOS.game = 'LilyLeap';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
+// QuintOS.user = 'Oki634';
 // QuintOS.user = 'Paeto-Chayarat'; // switch to main
 // QuintOS.user = 'ZhYGuoL'; // Zhiyuan
 // QuintOS.user = 'LizaaV'; // Liza (Jes)
