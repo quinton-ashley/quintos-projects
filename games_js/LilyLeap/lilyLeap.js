@@ -38,6 +38,8 @@ function setup() {
 	lilypads.collider = 'static';
 
 	generateLilyPads();
+
+	alert('Press up arrow to jump one lily pad, right arrow to jump two. Press r to reset.', 2);
 }
 
 function generateLilyPads() {
