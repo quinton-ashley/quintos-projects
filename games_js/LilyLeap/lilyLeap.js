@@ -45,11 +45,10 @@ function setup() {
 function generateLilyPads() {
 	let skip = 0;
 	for (let i = 0; i < 50; i++) {
-		if (skip == 0) {
-			skip = round(random(1, 5));
+		if (i == skip) {
+			skip += round(random(2, 7));
 			continue;
 		}
-		skip--;
 		let lily = new lilypads.Sprite();
 		lily.x = i * 16;
 		lily.animation.frame = round(random(0, 9));
@@ -65,7 +64,11 @@ function draw() {
 	fill('3');
 	rect(0, 0, width, 90);
 
+	// frog is not mid-jump and not falling
+	// the frog is sitting on a lilypad
 	if (frog.y > 83 && frog.vel.y < 1) {
+		// round the x position of the frog to be at exactly
+		// the same x position as the nearest lilypad
 		frog.x = round(frog.x / 16) * 16;
 
 		if (kb.pressed('ArrowUp')) {

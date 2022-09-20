@@ -27,7 +27,9 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
-// QuintOS.user = 'Oki634';
+// QuintOS.user = 'Oki634'; // Oki Sugiyama
+// QuintOS.user = 'StefanoCereser'; // Stefano Cereser
+// QuintOS.user = 'Matttaaaaa'; // (Matt) Chayakul Chanthawarang
 // QuintOS.user = 'Paeto-Chayarat'; // switch to main
 // QuintOS.user = 'ZhYGuoL'; // Zhiyuan
 // QuintOS.user = 'LizaaV'; // Liza (Jes)
