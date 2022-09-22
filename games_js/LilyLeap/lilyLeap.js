@@ -39,7 +39,7 @@ function setup() {
 
 	generateLilyPads();
 
-	alert('Press up arrow to jump one lily pad, right arrow to jump two. Press r to reset.', 2);
+	alert('Press the up arrow key to jump one lily pad. Press right arrow to jump two.', 2);
 }
 
 function generateLilyPads() {
@@ -84,10 +84,12 @@ function draw() {
 
 	camera.x = frog.x + 64;
 
-	if (kb.pressed('r')) {
+	if (frog.y > 600) {
 		lilypads.removeAll();
 		frog.x = 16;
 		frog.y = 90;
+		frog.vel.x = 0;
+		frog.vel.y = 0;
 		generateLilyPads();
 	}
 }

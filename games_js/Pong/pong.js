@@ -44,7 +44,7 @@ wwywwyww
 	ball.velocity.y = 1;
 	ball.bounciness = 1;
 	ball.friction = 0;
-	ball.rotationLocked = true;
+	ball.rotationLock = true;
 
 	displayScore();
 }
@@ -126,4 +126,6 @@ function draw() {
 		ball.x = width / 2 - ball.w / 2;
 		ball.y = height / 2 - ball.h / 2;
 	}
+
+	allSprites.debug = mouse.pressing();
 }
