@@ -3,9 +3,10 @@
 	/*01*/ ['PickAPath', 'cpet'], // array
 	/*02*/ ['Pong', 'zx'], // using objects
 	/*03*/ ['LilyLeap', 'gameboi'], // iteration
-	/*04*/ ['Hangman', 'a2'], // strings
+	/*04*/ ['Hangman', 'a2'], // strings and array editing
 	/*05*/ ['QuickClicks', 'gridc'], // recursion
-	/*06*/ ['BinaryCounter', 'cpet'], // binary
+
+	/*06*/ ['BinaryCounter', 'calcu'], // binary
 	/*07*/ ['CodeBreaker', 'gridc'], // loading files
 	/*08*/ ['GenerativeArt', 'ibm2250'], // fun (review)
 	/*09*/ ['TicTacToe', 'gridc'], // 2D Array
@@ -21,12 +22,15 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'LilyLeap';
+QuintOS.game = 'BigBinary';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
+// QuintOS.user = 'Eason-Liutenant'; // Eason
+// QuintOS.user = 'Ali4110'; // Ali Abroumand Azar
+// QuintOS.user = 'EgorDeniso'; // Egor Denisov
 // QuintOS.user = 'Oki634'; // Oki Sugiyama
 // QuintOS.user = 'AmaniZungu'; // Sakhile Zunga
 // QuintOS.user = 'DanielKibatullin'; // Daniel Kibatullin
@@ -37,8 +41,8 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.user = 'Morz75'; // Alex Marinenko
 // QuintOS.user = 'seva-zoff'; // Seva Zoff
 // QuintOS.user = 'WarriorFPHS'; // Aarnav Gupta
-
 // QuintOS.user = 'LizaaV'; // (Liza) Jelisaveta Vasiljevic
+
 // QuintOS.user = 'jaximuslim'; // Jax Lim
 // QuintOS.user = 'MEDBEDFAKE'; // Tagir Rakhmatullin
 // QuintOS.user = 'carter-noa'; // Carter Noah

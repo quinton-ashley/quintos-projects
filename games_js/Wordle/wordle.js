@@ -29,26 +29,37 @@ function displayInfo() {
 	text('letter is in the correct position', row, 24, 14);
 }
 
-function displayBoxes(guess) {
+function displayBoxes() {
 	for (let i = 0; i < 6; i++) {
 		for (let j = 0; j < 5; j++) {
 			let row = 2 + i * 3;
 			let col = 2 + j * 3;
-
-			let letter = board[i][j];
-			let style = 'solid';
-
-			if (word[j] == letter) {
-				style = 'dashed';
-			} else if (word.includes(letter)) {
-				style = 'outline';
-			} else {
-				letters[letters.indexOf(letter)] = ' ';
-			}
-
-			textRect(row, col, 3, 3, style);
-			text(letter, row + 1, col + 1);
+			textRect(row, col, 3, 3);
 		}
+	}
+}
+
+function displayGuess(turn, guess) {
+	for (let j = 0; j < 5; j++) {
+		let row = 2 + turn * 3;
+		let col = 2 + j * 3;
+
+		let letter = guess[j];
+		let style = 'solid';
+
+		if (word[j] == letter) {
+			style = 'dashed';
+		} else if (word.includes(letter)) {
+			// TEETH
+			// LEVEE
+
+			style = 'outline';
+		} else {
+			letters[letters.indexOf(letter)] = ' ';
+		}
+
+		textRect(row, col, 3, 3, style);
+		text(letter, row + 1, col + 1);
 	}
 }
 
@@ -76,7 +87,7 @@ async function startGame() {
 
 	erase();
 	displayInfo();
-	displayBoxes('');
+	displayBoxes();
 
 	for (let turn = 0; turn < 6; turn++) {
 		displayLetters();
@@ -88,8 +99,8 @@ async function startGame() {
 			continue;
 		}
 		board[turn] = guess;
-		await eraseRect(2, 2, 16, 18);
-		displayBoxes(guess);
+		await eraseRect(2 + turn * 3, 2, 16, 3);
+		displayGuess(turn, guess);
 		if (guess == word) {
 			score++;
 			distribution[turn]++;
