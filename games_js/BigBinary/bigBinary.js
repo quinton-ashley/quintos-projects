@@ -11,6 +11,7 @@ Which number is bigger,
              arrow keys.`;
 let message = instructions;
 let isCorrect = false;
+let checkingPick = false;
 
 function preload() {
 	miniBulb = loadTextAni('miniBulb.txt');
@@ -29,11 +30,21 @@ function start() {
 	pickNumbers();
 	button('DECIMAL', 10, 2, pickedLeft);
 	button('BINARY ', 12, 29, pickedRight);
+	update();
+}
+
+function update() {
+	if (kb.pressed('ArrowLeft')) pickedLeft();
+	if (kb.pressed('ArrowRight')) pickedRight();
+	requestAnimationFrame(update);
 }
 
 function pickNumbers() {
 	leftNum = round(random(0, 15));
-	rightNum = round(random(0, 15));
+	rightNum = leftNum;
+	while (rightNum == leftNum) {
+		rightNum = round(random(0, 15));
+	}
 }
 
 function draw() {
@@ -50,20 +61,19 @@ function draw() {
 	textAni(tv, 1, 1);
 	textAni(tv, 3, 28);
 
-	if (message === instructions) {
-		text(leftNum.toString(10).padStart(4, ' '), 7, 6);
-		text(rightNum.toString(2).padStart(4, '0'), 9, 33);
+	text(leftNum.toString(10).padStart(4, ' '), 7, 6);
+	text(rightNum.toString(2).padStart(4, '0'), 9, 33);
+
+	if (!checkingPick) {
 		text('DECIMAL', 10, 2);
 		text('BINARY ', 12, 29);
 	}
 
 	text(message, 12, 4);
-
-	if (kb.pressed('ArrowLeft')) pickedLeft();
-	if (kb.pressed('ArrowRight')) pickedRight();
 }
 
 function pickedLeft() {
+	if (checkingPick) return;
 	if (leftNum > rightNum) {
 		message = '             Correct!';
 		isCorrect = true;
@@ -74,6 +84,7 @@ function pickedLeft() {
 }
 
 function pickedRight() {
+	if (checkingPick) return;
 	if (rightNum > leftNum) {
 		message = '             Correct!';
 		isCorrect = true;
@@ -84,8 +95,10 @@ function pickedRight() {
 }
 
 async function newGame() {
+	checkingPick = true;
 	await delay(2000);
+	pickNumbers();
 	isCorrect = false;
 	message = instructions;
-	pickNumbers();
+	checkingPick = false;
 }
