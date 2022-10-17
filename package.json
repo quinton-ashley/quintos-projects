@@ -25,5 +25,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
 	},
-	"version": "1.0.86"
+	"version": "1.0.87"
 }

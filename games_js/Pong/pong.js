@@ -94,15 +94,15 @@ function draw() {
 		paddleR.y += 4;
 	}
 
-	if (kb.pressed('d')) {
+	if (kb.presses('d')) {
 		paddleL.rotation += 22.5;
-	} else if (kb.pressed('a')) {
+	} else if (kb.presses('a')) {
 		paddleL.rotation -= 22.5;
 	}
 
-	if (kb.pressed('ArrowLeft')) {
+	if (kb.presses('ArrowLeft')) {
 		paddleR.rotation -= 22.5;
-	} else if (kb.pressed('ArrowRight')) {
+	} else if (kb.presses('ArrowRight')) {
 		paddleR.rotation += 22.5;
 	}
 

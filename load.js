@@ -22,7 +22,7 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'BigBinary';
+QuintOS.game = 'TicTacToe';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
@@ -52,15 +52,15 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.user = 'Ricane7'; // Ricane
 // QuintOS.user = 'eeshcapiche'; // Eeshan
 // QuintOS.user = 'JuniorObrien'; // Michael
-// QuintOS.user = 'Man4070'; // Alkarim
+// QuintOS.user = 'Man4070'; // Alkarim Uakassov
 // QuintOS.user = 'VoronmVoron'; //
 // QuintOS.user = 'hansenhong'; // Hansen
 // QuintOS.user = 'EvanZSC'; // Evan
 // QuintOS.user = 'saa1d'; // Said
 // QuintOS.user = 'mykaala';	// Mykaala
 
-// QuintOS.dir = 'games_java';
-QuintOS.dir = 'games_js';
+QuintOS.dir = 'games_java';
+// QuintOS.dir = 'games_js';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.user + '/' + QuintOS.game;
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/master/GAMES';

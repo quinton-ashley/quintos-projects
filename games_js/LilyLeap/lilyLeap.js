@@ -71,11 +71,11 @@ function draw() {
 		// the same x position as the nearest lilypad
 		frog.x = round(frog.x / 16) * 16;
 
-		if (kb.pressed('ArrowUp')) {
+		if (kb.presses('ArrowUp')) {
 			frog.animation.play();
 			frog.velocity.y = -1.4;
 			frog.velocity.x = 0.9;
-		} else if (kb.pressed('ArrowRight')) {
+		} else if (kb.presses('ArrowRight')) {
 			frog.animation.play();
 			frog.velocity.y = -2;
 			frog.velocity.x = 1.4;
