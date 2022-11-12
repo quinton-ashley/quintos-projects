@@ -3,32 +3,33 @@
 	/*01*/ ['PickAPath', 'cpet'], // array
 	/*02*/ ['Pong', 'zx'], // using objects
 	/*03*/ ['LilyLeap', 'gameboi'], // iteration
-	/*04*/ ['Hangman', 'a2'], // strings and array editing
+	/*04*/ ['Hangman', 'a2'], // strings
 	/*05*/ ['QuickClicks', 'gridc'], // recursion
 
-	/*06*/ ['BinaryCounter', 'calcu'], // binary
-	/*07*/ ['CodeBreaker', 'gridc'], // loading files
-	/*08*/ ['GenerativeArt', 'ibm2250'], // fun (review)
+	/*06*/ ['BinaryConverter', 'calcu'], // binary
+	/*07*/ ['GenerativeArt', 'ibm2250'], // hex codes
+	/*08*/ ['CodeBreaker', 'gridc'], // loading files
 	/*09*/ ['TicTacToe', 'gridc'], // 2D Array
 	/*10*/ ['DataDesigner', 'c64'], // creating objects
 	/*11*/ ['WorldWideWeb', 'macin'], // web
 
-	/*12*/ ['Wordle', 'a2'],
-	/*13*/ ['TicTacAIO', 'gridc'],
-	/*14*/ ['SpeakAndSpell', 'sas'],
+	/*12*/ ['Wordle', 'a2'], // review
+	/*13*/ ['TicTacAIO', 'gridc'], // basic AI
+	/*14*/ ['SpeakAndSpell', 'sas'], // promises and dictionaries
 	/*15*/ ['Contain', 'zx'],
-	/*16*/ ['Snake', 'gameboi'], // TODO fix animation frame delay
-	/*17*/ ['SuperJump', 'arcv'],
+	/*16*/ ['Snake', 'gameboi'],
+	/*17*/ ['SuperJump', 'arc'],
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'TicTacToe';
+QuintOS.game = 'LilyLeap';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
-// QuintOS.user = 'Eason-Liutenant'; // Eason
+// QuintOS.user = 'CornN10'; // Korn Niruttinanon
+// QuintOS.user = 'Eason-Liutenant'; // Eason Liu
 // QuintOS.user = 'Ali4110'; // Ali Abroumand Azar
 // QuintOS.user = 'EgorDeniso'; // Egor Denisov
 // QuintOS.user = 'Oki634'; // Oki Sugiyama
@@ -59,11 +60,11 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.user = 'saa1d'; // Said
 // QuintOS.user = 'mykaala';	// Mykaala
 
-QuintOS.dir = 'games_java';
-// QuintOS.dir = 'games_js';
+QuintOS.dir = 'games_js';
+// QuintOS.dir = 'games_java';
 // QuintOS.dir = 'starter_js';
-// QuintOS.dir = 'students/' + QuintOS.user + '/' + QuintOS.game;
-// QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/master/GAMES';
+// QuintOS.dir = 'students/' + QuintOS.user + '/quintos-games/GAMES';
+// QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/main/GAMES';
 
 // QuintOS.language = 'java';
 
