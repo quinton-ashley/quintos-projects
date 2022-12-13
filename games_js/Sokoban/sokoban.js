@@ -327,9 +327,9 @@ function loadLevel(level, doReset) {
 
 function resetBoard() {
 	displaySteps();
-	walls.removeSprites();
-	boxes.removeSprites();
-	goals.removeSprites();
+	walls.remove();
+	boxes.remove();
+	goals.remove();
 	board = [];
 }
 

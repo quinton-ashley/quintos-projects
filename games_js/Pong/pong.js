@@ -1,5 +1,3 @@
-// screen size is 256x192
-
 let ball, paddleL, paddleR, wallTop, wallBottom;
 let imgNet, imgCenterLine;
 let halfW, halfH;
@@ -34,17 +32,16 @@ wwywwyww
 	imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
 	ball = new Sprite(imgBall, halfW, halfH, 8);
-	paddleL = new Sprite(imgPaddle, 9, halfH, 'static');
-	paddleR = new Sprite(imgPaddle, width - 9, halfH, 'static');
-	wallTop = new Sprite(imgWall, halfW, 4, 'static');
-	wallBottom = new Sprite(imgWall, halfW, height - 4, 'static');
+	paddleL = new Sprite(imgPaddle, 9, halfH, 'k');
+	paddleR = new Sprite(imgPaddle, width - 9, halfH, 'k');
+	wallTop = new Sprite(imgWall, halfW, 4, 's');
+	wallBottom = new Sprite(imgWall, halfW, height - 4, 's');
 
-	// places a ball in center of the screen
-	ball.velocity.x = 1;
-	ball.velocity.y = 1;
 	ball.bounciness = 1;
 	ball.friction = 0;
-	ball.rotationLock = true;
+
+	ball.velocity.x = 1;
+	ball.velocity.y = 1;
 
 	displayScore();
 }
@@ -65,66 +62,51 @@ function draw() {
 	image(imgNet, halfW - 1, 16);
 	image(imgCenterLine, 20, halfH);
 
-	// if ball touches top wall
-	if (ball.y < wallTop.y + wallTop.h) {
-		ball.velocity.y = -ball.velocity.y + 0.1;
-	}
-	// if ball touches bottom wall
-	if (ball.y + ball.h > wallBottom.y) {
-		ball.velocity.y = -ball.velocity.y - 0.1;
-	}
-	// if ball touches either wall
-	if (ball.y < wallTop.y + wallTop.h || ball.y + ball.h > wallBottom.y) {
-		if (ball.velocity.x > 0) {
-			ball.velocity.x += 0.1;
-		} else {
-			ball.velocity.x -= 0.1;
-		}
+	if (kb.pressing('w')) {
+		paddleL.vel.y = -4;
+	} else if (kb.pressing('s')) {
+		paddleL.vel.y = 4;
+	} else {
+		paddleL.vel.y = 0;
 	}
 
-	if (kb.pressing('w') && paddleL.y > wallTop.y) {
-		paddleL.y -= 4;
-	} else if (kb.pressing('s') && paddleL.y < wallBottom.y) {
-		paddleL.y += 4;
+	if (kb.pressing('i')) {
+		paddleR.vel.y = -4;
+	} else if (kb.pressing('k')) {
+		paddleR.vel.y = 4;
+	} else {
+		paddleR.vel.y = 0;
 	}
 
-	if (kb.pressing('ArrowUp') && paddleR.y > wallTop.y) {
-		paddleR.y -= 4;
-	} else if (kb.pressing('ArrowDown') && paddleR.y < wallBottom.y) {
-		paddleR.y += 4;
-	}
+	if (kb.presses('d')) paddleL.rotate(22.5, 5);
+	else if (kb.presses('a')) paddleL.rotate(-22.5, 5);
+	if (kb.presses('j')) paddleR.rotate(-22.5, 5);
+	else if (kb.presses('l')) paddleR.rotate(22.5, 5);
 
-	if (kb.presses('d')) {
-		paddleL.rotation += 22.5;
-	} else if (kb.presses('a')) {
-		paddleL.rotation -= 22.5;
-	}
-
-	if (kb.presses('ArrowLeft')) {
-		paddleR.rotation -= 22.5;
-	} else if (kb.presses('ArrowRight')) {
-		paddleR.rotation += 22.5;
+	// if the ball hit a paddle
+	if (ball.collided(paddleL) || ball.collided(paddleR)) {
+		ball.speed = 2;
 	}
 
 	// if the ball leaves the screen
 	if (ball.x < -50) {
-		ball.velocity.x = 1;
+		ball.vel.x = 1;
 		scoreR++;
 	}
 	if (ball.x > width + 50) {
-		ball.velocity.x = -1;
+		ball.vel.x = -1;
 		scoreL++;
 	}
 	if (ball.x < -50 || ball.x > width + 50) {
 		displayScore();
-		if (Math.random() < 0.5) {
-			ball.velocity.y = 1;
+		if (random() < 0.5) {
+			ball.vel.y = 1;
 		} else {
-			ball.velocity.y = -1;
+			ball.vel.y = -1;
 		}
 		// place back in center of the screen
-		ball.x = width / 2 - ball.w / 2;
-		ball.y = height / 2 - ball.h / 2;
+		ball.x = width / 2;
+		ball.y = height / 2;
 	}
 
 	allSprites.debug = mouse.pressing();

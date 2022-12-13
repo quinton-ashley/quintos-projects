@@ -22,7 +22,7 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'LilyLeap';
+QuintOS.game = 'Pong';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
