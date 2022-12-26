@@ -1,11 +1,12 @@
 function preload() {
 	// image assets location
-	let imgDir = QuintOS.dir + '/img/bitBoi';
+	let imgDir = '/img/bitBoi';
 
 	world.offset.x = 96;
 	world.offset.y = 48;
 	world.autoResetAnimations = true;
 
+	allSprites.rotationLock = true;
 	allSprites.tileSize = 16;
 	allSprites.spriteSheet = loadImage(imgDir + '/world16.png');
 
@@ -53,9 +54,9 @@ function preload() {
 
 	/* PART A: Choose a tile to represent the box goal positions on the floor */
 	goals = new Group();
+	goals.collider = 'none';
 	goals.layer = 0;
 	goals.addAni('goal', [1, 15]);
-	goals.overlap(allSprites);
 
 	/* PLAYER */
 
@@ -94,6 +95,8 @@ let levelSet;
 
 async function loadMenu() {
 	player.steps = 0;
+	player.x = 0;
+	player.y = 0;
 	resetBoard();
 	displayLevel();
 	levelNum = await prompt('Select level (0-110): ', 9, 7, 26);
@@ -105,6 +108,9 @@ async function loadMenu() {
 }
 
 async function setup() {
+	boxes.w = 0.5;
+	boxes.h = 0.5;
+
 	player.walk = async function (direction) {
 		let r = player.y;
 		let c = player.x;
@@ -154,12 +160,9 @@ async function setup() {
 			displaySteps();
 		}
 
-		// the name of the current animation being used
-		let cur = player.getAnimationLabel();
-
 		// player is already walking that way or turning
 		// no need to change animation
-		if (cur == aniName || cur == 'idle-turn') return;
+		if (player.ani == aniName || player.ani == 'idle-turn') return;
 
 		if (direction != 'up') {
 			player.layer = 1;
@@ -167,14 +170,15 @@ async function setup() {
 		} else {
 			player.layer = 2;
 			// have the player turn before walking upwards
-			await player.changeAni('idle-turn');
+			player.ani = 'idle-turn';
+			await player.ani.play();
 			player.ani = 'walk-up';
 		}
 
 		if (direction == 'left') {
-			player.mirrorX = true; // flip the character left
+			player.mirror.x = true; // flip the character left
 		} else {
-			player.mirrorX = false;
+			player.mirror.x = false;
 		}
 
 		await player.move(direction, 0.05);
@@ -199,33 +203,31 @@ async function setup() {
 			let chance = Math.random();
 
 			if (chance > 0.4) {
-				await player.changeAni('idle-stand');
+				player.ani = 'idle-stand';
 			} else if (chance > 0.2) {
-				await player.changeAni('idle-blink');
+				player.ani = 'idle-blink';
 			} else if (chance > 0.1) {
-				await player.changeAni('idle-think');
+				player.ani = 'idle-think';
 			} else if (chance > 0.05) {
-				await player.changeAni('idle-scratch');
+				player.ani = 'idle-scratch';
 			} else {
-				await player.changeAni('idle-yawn');
+				player.ani = 'idle-yawn';
 			}
+			await player.ani.play();
 			_idle();
 		}
 
-		// the name of the current animation being used
-		let cur = this.getAnimationLabel();
-
-		if (cur == 'walk-up' || cur == 'push-up') {
-			this.ani = 'idle-turn';
-			this.animation.changeFrame(2);
-			this.animation.goToFrame(0);
-			this.animation.onComplete = () => {
-				this.ani = 'idle-stand';
-				this.animation.onComplete = _idle;
+		if (player.ani == 'walk-up' || player.ani == 'push-up') {
+			player.ani = 'idle-turn';
+			player.ani.frame = 2;
+			player.ani.rewind();
+			player.ani.onComplete = () => {
+				player.ani = 'idle-stand';
+				player.ani.onComplete = _idle;
 			};
-		} else if (!cur.includes('idle')) {
-			this.ani = 'idle-stand';
-			this.animation.onComplete = _idle;
+		} else if (!player.ani.name.includes('idle')) {
+			player.ani = 'idle-stand';
+			player.ani.onComplete = _idle;
 		}
 	};
 
@@ -309,11 +311,10 @@ function loadLevel(level, doReset) {
 				new walls.Sprite(img, x, y);
 			}
 			if (t == '$' || t == '*') {
-				new boxes.Sprite('box', x, y);
-				// box.setCollider('rectangle', 0, 0, box.height * 0.5, box.height * 0.5);
+				new boxes.Sprite(x, y);
 			}
 			if (t == '.' || t == '*' || t == '+') {
-				new goals.Sprite('goal', x, y);
+				new goals.Sprite(x, y);
 			}
 			if (t == '@' || t == '+') {
 				player.x = x;
@@ -327,9 +328,9 @@ function loadLevel(level, doReset) {
 
 function resetBoard() {
 	displaySteps();
-	walls.remove();
-	boxes.remove();
-	goals.remove();
+	walls.removeAll();
+	boxes.removeAll();
+	goals.removeAll();
 	board = [];
 }
 
@@ -408,6 +409,4 @@ function draw() {
 	if (!player.isMoving && !didWin) player.idle();
 
 	boxes.snap(player);
-
-	// allSprites.debug = mouseIsPressed;
 }

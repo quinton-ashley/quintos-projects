@@ -30,6 +30,8 @@
 // 	return cos(t * 4) * 70;
 // }
 
+let art = 0;
+
 let time = 0;
 
 function draw() {
@@ -40,15 +42,25 @@ function draw() {
 		point(eqX(time), eqY(time));
 		time += 0.1;
 	}
-	if (time > 8000) {
-		noLoop();
+
+	if (kb.presses('left')) {
+		background('b');
+		art--;
+		time = 0;
+	}
+	if (kb.presses('right')) {
+		background('b');
+		art++;
+		time = 0;
 	}
 }
 
 function eqX(t) {
-	return sin(t * 2) * 250 + sin(t / 20) * 250;
+	if (art == 0) return sin(t * 2) * 250 + sin(t / 20) * 250;
+	if (art == 1) return cos(t * 4) * 20 + sin(t / 10) * 250;
 }
 
 function eqY(t) {
-	return cos(t / 2) * 350;
+	if (art == 0) return cos(t / 2) * 350;
+	if (art == 1) return cos(t * 3) * 20 * sin(t / 10) * 20;
 }

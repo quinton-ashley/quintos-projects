@@ -22,12 +22,14 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Pong';
+QuintOS.game = 'Sokoban';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.game = 'NumberDash';
 // QuintOS.sys = 'arc';
 
+// QuintOS.user = 'Shashwath12'; // Shashwath
+// QuintOS.user = 'Jer1x5';
 // QuintOS.user = 'CornN10'; // Korn Niruttinanon
 // QuintOS.user = 'Eason-Liutenant'; // Eason Liu
 // QuintOS.user = 'Ali4110'; // Ali Abroumand Azar

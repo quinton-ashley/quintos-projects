@@ -40,8 +40,7 @@ wwywwyww
 	ball.bounciness = 1;
 	ball.friction = 0;
 
-	ball.velocity.x = 1;
-	ball.velocity.y = 1;
+	ball.speed = 1.4;
 
 	displayScore();
 }
