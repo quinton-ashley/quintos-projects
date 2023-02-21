@@ -55,8 +55,8 @@ let scoreL = 0;
 let scoreR = 0;
 
 function displayScore() {
-	text(scoreL, 3, 13);
-	text(scoreR, 3, 19);
+	txt(scoreL, 3, 13);
+	txt(scoreR, 3, 19);
 }
 
 displayScore();
@@ -67,17 +67,17 @@ function draw() {
 	/* PART A1: draw the ball and paddles inside the p5 main draw function */
 	// the `width` and `height` variables are the width and height of the screen
 
-	if (keyIsDown('ArrowUp') && paddleR.rotation > -89) {
+	if (kb.pressing('ArrowUp') && paddleR.rotation > -89) {
 		paddleR.rotation -= 2;
-	} else if (keyIsDown('ArrowDown') && paddleR.rotation < 89) {
+	} else if (kb.pressing('ArrowDown') && paddleR.rotation < 89) {
 		paddleR.rotation += 2;
 	}
 	paddleR.x = 88 * cos(paddleR.rotation) + width / 2;
 	paddleR.y = 88 * sin(paddleR.rotation) + height / 2;
 
-	if (keyIsDown('w') && (paddleL.rotation > 89 || paddleL.rotation < -91)) {
+	if (kb.pressing('w') && (paddleL.rotation > 89 || paddleL.rotation < -91)) {
 		paddleL.rotation += 2;
-	} else if (keyIsDown('s') && (paddleL.rotation > 91 || paddleL.rotation < -89)) {
+	} else if (kb.pressing('s') && (paddleL.rotation > 91 || paddleL.rotation < -89)) {
 		paddleL.rotation -= 2;
 	}
 	paddleL.x = 88 * cos(paddleL.rotation) + width / 2;

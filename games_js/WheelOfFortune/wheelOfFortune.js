@@ -16,7 +16,7 @@ let bigBuzzer = `
 |_.__/ \\__,_/___/___\\___|_|`.slice(1);
 
 function displayScore() {
-	text('Score: ' + score, 23, 14);
+	txt('Score: ' + score, 23, 14);
 }
 
 async function pickNewPhrase() {
@@ -31,7 +31,7 @@ async function pickNewPhrase() {
 		category = cats[Math.floor(Math.random() * cats.length)];
 	}
 
-	text('The category is ' + category, 2, 2);
+	txt('The category is ' + category, 2, 2);
 
 	let phrases = categories[category];
 	phrase = phrases[Math.floor(Math.random() * phrases.length)];
@@ -52,9 +52,9 @@ async function pickNewPhrase() {
 				emptyBoxes++;
 			} else {
 				board[i].push(character);
-				text(character, 5 + i * 3, 3 + j * 3);
+				txt(character, 5 + i * 3, 3 + j * 3);
 			}
-			textRect(4 + i * 3, 2 + j * 3, 3, 3);
+			txtRect(4 + i * 3, 2 + j * 3, 3, 3);
 		}
 	}
 
@@ -110,7 +110,7 @@ async function addLetter() {
 				if (emptyBoxCount != rand) continue;
 
 				board[i][j] = words[i][j];
-				text(words[i][j], 5 + i * 3, 3 + j * 3);
+				txt(words[i][j], 5 + i * 3, 3 + j * 3);
 				emptyBoxes--;
 				await delay(1250);
 				addLetter();
@@ -124,7 +124,7 @@ async function selectScreen() {
 	await erase();
 
 	let description = 'Guess the phrase as quick as you can! Select a Category:';
-	await text(description, 2, 2);
+	await txt(description, 2, 2);
 
 	let cats = Object.keys(categories);
 	cats.push('Shuffle!');

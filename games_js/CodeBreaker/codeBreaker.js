@@ -18,11 +18,10 @@ function ceasarCipher() {
 }
 
 async function start() {
-	// textRect(2, 2, 3, 36, 'solid', '═');
+	// txtRect(2, 2, 3, 36, 'solid', '═');
 
-	text('MESSAGE'.padStart(20, ' '), 3, 3);
+	txt('MESSAGE'.padStart(20, ' '), 3, 3);
 	let msg = input('', 7, 4);
-	textRect(5, 2, 20, 36);
+	txtRect(5, 2, 20, 36);
 }
-start();
 // let shift = input('', 20, 2);

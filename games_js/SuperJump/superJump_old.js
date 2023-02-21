@@ -124,8 +124,8 @@ function draw() {
 		if (!restarting) restart();
 		return;
 	}
-	text('score', 2, 20);
-	text(score, 4, 20);
+	txt('score', 2, 20);
+	txt(score, 4, 20);
 	background(0);
 	// every 1000 increase distance, unless distance is already 300 or more
 	if (score - levelProgress > 500 && dist < 150) {

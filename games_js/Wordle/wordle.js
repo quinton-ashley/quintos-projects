@@ -7,10 +7,10 @@ let total = 0;
 let distribution = [0, 0, 0, 0, 0, 0];
 
 async function setup() {
-	let wordsList = await (await fetch(QuintOS.dir + '/words5.txt')).text();
+	let wordsList = await (await fetch(QuintOS.dir + '/words5.txt')).txt();
 	words = wordsList.split('\n');
 
-	let dict = await (await fetch(QuintOS.dir + '/dictionary5.txt')).text();
+	let dict = await (await fetch(QuintOS.dir + '/dictionary5.txt')).txt();
 	for (let line of dict.split('\n')) {
 		dictionary.push(...line.split(' '));
 	}
@@ -19,14 +19,14 @@ async function setup() {
 
 function displayInfo() {
 	let row = 10;
-	textRect(row, 20, 3, 3, 'solid');
-	text('letter is not found in word', row, 24);
+	txtRect(row, 20, 3, 3, 'solid');
+	txt('letter is not found in word', row, 24);
 	row += 3;
-	textRect(row, 20, 3, 3, 'outline');
-	text('letter is in the word', row, 24);
+	txtRect(row, 20, 3, 3, 'outline');
+	txt('letter is in the word', row, 24);
 	row += 3;
-	textRect(row, 20, 3, 3, 'dashed');
-	text('letter is in the correct position', row, 24, 14);
+	txtRect(row, 20, 3, 3, 'dashed');
+	txt('letter is in the correct position', row, 24, 14);
 }
 
 function displayBoxes() {
@@ -34,7 +34,7 @@ function displayBoxes() {
 		for (let j = 0; j < 5; j++) {
 			let row = 2 + i * 3;
 			let col = 2 + j * 3;
-			textRect(row, col, 3, 3);
+			txtRect(row, col, 3, 3);
 		}
 	}
 }
@@ -58,8 +58,8 @@ function displayGuess(turn, guess) {
 			letters[letters.indexOf(letter)] = ' ';
 		}
 
-		textRect(row, col, 3, 3, style);
-		text(letter, row + 1, col + 1);
+		txtRect(row, col, 3, 3, style);
+		txt(letter, row + 1, col + 1);
 	}
 }
 
@@ -69,11 +69,11 @@ async function displayScore() {
 	for (let i = 0; i < 6; i++) {
 		str += `Guess ${i + 1}: ${distribution[i]}\n`;
 	}
-	text(str, 9, 19);
+	txt(str, 9, 19);
 }
 
 function displayLetters() {
-	text(letters.join('').padEnd(36), 21, 2);
+	txt(letters.join('').padEnd(36), 21, 2);
 }
 
 async function startGame() {

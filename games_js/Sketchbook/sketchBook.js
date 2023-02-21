@@ -54,7 +54,7 @@ async function pickSize() {
 		}
 	}
 
-	text('pick background color', 5, 5);
+	txt('pick background color', 5, 5);
 }
 
 pickSize();

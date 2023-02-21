@@ -147,7 +147,7 @@ function exitMenu() {
 }
 
 function startGame() {
-	text('SCORE: ' + score, 17, 6);
+	txt('SCORE: ' + score, 17, 6);
 
 	new snake.Sprite('head-up', 2, 11).layer = 4;
 	new snake.Sprite('body-up', 2, 12);
@@ -325,7 +325,7 @@ async function moveSnake() {
 		movements.push(snake[0].move(snake[0].heading, speed));
 		await Promise.all(movements);
 		score += 1;
-		text('SCORE: ' + score, 17, 6);
+		txt('SCORE: ' + score, 17, 6);
 		placeEgg();
 		moveSnake();
 		return;

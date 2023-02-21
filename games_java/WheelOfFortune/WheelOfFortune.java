@@ -79,7 +79,7 @@ public class WheelOfFortune {
 			this.buzz();
 		});
 
-		text("Score: " + score, 17, 10);
+		txt("Score: " + score, 17, 10);
 		displayBoxes();
 		addLetter();
 	}
@@ -95,7 +95,7 @@ public class WheelOfFortune {
 			}
 			boxes += "\n" + "└─┘".repeat(word.length()) + "\n";
 		}
-		text(boxes, 2, 2);
+		txt(boxes, 2, 2);
 	}
 
 	void buzz() {
@@ -118,7 +118,7 @@ public class WheelOfFortune {
 			alert("Wrong, try again!", 18);
 			score--;
 		}
-		text("Score: " + score, 17, 10);
+		txt("Score: " + score, 17, 10);
 		button(bigBuzzer, 18, 5, () -> {
 			this.buzz();
 		});

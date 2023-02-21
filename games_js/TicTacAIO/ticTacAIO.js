@@ -57,25 +57,25 @@ let challengeMode = false;
 
 function displayAiLevel() {
 	if (aiLevel == 0) {
-		text('AI Level: Easy', 10, 55);
+		txt('AI Level: Easy', 10, 55);
 	} else if (aiLevel == 1) {
-		text('AI Level: Medium', 10, 55);
+		txt('AI Level: Medium', 10, 55);
 	} else {
-		text('AI Level: Hard  ', 10, 55);
+		txt('AI Level: Hard  ', 10, 55);
 	}
 }
 
 function displayTurn() {
 	if (turnX) {
-		text("X's turn!", 4, 55);
+		txt("X's turn!", 4, 55);
 	} else {
-		text("O's turn!", 4, 55);
+		txt("O's turn!", 4, 55);
 	}
 }
 
 function displayScore() {
-	text("Player X's Score: " + scoreX, 6, 55);
-	text("Player O's Score: " + scoreO, 8, 55);
+	txt("Player X's Score: " + scoreX, 6, 55);
+	txt("Player O's Score: " + scoreO, 8, 55);
 }
 
 function checkWinner(mark) {
@@ -117,7 +117,7 @@ async function startNewGame() {
 			board[row][col] = ' ';
 			let c = gridCol + col * 9;
 			let r = gridRow + row * 8;
-			await text(bigSpace, r, c);
+			await txt(bigSpace, r, c);
 		}
 	}
 }
@@ -188,10 +188,10 @@ async function takeTurn(row, col) {
 
 		let mark;
 		if (turnX == true) {
-			text(bigX, r, c);
+			txt(bigX, r, c);
 			mark = 'X';
 		} else {
-			text(bigO, r, c);
+			txt(bigO, r, c);
 			mark = 'O';
 		}
 		board[row][col] = mark;
@@ -249,14 +249,14 @@ async function startGame() {
 }
 
 function setup() {
-	text(title, 5, 6);
+	txt(title, 5, 6);
 	/* PART A: finish the grid of 9x8 spaces */
-	text('─'.repeat(26), gridRow + 7, gridCol);
-	text('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
+	txt('─'.repeat(26), gridRow + 7, gridCol);
+	txt('─'.repeat(26), gridRow + 15, gridCol); // draw another horizontal line
 
 	for (let row = gridRow; row < gridRow + 23; row++) {
-		text('│', row, gridCol + 8);
-		text('│', row, gridCol + 17); // draw another vertical line
+		txt('│', row, gridCol + 8);
+		txt('│', row, gridCol + 17); // draw another vertical line
 	}
 
 	button('One Player Start', 13, 55, async () => {

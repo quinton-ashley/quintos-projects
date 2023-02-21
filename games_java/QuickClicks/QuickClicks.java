@@ -15,7 +15,7 @@ public class QuickClicks {
 
 	void makeBg() {
 		/* PART D: Make a background pattern */
-		text("<>".repeat(1000), 1, 1, 78);
+		txt("<>".repeat(1000), 1, 1, 78);
 	}
 
 	/* PART B2: calculate and display player performance statistics */

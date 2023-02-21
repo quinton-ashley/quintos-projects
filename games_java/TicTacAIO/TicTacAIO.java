@@ -64,13 +64,13 @@ public class TicTacAIO {
 	int scoreO = 0;
 
 	public TicTacAIO() {
-		text(title, 5, 6);
+		txt(title, 5, 6);
 
 		/* PART A: finish the grid of 9x8 spaces */
-		text("─".repeat(26), gridX, gridY + 7);
-		text("─".repeat(26), gridX, gridY + 15); // draw another horizontal line
-		text("│\n".repeat(23), gridX + 8, gridY);
-		text("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
+		txt("─".repeat(26), gridX, gridY + 7);
+		txt("─".repeat(26), gridX, gridY + 15); // draw another horizontal line
+		txt("│\n".repeat(23), gridX + 8, gridY);
+		txt("│\n".repeat(23), gridX + 17, gridY); // draw another vertical line
 
 		button("One Player Start", 55, 10, () -> {
 			onePlayerStart();
@@ -104,25 +104,25 @@ public class TicTacAIO {
 
 	public void displayAiLevel() {
 		if (aiLevel == 0) {
-			text("AI Level: Easy", 55, 10);
+			txt("AI Level: Easy", 55, 10);
 		} else if (aiLevel == 1) {
-			text("AI Level: Medium", 55, 10);
+			txt("AI Level: Medium", 55, 10);
 		} else {
-			text("AI Level: Hard  ", 55, 10);
+			txt("AI Level: Hard  ", 55, 10);
 		}
 	}
 
 	public void displayTurn() {
 		if (turnX) {
-			text("X's turn!", 55, 4);
+			txt("X's turn!", 55, 4);
 		} else {
-			text("O's turn!", 55, 4);
+			txt("O's turn!", 55, 4);
 		}
 	}
 
 	public void displayScore() {
-		text("Player X's Score: " + scoreX, 55, 6);
-		text("Player O's Score: " + scoreO, 55, 8);
+		txt("Player X's Score: " + scoreX, 55, 6);
+		txt("Player O's Score: " + scoreO, 55, 8);
 	}
 
 	public void displayBoard() {
@@ -175,7 +175,7 @@ public class TicTacAIO {
 				board[row][col] = ' ';
 				int x = gridX + col * 9;
 				int y = gridY + row * 8;
-				text(bigSpace, x, y);
+				txt(bigSpace, x, y);
 			}
 		}
 	}
@@ -246,10 +246,10 @@ public class TicTacAIO {
 
 			char mark;
 			if (turnX == true) {
-				text(bigX, x, y);
+				txt(bigX, x, y);
 				mark = 'X';
 			} else {
-				text(bigO, x, y);
+				txt(bigO, x, y);
 				mark = 'O';
 			}
 			board[row][col] = mark;

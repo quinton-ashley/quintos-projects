@@ -46,8 +46,8 @@ wwywwyww
 }
 
 function displayScore() {
-	text(scoreL, 3, 10);
-	text(scoreR, 3, 20);
+	txt(scoreL, 3, 10);
+	txt(scoreR, 3, 20);
 }
 
 function draw() {

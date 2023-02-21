@@ -55,28 +55,28 @@ public class TicTacToe_fin {
 	int scoreO = 0;
 
 	public TicTacToe_fin() {
-		text(title, 5, 6);
+		txt(title, 5, 6);
 
 		/* PART A: finish the grid of 9x8 spaces */
-		text("─".repeat(26), gridRow + 7, gridCol);
-		text("─".repeat(26), gridRow + 15, gridCol); // draw another horizontal line
-		text("│\n".repeat(23), gridRow, gridCol + 8);
-		text("│\n".repeat(23), gridRow, gridCol + 17); // draw another vertical line
+		txt("─".repeat(26), gridRow + 7, gridCol);
+		txt("─".repeat(26), gridRow + 15, gridCol); // draw another horizontal line
+		txt("│\n".repeat(23), gridRow, gridCol + 8);
+		txt("│\n".repeat(23), gridRow, gridCol + 17); // draw another vertical line
 
 		startGame();
 	}
 
 	public void displayTurn() {
 		if (turnX) {
-			text("X's turn!", 4, 55);
+			txt("X's turn!", 4, 55);
 		} else {
-			text("O's turn!", 4, 55);
+			txt("O's turn!", 4, 55);
 		}
 	}
 
 	public void displayScore() {
-		text("Player X's Score: " + scoreX, 6, 55);
-		text("Player O's Score: " + scoreO, 6, 55);
+		txt("Player X's Score: " + scoreX, 6, 55);
+		txt("Player O's Score: " + scoreO, 6, 55);
 	}
 
 	public void displayBoard() {
@@ -129,7 +129,7 @@ public class TicTacToe_fin {
 				board[row][col] = ' ';
 				int r = gridRow + row * 8;
 				int c = gridCol + col * 9;
-				text(bigSpace, r, c);
+				txt(bigSpace, r, c);
 			}
 		}
 	}
@@ -145,10 +145,10 @@ public class TicTacToe_fin {
 
 			char mark;
 			if (turnX == true) {
-				text(bigX, r, c);
+				txt(bigX, r, c);
 				mark = 'X';
 			} else {
-				text(bigO, r, c);
+				txt(bigO, r, c);
 				mark = 'O';
 			}
 			board[row][col] = mark;

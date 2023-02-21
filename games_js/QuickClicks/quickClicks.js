@@ -56,7 +56,7 @@ function makeBg() {
 			pattern = patternB;
 		}
 		for (let col = 0; col < 13; col++) {
-			text(pattern, row + 1, col * 6 + 1);
+			txt(pattern, row + 1, col * 6 + 1);
 		}
 	}
 }

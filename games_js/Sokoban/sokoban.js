@@ -4,11 +4,11 @@ function preload() {
 
 	world.offset.x = 96;
 	world.offset.y = 48;
-	world.autoResetAnimations = true;
 
 	allSprites.rotationLock = true;
 	allSprites.tileSize = 16;
 	allSprites.spriteSheet = loadImage(imgDir + '/world16.png');
+	allSprites.resetAnimationsOnChange = true;
 
 	walls = new Group();
 	walls.collider = 'static';
@@ -260,11 +260,11 @@ function reset() {
 }
 
 function displayLevel() {
-	text('level ' + ('' + levelNum).padStart(3, '0'), 2, 0);
+	txt('level ' + ('' + levelNum).padStart(3, '0'), 2, 0);
 }
 
 function displaySteps() {
-	text('steps ' + ('' + player.steps).padStart(3, '0'), 2, 10);
+	txt('steps ' + ('' + player.steps).padStart(3, '0'), 2, 10);
 }
 
 let objects = [];

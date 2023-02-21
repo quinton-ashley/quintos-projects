@@ -65,7 +65,7 @@ let shouldScroll = true;
 // value is the text the user entered in the input
 async function onSubmit(value) {
 	if (value.toUpperCase() == word.toUpperCase()) {
-		text('correct');
+		txt('correct');
 		if (wordAmount == 10) {
 			await play(speechSounds.you_are_correct);
 			endGame();
@@ -91,7 +91,7 @@ async function onSubmit(value) {
 		await play(wordSounds[word]);
 		await play(speechSounds.is);
 		erase(); // erase the screen
-		await text('*' + word);
+		await txt('*' + word);
 		let spelling = word.toUpperCase().split('');
 		for (let letter of spelling) {
 			await play(letterSounds[letter]);
@@ -117,7 +117,7 @@ function onChange(value) {
 
 async function endGame() {
 	erase(); // erase the screen
-	await text('Your score: ' + correctWords);
+	await txt('Your score: ' + correctWords);
 	if (correctWords >= 5) {
 		await play(speechSounds.you_win);
 	}
@@ -154,7 +154,7 @@ async function textScroll(msg, stepDelay, initDelay) {
 	shouldScroll = true;
 	// let user read the beginning
 	for (let i = 0; shouldScroll && i < msg.length; i++) {
-		await text(msg.substring(i, i + 20), 1, 0);
+		await txt(msg.substring(i, i + 20), 1, 0);
 		if (i == 0) await delay(initDelay);
 		else await delay(stepDelay);
 	}

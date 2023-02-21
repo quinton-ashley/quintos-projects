@@ -5,7 +5,7 @@ import static games_java.QuintOS.*;
 public class Test {
 
 	void startGame() {
-		text("hi!", 1, 1);
+		txt("hi!", 1, 1);
 	}
 
 	public Test() {
