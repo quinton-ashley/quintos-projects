@@ -14,44 +14,58 @@ PImage imgPaddle = spriteArt(".wwwwww.\nwwwwwwww\n" + "www..www\nww.ww.ww\n".rep
 
 PImage imgWall = spriteArt(("c".repeat(320) + "\n").repeat(8));
 
-Sprite ball = createSprite(imgBall);
-Sprite paddleL = createSprite(imgPaddle);
-Sprite paddleR = createSprite(imgPaddle);
-Sprite wallTop = createSprite(imgWall);
-Sprite wallBottom = createSprite(imgWall);
-
 PImage imgNet = spriteArt("w.\n.w\n".repeat(80));
 
 PImage imgCenterLine = spriteArt("w".repeat(5) + ".".repeat(31) + "w".repeat(144) + ".".repeat(31) + "w".repeat(5) + "\n");
 
+Sprite ball;
+Sprite paddleL;
+Sprite paddleR;
+Sprite wallTop;
+Sprite wallBottom;
+
 void setup() {
-  // places a ball in center of the screen
+  allSprites.pixelPerfect = true;
+  
+  ball = new Sprite();
+  ball.img = imgBall;
   ball.x = width / 2;
   ball.y = height / 2;
+  ball.rotationLock = true;
+  ball.bounciness = 1;
+  ball.friction = 0;
   ball.velocity.x = -1;
   ball.velocity.y = 1;
   
   // place paddles 5px from the sides, center vertically
-  paddleL.x = 5;
-  paddleL.immovable = true;
+  paddleL = new Sprite();
+  paddleL.img = imgPaddle;
+  paddleL.x = 10;
+  paddleL.collider = 'k';
   
-  paddleR.x = width - paddleR.w - 5;
-  paddleR.immovable = true;
+  paddleR = new Sprite();
+  paddleR.img = imgPaddle;
+  paddleR.x = width - 10;
+  paddleR.collider = 'k';
   
   // place walls on the top and bottom of the screen
-  wallTop.x = 0;
-  wallTop.y = 0;
-  wallTop.immovable = true;
+  wallTop = new Sprite();
+  wallTop.img = imgWall;
+  wallTop.x = width / 2;
+  wallTop.y = 4;
+  wallTop.collider = 's';
   
-  wallBottom.x = 0;
-  wallBottom.y = height - wallBottom.h;
-  wallBottom.immovable = true;
+  wallBottom = new Sprite();
+  wallBottom.img = imgWall;
+  wallBottom.x = width / 2;
+  wallBottom.y = height - 4;
+  wallBottom.collider = 's';
 }
 
 void draw() {
-  background(colorPal('r'));
-  fill(colorPal('c'));
-  stroke(colorPal('w'));
+  background("r");
+  fill("c");
+  stroke("w");
   rect(20, 16, 216, 20); // top
   rect(20, 36, 36, 140); // left
   rect(200, 36, 36, 140); // right
@@ -59,19 +73,25 @@ void draw() {
   image(imgNet, width / 2 - 2, 16);
   image(imgCenterLine, 20, height / 2);
 
-  paddleL.y = mouseY - paddleL.h;
-  paddleR.y = mouseY - paddleR.h;
+  if (kb.pressing('w')) {
+		paddleL.vel.y = -4;
+	} else if (kb.pressing('s')) {
+		paddleL.vel.y = 4;
+	} else {
+		paddleL.vel.y = 0;
+	}
 
-  ball.bounce(paddleL);
-  ball.bounce(paddleR);
-  ball.bounce(wallTop);
-  ball.bounce(wallBottom);
+	if (kb.pressing('i')) {
+		paddleR.vel.y = -4;
+	} else if (kb.pressing('k')) {
+		paddleR.vel.y = 4;
+	} else {
+		paddleR.vel.y = 0;
+	}
 
   // if the ball leaves the screen
   if (ball.x < -10 || ball.x > width + 10) {
     ball.x = width / 2;
     ball.y = height / 2;
   }
-
-  drawSprites();
 }

@@ -22,12 +22,11 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'Pong';
+QuintOS.game = 'LilyLeap';
 QuintOS.user = 'quinton-ashley';
 
-// QuintOS.game = 'NumberDash';
-// QuintOS.sys = 'arc';
-
+// QuintOS.user = 'Aliem455';
+// QuintOS.user = 'OleHo370'; // Ole Ho
 // QuintOS.user = 'Shashwath12'; // Shashwath
 // QuintOS.user = 'Jer1x5';
 // QuintOS.user = 'CornN10'; // Korn Niruttinanon
@@ -62,15 +61,12 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.user = 'saa1d'; // Said
 // QuintOS.user = 'mykaala';	// Mykaala
 
-QuintOS.dir = 'games_js';
-// QuintOS.dir = 'games_java';
+// QuintOS.dir = 'games_js';
+QuintOS.dir = 'games_java';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.user + '/quintos-games/GAMES';
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/main/GAMES';
 
 // QuintOS.language = 'java';
-
-// QuintOS.game = 'Test';
-// QuintOS.sys = 'cpet';
 
 QuintOS.dev = true;
