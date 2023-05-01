@@ -22,7 +22,7 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'LilyLeap';
+QuintOS.game = 'Sokoban';
 QuintOS.user = 'quinton-ashley';
 
 // QuintOS.user = 'Aliem455';
@@ -61,8 +61,8 @@ QuintOS.user = 'quinton-ashley';
 // QuintOS.user = 'saa1d'; // Said
 // QuintOS.user = 'mykaala';	// Mykaala
 
-// QuintOS.dir = 'games_js';
-QuintOS.dir = 'games_java';
+QuintOS.dir = 'games_js';
+// QuintOS.dir = 'games_java';
 // QuintOS.dir = 'starter_js';
 // QuintOS.dir = 'students/' + QuintOS.user + '/quintos-games/GAMES';
 // QuintOS.dir = 'https://raw.githubusercontent.com/' + QuintOS.user + '/quintos-games/main/GAMES';

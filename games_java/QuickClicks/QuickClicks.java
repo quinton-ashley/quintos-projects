@@ -22,7 +22,7 @@ public class QuickClicks {
 	void displayStats() {
 		// add difference between times in milliseconds to sum
 		int[] speeds = new int[19];
-		for (int i = 0; i < times.length - 1; i++) {
+		for (int i = 0; i < speeds.length; i++) {
 			speeds[i] = (int) (times[i + 1] - times[i]);
 		}
 

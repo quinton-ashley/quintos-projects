@@ -5,8 +5,9 @@ function preload() {
 	world.offset.x = 96;
 	world.offset.y = 48;
 
-	allSprites.rotationLock = true;
 	allSprites.tileSize = 16;
+	allSprites.pixelPerfect = true;
+	allSprites.rotationLock = true;
 	allSprites.spriteSheet = loadImage(imgDir + '/world16.png');
 	allSprites.resetAnimationsOnChange = true;
 
@@ -48,6 +49,17 @@ function preload() {
 
 	boxes = new Group();
 	boxes.layer = 1;
+	boxes.snap = function (o, dist) {
+		if (o.isMoving || o.x != o._dest.x || o.y != o._dest.y || !this.isMoving) return;
+		dist ??= 1 || this.tileSize * 0.1;
+		if (Math.abs(this.x) % 1 >= dist || Math.abs(this.y) % 1 >= dist) {
+			return;
+		}
+		this.vel.x = 0;
+		this.vel.y = 0;
+		this.x = Math.round(this.x);
+		this.y = Math.round(this.y);
+	};
 	// loads the animation for the tile representing the box
 	// at row 5, column 0 in the tile sheet
 	boxes.addAni('box', [0, 5]);
@@ -334,26 +346,6 @@ function resetBoard() {
 	board = [];
 }
 
-function keyPressed() {
-	if (player.isMoving) return;
-
-	if (key == 'u') {
-		undo();
-	} else if (key == 'r') {
-		reset();
-	} else if (key == 'm') {
-		loadMenu();
-	} else if (key === 'ArrowUp') {
-		player.walk('up');
-	} else if (key === 'ArrowDown') {
-		player.walk('down');
-	} else if (key === 'ArrowLeft') {
-		player.walk('left');
-	} else if (key === 'ArrowRight') {
-		player.walk('right');
-	}
-}
-
 function displayBoard() {
 	let str = '';
 	for (let row = 0; row < board.length; row++) {
@@ -408,5 +400,25 @@ function draw() {
 
 	if (!player.isMoving && !didWin) player.idle();
 
-	boxes.snap(player);
+	for (let box of boxes) {
+		box.snap(player);
+	}
+
+	if (player.isMoving) return;
+
+	if (kb.presses('u')) {
+		undo();
+	} else if (kb.presses('r')) {
+		reset();
+	} else if (kb.presses('m')) {
+		loadMenu();
+	} else if (kb.presses('up')) {
+		player.walk('up');
+	} else if (kb.presses('down')) {
+		player.walk('down');
+	} else if (kb.presses('left')) {
+		player.walk('left');
+	} else if (kb.presses('right')) {
+		player.walk('right');
+	}
 }

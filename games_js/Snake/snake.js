@@ -3,16 +3,16 @@
 // text rows: 18 cols: 20
 
 function preload() {
-	eatSound = loadSound(QuintOS.dir + '/sounds/retro_collect_pickup_item_20.wav');
+	eatSound = loadSound('/sounds/retro_collect_pickup_item_20.wav');
 	eatSound.setVolume(0.3);
 
-	crashSound = loadSound(QuintOS.dir + '/sounds/retro_crash_damage_01.wav');
+	crashSound = loadSound('/sounds/retro_crash_damage_01.wav');
 	crashSound.setVolume(0.3);
 
 	moveSounds = [];
 
 	for (let i = 1; i < 10; i++) {
-		sound = loadSound(QuintOS.dir + '/sounds/Footstep1__00' + i + '.wav');
+		sound = loadSound('/sounds/Footstep1__00' + i + '.wav');
 		sound.setVolume(0.3);
 		moveSounds[i] = sound;
 	}
@@ -20,7 +20,8 @@ function preload() {
 	world.offset.y = 16;
 
 	allSprites.tileSize = 8;
-	allSprites.spriteSheet = loadImage(QuintOS.dir + '/img/world.png');
+	allSprites.pixelPerfect = true;
+	allSprites.spriteSheet = loadImage('/img/world.png');
 
 	grass = new Group();
 	grass.layer = 0;
@@ -55,7 +56,7 @@ function preload() {
 	snake.layer = 3;
 	snake.collider = 'none';
 	snake.heading = 'up';
-	snake.spriteSheet = loadImage(QuintOS.dir + '/img/snakes.png');
+	snake.spriteSheet = loadImage('/img/snakes.png');
 
 	snake.addAnis({
 		'head-up': [0, 0],
@@ -77,7 +78,7 @@ function preload() {
 	icons.layer = 1;
 	icons.collider = 'none';
 	icons.tileSize = 16;
-	icons.spriteSheet = loadImage(QuintOS.dir + '/img/icons.png');
+	icons.spriteSheet = loadImage('/img/icons.png');
 
 	icons.addAnis({
 		Normal: [0, 0],
@@ -320,9 +321,9 @@ async function moveSnake() {
 		snake.splice(1, 0, snake.pop());
 		snake[1].heading = snake[0].heading;
 
-		movements.push(snake[1].move(snake[1].heading, speed));
+		movements.push(snake[1].move(1, snake[1].heading, speed));
 		snake[0].heading = inputDirection;
-		movements.push(snake[0].move(snake[0].heading, speed));
+		movements.push(snake[0].move(1, snake[0].heading, speed));
 		await Promise.all(movements);
 		score += 1;
 		txt('SCORE: ' + score, 17, 6);
@@ -380,9 +381,9 @@ async function moveSnake() {
 		changeSnakeAni(s, type, s.heading);
 
 		if (type == 'head' || type == 'eat') {
-			movements.push(s.move(s.heading, speed));
+			movements.push(s.move(1, s.heading, speed));
 		} else {
-			movements.push(s.move(s.heading, speed));
+			movements.push(s.move(1, s.heading, speed));
 		}
 	}
 	await Promise.all(movements);
@@ -390,19 +391,16 @@ async function moveSnake() {
 }
 
 function draw() {
-	background(2);
-}
+	background('2');
 
-function keyPressed() {
-	if (key == 'ArrowUp' && snake[0].heading != 'down') {
+	if (kb.presses('up') && snake[0].heading != 'down') {
 		inputDirection = 'up';
-	} else if (key == 'ArrowDown' && snake[0].heading != 'up') {
+	} else if (kb.presses('down') && snake[0].heading != 'up') {
 		inputDirection = 'down';
-	} else if (key == 'ArrowLeft' && snake[0].heading != 'right') {
+	} else if (kb.presses('left') && snake[0].heading != 'right') {
 		inputDirection = 'left';
-	} else if (key == 'ArrowRight' && snake[0].heading != 'left') {
+	} else if (kb.presses('right') && snake[0].heading != 'left') {
 		inputDirection = 'right';
 	}
-
 	log(inputDirection);
 }
