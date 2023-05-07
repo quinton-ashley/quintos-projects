@@ -4,10 +4,9 @@
 	"description": "Learn to code by making games in JavaScript using QuintOS!",
 	"dependencies": {
 		"java2js": "^1.2.19",
-		"jquery": "^3.6.0",
 		"p5": "^1.6.0",
 		"p5.play": "^3.8.3",
-		"quintos": "^5.0.3"
+		"quintos": "^6.0.0"
 	},
 	"homepage": "https://quinton-ashley.github.io/java2js/",
 	"license": "GPL-3.0-only",
@@ -24,5 +23,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
 	},
-	"version": "1.0.94"
+	"version": "1.0.95"
 }

@@ -2,7 +2,7 @@
 async function start() {
 	// your code goes here!
 
-	let num = Math.round(random(1, 100));
+	let num = round(random(1, 100));
 	let guess;
 
 	while (guess != num) {
