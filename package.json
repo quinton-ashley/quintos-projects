@@ -7,7 +7,7 @@
 		"p5.play": "^3.8.3",
 		"quintos": "^6.0.0"
 	},
-	"homepage": "https://quinton-ashley.github.io/java2js/",
+	"homepage": "https://quintos.org",
 	"license": "GPL-3.0-only",
 	"main": "server.js",
 	"repository": {
@@ -22,5 +22,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
 	},
-	"version": "1.0.96"
+	"version": "1.0.97"
 }

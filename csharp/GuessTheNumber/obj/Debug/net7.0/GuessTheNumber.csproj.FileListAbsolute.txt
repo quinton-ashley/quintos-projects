@@ -1,0 +1,15 @@
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/bin/Debug/net7.0/GuessTheNumber
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/bin/Debug/net7.0/GuessTheNumber.deps.json
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/bin/Debug/net7.0/GuessTheNumber.runtimeconfig.json
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/bin/Debug/net7.0/GuessTheNumber.dll
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/bin/Debug/net7.0/GuessTheNumber.pdb
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.csproj.AssemblyReference.cache
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.GeneratedMSBuildEditorConfig.editorconfig
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.AssemblyInfoInputs.cache
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.AssemblyInfo.cs
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.csproj.CoreCompileInputs.cache
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.dll
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/refint/GuessTheNumber.dll
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.pdb
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/GuessTheNumber.genruntimeconfig.cache
+/Users/qashto/dev/web/quintos-projects/csharp/GuessTheNumber/obj/Debug/net7.0/ref/GuessTheNumber.dll
