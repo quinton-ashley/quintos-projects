@@ -4,7 +4,7 @@
 	"dependencies": {
 		"java2js": "^1.2.19",
 		"p5": "^1.6.0",
-		"p5.play": "^3.8.3",
+		"p5play": "^3.8.14",
 		"quintos": "^6.0.0"
 	},
 	"homepage": "https://quintos.org",
@@ -20,7 +20,7 @@
 		"V": "npm version minor --force",
 		"version": "git add -A",
 		"postversion": "git push",
-		"relink": "npm link ../../pkg/quintos ../../pkg/p5.play ../../pkg/java2js"
+		"relink": "npm link ../../pkg/quintos ../../pkg/p5play ../../pkg/java2js"
 	},
-	"version": "1.0.97"
+	"version": "1.0.98"
 }
