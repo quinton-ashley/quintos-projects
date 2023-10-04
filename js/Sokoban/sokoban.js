@@ -1,14 +1,40 @@
-function preload() {
-	// image assets location
-	let imgDir = '/img/bitBoi';
+/**
+ * @type Sprite
+ */
+let player;
 
+/**
+ * @type Group
+ */
+let walls;
+
+/**
+ * @type Group
+ */
+let boxes;
+
+/**
+ * @type Group
+ */
+let goals;
+
+let board = [];
+let levelNum = 0;
+let inGame = false;
+let didWin = false;
+
+let moves = [];
+
+let levelSet;
+
+function preload() {
 	world.offset.x = 96;
 	world.offset.y = 48;
 
 	allSprites.tileSize = 16;
 	allSprites.pixelPerfect = true;
 	allSprites.rotationLock = true;
-	allSprites.spriteSheet = loadImage(imgDir + '/world16.png');
+	allSprites.spriteSheet = loadImage('/img/bitBoi/world16.png');
 	allSprites.resetAnimationsOnChange = true;
 
 	walls = new Group();
@@ -74,7 +100,7 @@ function preload() {
 
 	player = new Sprite();
 	player.layer = 1;
-	player.spriteSheet = loadImage(imgDir + '/bitBoi16.png');
+	player.spriteSheet = loadImage('/img/bitBoi/bitBoi16.png');
 
 	player.addAnis({
 		'idle-stand': { line: 0, frames: 4, delay: 20 },
@@ -96,16 +122,9 @@ function preload() {
 	player.steps = 0;
 }
 
-let board = [];
-let levelNum = 0;
-let inGame = false;
-let didWin = false;
-
-let moves = [];
-
-let levelSet;
-
 async function loadMenu() {
+	levelSet ??= await (await fetch(QuintOS.dir + '/levels.json')).json();
+	
 	player.steps = 0;
 	player.x = 0;
 	player.y = 0;
@@ -119,7 +138,7 @@ async function loadMenu() {
 	displaySteps();
 }
 
-async function setup() {
+function setup() {
 	boxes.w = 0.5;
 	boxes.h = 0.5;
 
@@ -212,7 +231,7 @@ async function setup() {
 		// switch between idle animations
 		// some have a higher probability of occurring than others
 		async function _idle() {
-			let chance = Math.random();
+			let chance = random();
 
 			if (chance > 0.4) {
 				player.ani = 'idle-stand';
@@ -242,8 +261,6 @@ async function setup() {
 			player.ani.onComplete = _idle;
 		}
 	};
-
-	levelSet = await (await fetch(QuintOS.dir + '/levels.json')).json();
 
 	button('Undo', 2, 24, undo);
 

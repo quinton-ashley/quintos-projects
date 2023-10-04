@@ -22,7 +22,7 @@
 	/*18*/ ['Sokoban', 'c64']
 ];
 
-QuintOS.game = 'GuessTheNumber';
+QuintOS.game = 'Sokoban';
 QuintOS.user = 'quinton-ashley';
 // QuintOS.language = 'java';
 

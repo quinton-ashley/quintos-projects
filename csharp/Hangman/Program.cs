@@ -44,7 +44,7 @@
   +---+
   |   |
   O   |
- /|\\  |
+ /|\  |
       |
       |
 =========",
@@ -52,7 +52,7 @@
   +---+
   |   |
   O   |
- /|\\  |
+ /|\  |
  /    |
       |
 =========",
@@ -60,8 +60,8 @@
   +---+
   |   |
   O   |
- /|\\  |
- / \\  |
+ /|\  |
+ / \  |
       |
 ========="
 };
@@ -78,11 +78,10 @@ int wrong = 0;
 
 while (wrong < hangman.Length)
 {
-    Console.WriteLine("Guessed word: " + new string(lines));
-    Console.WriteLine("Lives: " + lives);
+    Console.WriteLine(hangman[wrong] + "\n\n" + string.Join(' ', lines));
 
     Console.Write("Enter your guess: ");
-    char guess = Console.ReadKey().KeyChar;
+    char guess = Console.ReadLine()[0];
     Console.WriteLine();
 
     bool correctGuess = false;
@@ -97,12 +96,11 @@ while (wrong < hangman.Length)
 
     if (!correctGuess)
     {
-        lives--;
-        Console.WriteLine("Incorrect guess. You lost a life.");
+        wrong++;
     }
     else if (new string(lines) == word)
     {
-        Console.WriteLine("Congratulations! You guessed it!");
+        Console.WriteLine("You guessed it! The word was: " + word);
         return;
     }
 }
