@@ -28,8 +28,8 @@ let moves = [];
 let levelSet;
 
 function preload() {
-	world.offset.x = 96;
-	world.offset.y = 48;
+	world.origin.x = 104;
+	world.origin.y = 48;
 
 	allSprites.tileSize = 16;
 	allSprites.pixelPerfect = true;
@@ -124,7 +124,7 @@ function preload() {
 
 async function loadMenu() {
 	levelSet ??= await (await fetch(QuintOS.dir + '/levels.json')).json();
-	
+
 	player.steps = 0;
 	player.x = 0;
 	player.y = 0;
