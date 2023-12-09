@@ -74,19 +74,19 @@ function draw() {
 
 	// frog is not mid-jump and not falling
 	// the frog is sitting on a lilypad
-	if (frog.y > 83 && frog.vel.y < 1) {
+	if (frog.y > 83 && frog.vel.y < 0.1) {
 		// round the x position of the frog to be at exactly
 		// the same x position as the nearest lilypad
 		frog.x = round(frog.x / 16) * 16;
 
-		if (kb.presses('ArrowUp')) {
+		if (kb.presses('up')) {
 			frog.animation.play();
 			frog.velocity.y = -1.4;
-			frog.velocity.x = 0.9;
-		} else if (kb.presses('ArrowRight')) {
+			frog.velocity.x = 0.95;
+		} else if (kb.presses('right')) {
 			frog.animation.play();
 			frog.velocity.y = -2;
-			frog.velocity.x = 1.4;
+			frog.velocity.x = 1.36;
 		}
 	}
 

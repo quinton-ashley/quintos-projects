@@ -6,9 +6,6 @@ let scoreL = 0;
 let scoreR = 0;
 
 function setup() {
-	halfW = width / 2;
-	halfH = height / 2;
-
 	// tennis ball image
 	let imgBall = spriteArt(`
 ..wwww..
@@ -31,15 +28,17 @@ wwywwyww
 
 	imgCenterLine = spriteArt('w'.repeat(5) + '.'.repeat(31) + 'w'.repeat(144) + '.'.repeat(31) + 'w'.repeat(5) + '\n');
 
-	ball = new Sprite(imgBall, halfW, halfH, 8);
-	paddleL = new Sprite(imgPaddle, 9, halfH, 'k');
-	paddleR = new Sprite(imgPaddle, width - 9, halfH, 'k');
-	wallTop = new Sprite(imgWall, halfW, 4, 's');
-	wallBottom = new Sprite(imgWall, halfW, height - 4, 's');
+	ball = new Sprite(imgBall, canvas.hw, canvas.hh, 8);
+	paddleL = new Sprite(imgPaddle, 9, canvas.hh, 'k');
+	paddleR = new Sprite(imgPaddle, canvas.w - 9, canvas.hh, 'k');
+	wallTop = new Sprite(imgWall, canvas.hw, 4, 's');
+	wallBottom = new Sprite(imgWall, canvas.hw, canvas.h - 4, 's');
+
+	paddleL.pixelPerfect = true;
+	paddleR.pixelPerfect = true;
 
 	ball.bounciness = 1;
 	ball.friction = 0;
-
 	ball.speed = 1.4;
 
 	displayScore();
@@ -58,8 +57,8 @@ function draw() {
 	rect(20, 36, 36, 140); // left
 	rect(200, 36, 36, 140); // right
 	rect(20, 156, 216, 20); // bottom
-	image(imgNet, halfW - 1, 16);
-	image(imgCenterLine, 20, halfH);
+	image(imgNet, canvas.hw - 1, 16);
+	image(imgCenterLine, 20, canvas.hh);
 
 	if (kb.pressing('w')) {
 		paddleL.vel.y = -4;
@@ -92,11 +91,11 @@ function draw() {
 		ball.vel.x = 1;
 		scoreR++;
 	}
-	if (ball.x > width + 50) {
+	if (ball.x > canvas.w + 50) {
 		ball.vel.x = -1;
 		scoreL++;
 	}
-	if (ball.x < -50 || ball.x > width + 50) {
+	if (ball.x < -50 || ball.x > canvas.w + 50) {
 		displayScore();
 		if (random() < 0.5) {
 			ball.vel.y = 1;
@@ -104,8 +103,8 @@ function draw() {
 			ball.vel.y = -1;
 		}
 		// place back in center of the screen
-		ball.x = width / 2;
-		ball.y = height / 2;
+		ball.x = canvas.hw;
+		ball.y = canvas.hh;
 	}
 
 	allSprites.debug = mouse.pressing();
