@@ -2,6 +2,17 @@
 // tile size: 8x8 pixels
 // text rows: 18 cols: 20
 
+let score = 0; // number of apples eaten
+let speed = 0.05; // snake speed
+
+let isGameOver = false;
+let reverseMode = false;
+
+let tailIndex = 2;
+let curves = [];
+let inputDirection = 'up';
+let egg;
+
 function preload() {
 	eatSound = loadSound('/sounds/retro_collect_pickup_item_20.wav');
 	eatSound.setVolume(0.3);
@@ -17,7 +28,8 @@ function preload() {
 		moveSounds[i] = sound;
 	}
 
-	world.offset.y = 16;
+	world.origin.x = 4;
+	world.origin.y = 24;
 
 	allSprites.tileSize = 8;
 	allSprites.pixelPerfect = true;
@@ -85,17 +97,6 @@ function preload() {
 		Reverse: [1, 0]
 	});
 }
-
-let score = 0; // number of apples eaten
-let speed = 0.05; // snake speed
-
-let isGameOver = false;
-let reverseMode = false;
-
-let tailIndex = 2;
-let curves = [];
-let inputDirection = 'up';
-let egg;
 
 function setup() {
 	icons.tileSize = 8;
