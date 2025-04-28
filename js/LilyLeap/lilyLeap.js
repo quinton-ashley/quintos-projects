@@ -61,7 +61,7 @@ async function setup() {
 	makeLilyPads();
 	makeBugs();
 
-	background('1');
+	background('2');
 
 	await alert('Press the up arrow key to jump one lily pad. Press right arrow to jump two.', 2);
 	isPlaying = true;
