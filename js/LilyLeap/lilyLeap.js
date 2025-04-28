@@ -1,20 +1,9 @@
-let frog, lilypads, bugs;
+let frog, lilypads, bugs, time, jump1, jump2, death;
 
-let score = 0;
-
-let countDown = 10;
-
-let time;
-
-let bugPositions = [];
-
-let isPlaying = false;
-
-let jump1;
-
-let jump2;
-
-let death;
+let score = 0,
+	countDown = 10,
+	bugPositions = [],
+	isPlaying = false;
 
 function preload() {
 	frog = new Sprite();
@@ -103,12 +92,9 @@ function makeBugs() {
 	}
 }
 
-function draw() {
-	background('0');
-	fill('3');
-	rect(0, 0, width, 90);
-
+function update() {
 	if (!isPlaying) return;
+
 	// if frog is on the ground
 	if (frog.y >= 83 && frog.vel.y < 1) {
 		frog.x = round(frog.x / 16) * 16;
@@ -116,7 +102,7 @@ function draw() {
 		frog.ani.frame = 0;
 
 		// then it can jump
-		if (kb.presses('ArrowUp')) {
+		if (kb.presses('up')) {
 			// little jump
 			frog.velocity.y = -1.4;
 			frog.velocity.x = 0.975;
@@ -124,7 +110,7 @@ function draw() {
 			score += 1;
 			txt(score + '  ', 17, 17);
 			jump1.play();
-		} else if (kb.presses('ArrowRight')) {
+		} else if (kb.presses('right')) {
 			// BIG jump!
 			frog.velocity.y = -2;
 			frog.velocity.x = 1.355;
@@ -134,23 +120,25 @@ function draw() {
 			jump2.play();
 		}
 	}
+}
+
+function drawFrame() {
+	background('0');
+	fill('3');
+	rect(0, 0, width, 90);
+
+	if (!isPlaying) return;
 
 	camera.x = frog.x + 64;
 
 	// reset if the frog falls or if the countdown timer runs out
-	if (frog.y > 300 || countDown < 0) {
-		gameOver();
-	}
+	if (frog.y > 300 || countDown < 0) gameOver();
 
-	if (score >= 160) {
-		gameWin();
-	}
+	if (score >= 160) gameWin();
 
 	txt(countDown + ' '.repeat(5), 0, 17);
 
-	if (frameCount % 60 == 0) {
-		countDown--;
-	}
+	if (frameCount % 60 == 0) countDown--;
 }
 
 function gameWin() {

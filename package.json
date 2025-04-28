@@ -2,11 +2,10 @@
 	"author": "quinton-ashley",
 	"name": "quintos-projects",
 	"dependencies": {
-		"@types/p5": "^1.7.0",
 		"java2js": "^1.2.19",
-		"p5": "^1.6.0",
-		"p5play": "^3.8.14",
-		"quintos": "^6.0.0"
+		"q5": "^2.29.7",
+		"p5play": "^3.28.3",
+		"quintos": "^6.1.1"
 	},
 	"homepage": "https://quintos.org",
 	"license": "GPL-3.0-only",
@@ -23,5 +22,5 @@
 		"postversion": "git push",
 		"relink": "npm link ../../pkg/quintos ../../pkg/p5play ../../pkg/java2js"
 	},
-	"version": "1.0.104"
+	"version": "1.0.105"
 }
