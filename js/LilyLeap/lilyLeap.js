@@ -1,69 +1,103 @@
-/**
- * @type {Sprite}
- */
-let frog;
+let frog, lilypads, bugs;
 
-/**
- * @type {Group}
- */
-let lilypads;
+let score = 0;
+
+let countDown = 10;
+
+let time;
+
+let bugPositions = [];
+
+let isPlaying = false;
+
+let jump1;
+
+let jump2;
+
+let death;
 
 function preload() {
 	frog = new Sprite();
-	frog.spriteSheet = loadImage('frog_jump.png');
-
+	frog.addAni('frog_jump.png', { size: [32, 16], frames: 7 });
 	lilypads = new Group();
-	lilypads.spriteSheet = loadImage('lilypads.png');
+	lilypads.addAni('lilypads.png', { size: [16, 16], frames: 12 });
+	jump1 = loadSound('sounds/retro_jump_bounce_08.wav');
+	jump2 = loadSound('sounds/retro_jump_bounce_09.wav');
+	death = loadSound('sounds/retro_jump_bounce_12.wav');
+	jump1.setVolume(0.2);
+	jump2.setVolume(0.3);
+	death.setVolume(0.3);
+
+	let bugImg = spriteArt(`
+	0  
+	00 00
+	0 0 0`);
+	bugs = new Group();
+	bugs.image = bugImg;
 }
 
-function setup() {
+async function setup() {
 	world.gravity.y = 10;
 	noStroke();
 
 	frog.x = 16;
-	frog.y = 90;
+	frog.y = 83;
 	frog.w = 10;
 	frog.h = 8;
-	frog.addAni('jump', {
-		size: [32, 16],
-		frames: 7
-	});
-	frog.animation.stop();
-	frog.animation.looping = false;
-	frog.animation.endOnFirstFrame = true;
-
 	frog.rotationLock = true;
+	frog.ani.stop();
+	frog.layer = 1;
 
-	lilypads.addAni('pads', {
-		size: 16,
-		frames: 12
-	});
-	lilypads.layer = 0;
-	lilypads.x = 0;
+	bugs.y = 83;
+
 	lilypads.y = 90;
 	lilypads.w = 10;
 	lilypads.h = 2;
 	lilypads.collider = 'static';
+	lilypads.layer = 0;
 
-	generateLilyPads();
+	frog.overlaps(bugs, eatBug);
 
-	alert('Press the up arrow key to jump one lily pad. Press right arrow to jump two.', 2);
+	makeLilyPads();
+	makeBugs();
+
+	await alert('Press the up arrow key to jump one lily pad. Press right arrow to jump two.', 2);
+	isPlaying = true;
+	time = Date.now();
 }
 
-function generateLilyPads() {
-	let skip = 0;
-	for (let i = 0; i < 50; i++) {
-		if (i == skip) {
-			skip += round(random(2, 7));
-			continue;
-		}
+function eatBug(frog, bug) {
+	bug.remove();
+	countDown += 2;
+}
+
+function makeLilyPads() {
+	/* Part A: Use a loop to make more lily pads. */
+	let bugSpacing = 5;
+	for (let i = 0, l = 1; i < 160; i++, l++) {
 		let lily = new lilypads.Sprite();
-		lily.x = i * 16;
-		lily.animation.frame = round(random(0, 9));
-		lily.animation.frameDelay = round(random(100, 200));
-		if (random() < 0.5) {
-			lily.animation.rewind();
+		lily.x = 16 + i * 16;
+		lily.ani.frame = round(random(0, 11));
+		lily.ani.frameDelay = round(random(100, 140));
+
+		if (l % bugSpacing == 0) {
+			bugPositions.push(16 + i * 16);
 		}
+
+		if (l == 25) bugSpacing = 6;
+		else if (l == 60) bugSpacing = 7;
+		else if (l == 90) bugSpacing = 8;
+
+		if (random() > 0.6) {
+			i++;
+		}
+	}
+}
+
+function makeBugs() {
+	for (let i = 0; i < bugPositions.length; i++) {
+		let bug = new bugs.Sprite();
+		bug.x = bugPositions[i];
 	}
 }
 
@@ -72,32 +106,71 @@ function draw() {
 	fill('3');
 	rect(0, 0, width, 90);
 
-	// frog is not mid-jump and not falling
-	// the frog is sitting on a lilypad
-	if (frog.y > 83 && frog.vel.y < 0.1) {
-		// round the x position of the frog to be at exactly
-		// the same x position as the nearest lilypad
+	if (!isPlaying) return;
+	// if frog is on the ground
+	if (frog.y >= 83 && frog.vel.y < 1) {
 		frog.x = round(frog.x / 16) * 16;
+		frog.ani.stop();
+		frog.ani.frame = 0;
 
-		if (kb.presses('up')) {
-			frog.animation.play();
+		// then it can jump
+		if (kb.presses('ArrowUp')) {
+			// little jump
 			frog.velocity.y = -1.4;
-			frog.velocity.x = 0.95;
-		} else if (kb.presses('right')) {
-			frog.animation.play();
+			frog.velocity.x = 0.975;
+			frog.ani.play();
+			score += 1;
+			txt(score + '  ', 17, 17);
+			jump1.play();
+		} else if (kb.presses('ArrowRight')) {
+			// BIG jump!
 			frog.velocity.y = -2;
-			frog.velocity.x = 1.36;
+			frog.velocity.x = 1.355;
+			frog.ani.play();
+			score += 2;
+			txt(score + '  ', 17, 17);
+			jump2.play();
 		}
 	}
 
 	camera.x = frog.x + 64;
 
-	if (frog.y > 600) {
-		lilypads.removeAll();
-		frog.x = 16;
-		frog.y = 90;
-		frog.vel.x = 0;
-		frog.vel.y = 0;
-		generateLilyPads();
+	// reset if the frog falls or if the countdown timer runs out
+	if (frog.y > 300 || countDown < 0) {
+		gameOver();
 	}
+
+	if (score >= 160) {
+		gameWin();
+	}
+
+	txt(countDown + ' '.repeat(5), 0, 17);
+
+	if (frameCount % 60 == 0) {
+		countDown--;
+	}
+}
+
+function gameWin() {
+	isPlaying = false;
+	txt('The Frog Came Home From Work. Good Job!', 3);
+}
+
+async function gameOver() {
+	isPlaying = false;
+	frog.speed = 0;
+	death.play();
+	txt('Game Over! Your score is: ' + score, 4);
+	await delay(2000);
+	txt('                                ', 4);
+	frog.x = 16;
+	frog.y = 83;
+	frog.speed = 0;
+	score = 0;
+	txt(score + '  ', 17, 17);
+	countDown = 10;
+	bugs.removeAll();
+	makeBugs();
+	txt(score + ' '.repeat(5), 0, 17);
+	isPlaying = true;
 }
